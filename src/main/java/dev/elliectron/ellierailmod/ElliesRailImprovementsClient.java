@@ -1,4 +1,4 @@
-package dev.elliectron.examplemod;
+package dev.elliectron.ellierailmod;
 
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;

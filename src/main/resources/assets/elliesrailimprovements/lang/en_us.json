@@ -1,13 +1,7 @@
 {
-  "itemGroup.elliesrailimprovements": "Example Mod Tab",
-  "block.elliesrailimprovements.example_block": "Example Block",
-  "item.elliesrailimprovements.example_item": "Example Item",
+  "item.elliesrailimprovements.signal_switch_alternate": "Signal: Set switch alignment to alternate",
+  "item.elliesrailimprovements.signal_switch_override": "Signal: Override track signal aspect",
 
-  "elliesrailimprovements.configuration.title": "Ellie's Rail Improvements Configs",
-  "elliesrailimprovements.configuration.section.elliesrailimprovements.common.toml": "Ellie's Rail Improvements Configs",
-  "elliesrailimprovements.configuration.section.elliesrailimprovements.common.toml.title": "Ellie's Rail Improvements Configs",
-  "elliesrailimprovements.configuration.items": "Item List",
-  "elliesrailimprovements.configuration.logDirtBlock": "Log Dirt Block",
-  "elliesrailimprovements.configuration.magicNumberIntroduction": "Magic Number Text",
-  "elliesrailimprovements.configuration.magicNumber": "Magic Number"
+  "block.elliesrailimprovements.rail_class_1": "Class 1 Rail - 4 m/s max",
+  "block.elliesrailimprovements.rail_class_2": "Class 2 Rail - 8 m/s max"
 }

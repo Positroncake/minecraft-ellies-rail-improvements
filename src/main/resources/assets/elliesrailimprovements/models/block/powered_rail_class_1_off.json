@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/rail_flat",
+  "textures": {
+    "rail": "elliesrailimprovements:block/rail_class_1_off"
+  }
+}
