@@ -1,5 +1,13 @@
 {
   "itemGroup.elliesrailimprovements": "Example Mod Tab",
   "block.elliesrailimprovements.example_block": "Example Block",
-  "item.elliesrailimprovements.example_item": "Example Item"
+  "item.elliesrailimprovements.example_item": "Example Item",
+
+  "elliesrailimprovements.configuration.title": "Ellie's Rail Improvements Configs",
+  "elliesrailimprovements.configuration.section.elliesrailimprovements.common.toml": "Ellie's Rail Improvements Configs",
+  "elliesrailimprovements.configuration.section.elliesrailimprovements.common.toml.title": "Ellie's Rail Improvements Configs",
+  "elliesrailimprovements.configuration.items": "Item List",
+  "elliesrailimprovements.configuration.logDirtBlock": "Log Dirt Block",
+  "elliesrailimprovements.configuration.magicNumberIntroduction": "Magic Number Text",
+  "elliesrailimprovements.configuration.magicNumber": "Magic Number"
 }
