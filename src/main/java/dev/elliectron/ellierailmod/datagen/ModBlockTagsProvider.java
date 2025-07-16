@@ -21,18 +21,33 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         this.tag(BlockTags.RAILS)
                 .add(ModBlocks.RAIL_CLASS_1.get())
                 .add(ModBlocks.POWERED_RAIL_CLASS_1.get())
-                .add(ModBlocks.RAIL_CLASS_2.get());
+                .add(ModBlocks.RAIL_CLASS_2.get())
+                .add(ModBlocks.POWERED_RAIL_CLASS_2.get())
+                .add(ModBlocks.RAIL_CLASS_3.get())
+                .add(ModBlocks.POWERED_RAIL_CLASS_3.get())
+                .add(ModBlocks.RAIL_CLASS_4.get())
+                .add(ModBlocks.POWERED_RAIL_CLASS_4.get());
 
         // Add our rail to the pickaxe mineable tag
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.RAIL_CLASS_1.get())
                 .add(ModBlocks.POWERED_RAIL_CLASS_1.get())
-                .add(ModBlocks.RAIL_CLASS_2.get());
+                .add(ModBlocks.RAIL_CLASS_2.get())
+                .add(ModBlocks.POWERED_RAIL_CLASS_2.get())
+                .add(ModBlocks.RAIL_CLASS_3.get())
+                .add(ModBlocks.POWERED_RAIL_CLASS_3.get())
+                .add(ModBlocks.RAIL_CLASS_4.get())
+                .add(ModBlocks.POWERED_RAIL_CLASS_4.get());
 
         // Add our rail to prevent mob spawning inside
         this.tag(BlockTags.PREVENT_MOB_SPAWNING_INSIDE)
                 .add(ModBlocks.RAIL_CLASS_1.get())
                 .add(ModBlocks.POWERED_RAIL_CLASS_1.get())
-                .add(ModBlocks.RAIL_CLASS_2.get());
+                .add(ModBlocks.RAIL_CLASS_2.get())
+                .add(ModBlocks.POWERED_RAIL_CLASS_2.get())
+                .add(ModBlocks.RAIL_CLASS_3.get())
+                .add(ModBlocks.POWERED_RAIL_CLASS_3.get())
+                .add(ModBlocks.RAIL_CLASS_4.get())
+                .add(ModBlocks.POWERED_RAIL_CLASS_4.get());
     }
 }

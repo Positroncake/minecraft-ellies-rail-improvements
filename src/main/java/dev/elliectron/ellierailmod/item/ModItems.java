@@ -2,14 +2,20 @@ package dev.elliectron.ellierailmod.item;
 
 import dev.elliectron.ellierailmod.ElliesRailImprovements;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ElliesRailImprovements.MODID);
-    public static final DeferredItem<Item> SIGNAL_SWITCH_ALTERNATE = ITEMS.register("signal_switch_alternate", () -> new Item(new Item.Properties()));
-    public static final DeferredItem<Item> SIGNAL_SWITCH_OVERRIDE = ITEMS.register("signal_switch_override", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> SIGNAL_SWITCH_ALTERNATE = ITEMS.register("signal_switch_alternate", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> SIGNAL_SWITCH_OVERRIDE = ITEMS.register("signal_switch_override", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> SIGNAL_STOP = ITEMS.register("signal_stop", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> SIGNAL_SPEED_LIMITED = ITEMS.register("signal_speed_limited", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> SIGNAL_SPEED_MEDIUM = ITEMS.register("signal_speed_medium", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> SIGNAL_SPEED_DIVERGING = ITEMS.register("signal_speed_diverging", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> SIGNAL_SPEED_RESTRICTED = ITEMS.register("signal_speed_restricted", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -5,11 +5,17 @@ import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.MinecartChest;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RailBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
+@SuppressWarnings("DuplicatedCode")
 public class Class2Rail extends RailBlock {
+    public static final float SPEED_WET_FREIGHT = 5f;
+    public static final float SPEED_DRY_FREIGHT = 6.5f;
+    public static final float SPEED_WET_NORMAL = 6.5f;
+    public static final float SPEED_DRY_NORMAL = 8f;
 
-    public Class2Rail(Properties properties) {
+    public Class2Rail(BlockBehaviour.Properties properties) {
         super(properties);
     }
 
@@ -17,17 +23,17 @@ public class Class2Rail extends RailBlock {
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
         // Default vanilla rail speed is 8.0f (m/s) / 20 (tps) = 0.4f (speed value)
         if (cart instanceof MinecartChest && level.isRaining()) {
-            return 5f/20; // Slowest when freight carts is on wet tracks
+            return SPEED_WET_FREIGHT/20; // Slowest when freight carts is on wet tracks
         }
 
         if (cart instanceof MinecartChest) {
-            return 6f/20; // Slow for freight carts
+            return SPEED_DRY_FREIGHT/20; // Slow for freight carts
         }
 
         if (level.isRaining()) {
-            return 7f/20; // Slower when normal carts are on wet tracks
+            return SPEED_WET_NORMAL/20; // Slower when normal carts are on wet tracks
         }
 
-        return 8f/20; // Default speed for normal carts
+        return SPEED_DRY_NORMAL/20; // Default speed for normal carts
     }
 }
