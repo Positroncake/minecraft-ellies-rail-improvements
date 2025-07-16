@@ -1,0 +1,4 @@
+// 1.21.1	2025-07-15T19:29:02.830552	Tags for minecraft:block mod id elliesrailimprovements
+cde5e6680dccc333a6527159fc27177aab357b9d data/minecraft/tags/block/mineable/pickaxe.json
+cde5e6680dccc333a6527159fc27177aab357b9d data/minecraft/tags/block/prevent_mob_spawning_inside.json
+cde5e6680dccc333a6527159fc27177aab357b9d data/minecraft/tags/block/rails.json
