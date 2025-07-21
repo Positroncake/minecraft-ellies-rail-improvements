@@ -1,12 +1,12 @@
 package dev.elliectron.ellierailmod.block.custom;
 
+import dev.elliectron.ellierailmod.event.MinecartStoppingHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.AbstractMinecart;
-import net.minecraft.world.entity.vehicle.MinecartChest;
+import net.minecraft.world.entity.vehicle.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -17,21 +17,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraft.world.phys.Vec3;
 
 @SuppressWarnings("DuplicatedCode")
 public class PoweredClass1Rail extends RailBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-    public static final double ACCEL_AMOUNT = 0.03/20;
-    public static final double DECEL_AMOUNT = -0.005/20;
-    public static final double MAX_SPD_THRES_ROUND = 2 * ACCEL_AMOUNT;
-    public static final double STATIONARY_THRES_ROUND = 2 * DECEL_AMOUNT;
-    public static final double UPHILL_ACCEL_BONUS = 0.1132/20;
-
-    public static final float SPEED_WET_FREIGHT = 2f;
-    public static final float SPEED_DRY_FREIGHT = 3f;
-    public static final float SPEED_WET_NORMAL = 3f;
-    public static final float SPEED_DRY_NORMAL = 4f;
+    public static final double ACCEL_BUFFER = Acceleration.MAX_ACCEL_600V/20;
+    private static final int TRACK_CLASS = 1;
 
     public PoweredClass1Rail(BlockBehaviour.Properties properties) {
         super(properties);
@@ -79,7 +72,7 @@ public class PoweredClass1Rail extends RailBlock {
             }
 
             // Check if there's powered custom rail redstone wire on an adjacent block
-            if (adjacentState.getBlock() instanceof Electrification750V) {
+            if (adjacentState.getBlock() instanceof Electrification600V) {
                 int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
                 if (power > 0) {
                     return true;
@@ -97,23 +90,26 @@ public class PoweredClass1Rail extends RailBlock {
             boolean isPowered = state.getValue(POWERED);
             boolean hasOverrideSignal = holdingOverrideSignal(cart);
 
-            if (!holdingStopSignal(cart)) {
+            if (!holdingStoppingSignal(cart)) {
                 if (isPowered && !hasOverrideSignal) { // power and no override => accelerate as normal
-                    Vec3 motion = cart.getDeltaMovement();
+                    Vec3 motionMpt = cart.getDeltaMovement();
                     float maxSpd = getRailMaxSpeed(state, level, pos, cart);
 
-                    // Check if this is an ascending rail (going uphill)
-                    boolean isAscending = isAscendingRail(state);
-                    double accelAmount = isAscending ? ACCEL_AMOUNT + UPHILL_ACCEL_BONUS : ACCEL_AMOUNT; // extra acceleration for going uphill
-
-                    if (motion.x >= maxSpd - MAX_SPD_THRES_ROUND && motion.z < MAX_SPD_THRES_ROUND) cart.setDeltaMovement(maxSpd, motion.y, 0);
-                    else if (motion.x < MAX_SPD_THRES_ROUND && motion.z >= maxSpd - MAX_SPD_THRES_ROUND) cart.setDeltaMovement(0, motion.y, maxSpd);
-                    else { Vec3 accelAmount3 = CalcAccelAmount(motion.x, motion.z, accelAmount); cart.setDeltaMovement(motion.add(accelAmount3)); }
+                    double currSpd = Math.sqrt(motionMpt.x * motionMpt.x + motionMpt.z * motionMpt.z);
+                    // ACCEL_BUFFER is to prevent over-acceleration (e.g. if maxSpd is 10.00 and the maximum possible acceleration is 0.03,
+                    // then by having ACCEL_BUFFER as 0.03, the maximum currSpd can ever be at is 9.97 and therefore not over-accelerate,
+                    // as a value of 9.98 would give the minecart extra momentum equal to 10.01 (and the if statement therefore fails such
+                    // a condition (9.97 <= 10.00 - 0.03, but 9.98 </= 10.00 - 0.03))
+                    if (currSpd <= maxSpd - ACCEL_BUFFER) {
+                        Vec3 accelAmountT = Acceleration.Calc600VAccelMpt(motionMpt, getRailShape(state));
+                        cart.setDeltaMovement(motionMpt.add(accelAmountT));
+                    }
                 }
-                else if (!isPowered && !hasOverrideSignal) { // no power and no override => decelerate as normal
-                    Vec3 motion = cart.getDeltaMovement();
-                    if (motion.x < STATIONARY_THRES_ROUND && motion.z < STATIONARY_THRES_ROUND) cart.setDeltaMovement(0, 0, 0);
-                    else { Vec3 accelAmount3 = CalcAccelAmount(motion.x, motion.z, DECEL_AMOUNT); cart.setDeltaMovement(motion.add(accelAmount3)); }
+                else if (!isPowered && !hasOverrideSignal) { // no power and no override => treat as danger (red) signal aspect
+                    Vec3 vv = cart.getDeltaMovement();
+                    double spd = Math.sqrt(vv.x * vv.x + vv.z * vv.z);
+                    if (spd < 0.01) cart.setDeltaMovement(0, 0, 0);
+                    else MinecartStoppingHandler.DecelerateMinecart(cart, true);
                 }
             }
         } else {
@@ -121,46 +117,27 @@ public class PoweredClass1Rail extends RailBlock {
         }
     }
 
-    private Vec3 CalcAccelAmount(double x, double z, double accelValue) {
-        double xAccel = 0, zAccel = 0;
-        if (x < 0) xAccel = -accelValue;
-        else if (x > 0) xAccel = accelValue;
-        if (z < 0) zAccel = -accelValue;
-        else if (z > 0) zAccel = accelValue;
-        return new Vec3(xAccel, 0, zAccel);
-    }
-
-    /**
-     * Check if this rail is ascending (going uphill)
-     */
-    private boolean isAscendingRail(BlockState state) {
-        if (!state.hasProperty(SHAPE)) {
-            return false;
-        }
-
-        net.minecraft.world.level.block.state.properties.RailShape shape = state.getValue(SHAPE);
-        return shape == net.minecraft.world.level.block.state.properties.RailShape.ASCENDING_EAST ||
-                shape == net.minecraft.world.level.block.state.properties.RailShape.ASCENDING_WEST ||
-                shape == net.minecraft.world.level.block.state.properties.RailShape.ASCENDING_NORTH ||
-                shape == net.minecraft.world.level.block.state.properties.RailShape.ASCENDING_SOUTH;
+    private RailShape getRailShape(BlockState state) {
+        if (state.hasProperty(SHAPE)) return state.getValue(SHAPE);
+        return RailShape.EAST_WEST;
     }
 
     @Override
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-        // Default vanilla rail speed is 8.0f (m/s) / 20 (tps) = 0.4f (speed value)
-        if (cart instanceof MinecartChest && level.isRaining()) {
-            return SPEED_WET_FREIGHT/20; // Slowest when freight carts is on wet tracks
-        }
-
-        if (cart instanceof MinecartChest) {
-            return SPEED_DRY_FREIGHT/20; // Slow for freight carts
-        }
+        float[] spdLimsMps = SpeedLimits.GetSpdLimsMps(TRACK_CLASS);
 
         if (level.isRaining()) {
-            return SPEED_WET_NORMAL/20; // Slower when normal carts are on wet tracks
+            if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper
+                    || cart instanceof MinecartTNT || cart instanceof MinecartCommandBlock || cart instanceof MinecartSpawner) {
+                return spdLimsMps[0] / 20f; // Slowest when freight carts are on wet tracks
+            }
+            return spdLimsMps[1] / 20f; // Reduced speed for freight carts on dry tracks
         }
-
-        return SPEED_DRY_NORMAL/20; // Default speed for normal carts
+        if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper
+                || cart instanceof MinecartTNT || cart instanceof MinecartCommandBlock || cart instanceof MinecartSpawner) {
+            return spdLimsMps[2] / 20f; // Slower speed when passenger carts are on wet tracks
+        }
+        return spdLimsMps[3] / 20f; // Full speed for passenger carts on dry tracks
     }
 
     private boolean holdingOverrideSignal(AbstractMinecart cart) {
@@ -179,17 +156,18 @@ public class PoweredClass1Rail extends RailBlock {
         return false;
     }
 
-    private boolean holdingStopSignal(AbstractMinecart cart) {
-        ResourceLocation overrideSignalId = ResourceLocation.parse("elliesrailimprovements:signal_stop");
-        Item overrideItem = BuiltInRegistries.ITEM.get(overrideSignalId);
+    private boolean holdingStoppingSignal(AbstractMinecart cart) {
+        ResourceLocation stopSignalId = ResourceLocation.parse("elliesrailimprovements:signal_stop");
+        Item stopSignalItem = BuiltInRegistries.ITEM.get(stopSignalId);
+        ResourceLocation eStopSignalId = ResourceLocation.parse("elliesrailimprovements:signal_e_stop");
+        Item eStopSignalItem = BuiltInRegistries.ITEM.get(eStopSignalId);
 
         for (var passenger : cart.getPassengers()) {
             if (passenger instanceof Player player) {
                 ItemStack mainHand = player.getMainHandItem();
                 ItemStack offHand = player.getOffhandItem();
-                if (mainHand.is(overrideItem) || offHand.is(overrideItem)) {
-                    return true;
-                }
+                if (mainHand.is(stopSignalItem) || offHand.is(stopSignalItem)) return true;
+                if (mainHand.is(eStopSignalItem) || offHand.is(eStopSignalItem)) return true;
             }
         }
         return false;

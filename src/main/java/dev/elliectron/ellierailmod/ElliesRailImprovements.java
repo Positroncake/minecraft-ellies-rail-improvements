@@ -2,10 +2,14 @@ package dev.elliectron.ellierailmod;
 
 import dev.elliectron.ellierailmod.block.ModBlocks;
 import dev.elliectron.ellierailmod.item.ModItems;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.MinecartRenderer;
 
 import com.mojang.logging.LogUtils;
 
@@ -47,12 +51,6 @@ public class ElliesRailImprovements {
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAIL_CLASS_1.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.POWERED_RAIL_CLASS_1.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAIL_CLASS_2.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(ModBlocks.POWERED_RAIL_CLASS_2.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAIL_CLASS_3.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(ModBlocks.POWERED_RAIL_CLASS_3.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAIL_CLASS_4.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(ModBlocks.POWERED_RAIL_CLASS_4.get(), RenderType.cutout());
         });
     }
 
@@ -61,18 +59,13 @@ public class ElliesRailImprovements {
             event.accept(ModItems.SIGNAL_SWITCH_ALTERNATE);
             event.accept(ModItems.SIGNAL_SWITCH_OVERRIDE);
             event.accept(ModItems.SIGNAL_STOP);
+            event.accept(ModItems.SIGNAL_E_STOP);
             event.accept(ModItems.SIGNAL_SPEED_LIMITED);
             event.accept(ModItems.SIGNAL_SPEED_MEDIUM);
             event.accept(ModItems.SIGNAL_SPEED_DIVERGING);
             event.accept(ModItems.SIGNAL_SPEED_RESTRICTED);
             event.accept(ModBlocks.RAIL_CLASS_1);
             event.accept(ModBlocks.POWERED_RAIL_CLASS_1);
-            event.accept(ModBlocks.RAIL_CLASS_2);
-            event.accept(ModBlocks.POWERED_RAIL_CLASS_2);
-            event.accept(ModBlocks.RAIL_CLASS_3);
-            event.accept(ModBlocks.POWERED_RAIL_CLASS_3);
-            event.accept(ModBlocks.RAIL_CLASS_4);
-            event.accept(ModBlocks.POWERED_RAIL_CLASS_4);
         }
     }
 

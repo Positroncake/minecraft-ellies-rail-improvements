@@ -21,18 +21,6 @@ public class ModBlocks {
             () -> new Class1Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.RAIL)));
     public static final DeferredBlock<PoweredClass1Rail> POWERED_RAIL_CLASS_1 = registerBlock("powered_rail_class_1",
             () -> new PoweredClass1Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.POWERED_RAIL)));
-    public static final DeferredBlock<Class2Rail> RAIL_CLASS_2 = registerBlock("rail_class_2",
-            () -> new Class2Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.RAIL)));
-    public static final DeferredBlock<PoweredClass2Rail> POWERED_RAIL_CLASS_2 = registerBlock("powered_rail_class_2",
-            () -> new PoweredClass2Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.POWERED_RAIL)));
-    public static final DeferredBlock<Class3Rail> RAIL_CLASS_3 = registerBlock("rail_class_1",
-            () -> new Class3Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.RAIL)));
-    public static final DeferredBlock<PoweredClass3Rail> POWERED_RAIL_CLASS_3 = registerBlock("powered_rail_class_1",
-            () -> new PoweredClass3Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.POWERED_RAIL)));
-    public static final DeferredBlock<Class4Rail> RAIL_CLASS_4 = registerBlock("rail_class_2",
-            () -> new Class4Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.RAIL)));
-    public static final DeferredBlock<PoweredClass4Rail> POWERED_RAIL_CLASS_4 = registerBlock("powered_rail_class_2",
-            () -> new PoweredClass4Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.POWERED_RAIL)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

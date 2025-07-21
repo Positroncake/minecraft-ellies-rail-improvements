@@ -7,9 +7,14 @@
   "item.elliesrailimprovements.signal_speed_diverging": "Signal: Diverging speed",
   "item.elliesrailimprovements.signal_speed_restricted": "Signal: Restricted speed",
 
-
   "block.elliesrailimprovements.rail_class_1": "Class 1 Rail - 4 m/s max",
   "block.elliesrailimprovements.powered_rail_class_1": "Class 1 Powered Rail - 4 m/s max",
   "block.elliesrailimprovements.rail_class_2": "Class 2 Rail - 8 m/s max",
-  "block.elliesrailimprovements.powered_rail_class_2": "Class 2 Powered Rail - 8 m/s max"
+  "block.elliesrailimprovements.powered_rail_class_2": "Class 2 Powered Rail - 8 m/s max",
+  "block.elliesrailimprovements.rail_class_3": "Class 3 Rail - 15 m/s max",
+  "block.elliesrailimprovements.powered_rail_class_3": "Class 3 Powered Rail - 15 m/s max",
+  "block.elliesrailimprovements.rail_class_4": "Class 4 Rail - 20 m/s max",
+  "block.elliesrailimprovements.powered_rail_class_4": "Class 4 Powered Rail - 20 m/s max",
+
+  "entity.elliesrailimprovements.advanced_minecart": "Advanced Minecart"
 }
