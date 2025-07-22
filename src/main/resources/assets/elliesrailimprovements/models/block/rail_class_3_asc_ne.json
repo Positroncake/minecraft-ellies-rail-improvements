@@ -1,0 +1,6 @@
+﻿{
+  "parent": "minecraft:block/rail_raised_ne",
+  "textures": {
+    "rail": "elliesrailimprovements:block/rail_class_3"
+  }
+}
