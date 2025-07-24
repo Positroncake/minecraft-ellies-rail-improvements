@@ -8,10 +8,10 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
 @SuppressWarnings("DuplicatedCode")
-public class Class1Rail extends RailBlock {
-    private static final int TRACK_CLASS = 1;
+public class Class2Rail extends RailBlock {
+    private static final int TRACK_CLASS = 2;
 
-    public Class1Rail(BlockBehaviour.Properties properties) {
+    public Class2Rail(BlockBehaviour.Properties properties) {
         super(properties);
     }
 
