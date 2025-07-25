@@ -1,0 +1,23 @@
+{
+  "item.elliesrailmod.signal_switch_alternate": "Set switch alignment to alternate",
+  "item.elliesrailmod.signal_proceed": "Proceed",
+  "item.elliesrailmod.signal_override": "Override signal/train control",
+  "item.elliesrailmod.signal_stop": "Stop / decelerate",
+  "item.elliesrailmod.signal_e_stop": "Emergency stop",
+  "item.elliesrailmod.signal_speed_limited": "Signal: Limited speed",
+  "item.elliesrailmod.signal_speed_medium": "Signal: Medium speed",
+  "item.elliesrailmod.signal_speed_diverging": "Signal: Diverging speed",
+  "item.elliesrailmod.signal_speed_restricted": "Signal: Restricted speed",
+
+  "block.elliesrailmod.rail_class_1": "Class 1 Rail, 12 mph max",
+  "block.elliesrailmod.powered_rail_class_1": "Class 1 Powered Rail, 12 mph max",
+  "block.elliesrailmod.rail_class_2": "Class 2 Rail, 25 mph max",
+  "block.elliesrailmod.powered_rail_class_2": "Class 2 Powered Rail, 25 mph max",
+  "block.elliesrailmod.rail_class_3": "Class 3 Rail, 40 mph max",
+  "block.elliesrailmod.powered_rail_class_3": "Class 3 Powered Rail, 40 mph max",
+  "block.elliesrailmod.rail_class_4": "Class 4 Rail, 60 mph max",
+  "block.elliesrailmod.powered_rail_class_4": "Class 4 Powered Rail, 60 mph max",
+  "block.elliesrailmod.rail_class_5": "Class 5 Rail, 90 mph max",
+  "block.elliesrailmod.powered_rail_class_5": "Class 5 Powered Rail, 90 mph max",
+  "block.elliesrailmod.powered_rail_class_5a": "Class 5 Accelerator Rail, 90 mph max"
+}

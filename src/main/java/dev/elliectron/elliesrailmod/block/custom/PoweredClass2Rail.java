@@ -1,0 +1,191 @@
+package dev.elliectron.elliesrailmod.block.custom;
+
+import dev.elliectron.elliesrailmod.event.MinecartStoppingHandler;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RailBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.RailShape;
+import net.minecraft.world.phys.Vec3;
+
+@SuppressWarnings("DuplicatedCode")
+public class PoweredClass2Rail extends RailBlock {
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    public static final double ACCEL_BUFFER = Acceleration.MAX_ACCEL_600V/20;
+    private static final int TRACK_CLASS = 2;
+
+    public PoweredClass2Rail(BlockBehaviour.Properties properties) {
+        super(properties);
+        this.registerDefaultState(this.defaultBlockState().setValue(POWERED, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(POWERED);
+    }
+
+    // Add redstone power detection (UPDATED VERSION)
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        if (level.isClientSide) return;
+
+        boolean isPowered = isRailPowered(level, pos);
+
+        if (state.getValue(POWERED) != isPowered) {
+            level.setBlock(pos, state.setValue(POWERED, isPowered), 3);
+        }
+    }
+
+    /**
+     * Check if this rail should be powered, including redstone wire detection
+     */
+    private boolean isRailPowered(Level level, BlockPos pos) {
+        // Check for direct redstone power first
+        if (level.hasNeighborSignal(pos)) {
+            return true;
+        }
+
+        // Check for redstone wire on adjacent blocks (the common case)
+        for (net.minecraft.core.Direction direction : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            BlockPos adjacentPos = pos.relative(direction);
+            BlockState adjacentState = level.getBlockState(adjacentPos);
+
+            // Check if there's powered vanilla redstone wire on an adjacent block
+            if (adjacentState.is(net.minecraft.world.level.block.Blocks.REDSTONE_WIRE)) {
+                int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
+                if (power > 0) {
+                    return true;
+                }
+            }
+
+            // Check if there's powered custom rail redstone wire on an adjacent block
+            if (adjacentState.getBlock() instanceof Electrification600V) {
+                int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
+                if (power > 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // Custom acceleration logic
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (entity instanceof AbstractMinecart cart) {
+            boolean isPowered = state.getValue(POWERED);
+            boolean hasOverrideSignal = holdingOverrideSignal(cart);
+
+            if (!holdingStoppingSignal(cart)) {
+                if (isPowered && !hasOverrideSignal) { // power and no override => accelerate as normal
+                    Vec3 motionMpt = cart.getDeltaMovement();
+                    float maxSpd = getRailMaxSpeed(state, level, pos, cart);
+
+                    double currSpd = Math.sqrt(motionMpt.x * motionMpt.x + motionMpt.z * motionMpt.z);
+                    // ACCEL_BUFFER is to prevent over-acceleration (e.g. if maxSpd is 10.00 and the maximum possible acceleration is 0.03,
+                    // then by having ACCEL_BUFFER as 0.03, the maximum currSpd can ever be at is 9.97 and therefore not over-accelerate,
+                    // as a value of 9.98 would give the minecart extra momentum equal to 10.01 (and the if statement therefore fails such
+                    // a condition (9.97 <= 10.00 - 0.03, but 9.98 </= 10.00 - 0.03))
+                    if (currSpd <= maxSpd - ACCEL_BUFFER) {
+                        Vec3 accelAmountT = Acceleration.Calc600VAccelMpt(motionMpt, getRailShape(state));
+                        cart.setDeltaMovement(motionMpt.add(accelAmountT));
+                    }
+                }
+                else if (!isPowered && !hasOverrideSignal) { // no power and no override => treat as danger (red) signal aspect
+                    Vec3 vv = cart.getDeltaMovement();
+                    double spd = Math.sqrt(vv.x * vv.x + vv.z * vv.z);
+                    if (spd < 0.01) cart.setDeltaMovement(0, 0, 0);
+                    else MinecartStoppingHandler.DecelerateMinecart(cart, true, false);
+                }
+            }
+        } else {
+            super.entityInside(state, level, pos, entity);
+        }
+    }
+
+    private RailShape getRailShape(BlockState state) {
+        if (state.hasProperty(SHAPE)) return state.getValue(SHAPE);
+        return RailShape.EAST_WEST;
+    }
+
+    @Override
+    public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
+        float[] spdLimsMps = SpeedLimits.GetSpdLimsMps(TRACK_CLASS);
+
+        if (level.isRaining()) {
+            if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper
+                    || cart instanceof MinecartTNT || cart instanceof MinecartCommandBlock || cart instanceof MinecartSpawner) {
+                return spdLimsMps[0] / 20f; // Slowest when freight carts are on wet tracks
+            }
+            return spdLimsMps[1] / 20f; // Reduced speed for freight carts on dry tracks
+        }
+        if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper
+                || cart instanceof MinecartTNT || cart instanceof MinecartCommandBlock || cart instanceof MinecartSpawner) {
+            return spdLimsMps[2] / 20f; // Slower speed when passenger carts are on wet tracks
+        }
+        return spdLimsMps[3] / 20f; // Full speed for passenger carts on dry tracks
+    }
+
+    private boolean holdingOverrideSignal(AbstractMinecart cart) {
+        ResourceLocation overrideSignalId = ResourceLocation.parse("elliesrailmod:signal_override");
+        Item overrideItem = BuiltInRegistries.ITEM.get(overrideSignalId);
+
+        for (var passenger : cart.getPassengers()) {
+            if (passenger instanceof Player player) {
+                ItemStack mainHand = player.getMainHandItem();
+                ItemStack offHand = player.getOffhandItem();
+                if (mainHand.is(overrideItem) || offHand.is(overrideItem)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean holdingProceedSignal(AbstractMinecart cart) {
+        ResourceLocation proceedSignalId = ResourceLocation.parse("elliesrailmod:signal_proceed");
+        Item proceedItem = BuiltInRegistries.ITEM.get(proceedSignalId);
+
+        for (var passenger : cart.getPassengers()) {
+            if (passenger instanceof Player player) {
+                ItemStack mainHand = player.getMainHandItem();
+                ItemStack offHand = player.getOffhandItem();
+                if (mainHand.is(proceedItem) || offHand.is(proceedItem)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean holdingStoppingSignal(AbstractMinecart cart) {
+        ResourceLocation stopSignalId = ResourceLocation.parse("elliesrailmod:signal_stop");
+        Item stopSignalItem = BuiltInRegistries.ITEM.get(stopSignalId);
+        ResourceLocation eStopSignalId = ResourceLocation.parse("elliesrailmod:signal_e_stop");
+        Item eStopSignalItem = BuiltInRegistries.ITEM.get(eStopSignalId);
+
+        for (var passenger : cart.getPassengers()) {
+            if (passenger instanceof Player player) {
+                ItemStack mainHand = player.getMainHandItem();
+                ItemStack offHand = player.getOffhandItem();
+                if (mainHand.is(stopSignalItem) || offHand.is(stopSignalItem)) return true;
+                if (mainHand.is(eStopSignalItem) || offHand.is(eStopSignalItem)) return true;
+            }
+        }
+        return false;
+    }
+}

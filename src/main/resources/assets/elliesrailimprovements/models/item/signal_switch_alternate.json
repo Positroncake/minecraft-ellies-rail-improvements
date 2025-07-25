@@ -1,6 +1,0 @@
-﻿{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "elliesrailimprovements:item/signal_switch_alternate"
-  }
-}

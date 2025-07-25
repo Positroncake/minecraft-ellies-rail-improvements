@@ -1,6 +1,0 @@
-﻿{
-  "parent": "minecraft:block/rail_corner",
-  "textures": {
-    "rail": "elliesrailimprovements:block/rail_class_2_turn"
-  }
-}

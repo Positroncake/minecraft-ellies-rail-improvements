@@ -1,0 +1,14 @@
+﻿{
+  "variants": {
+    "shape=north_south": {"model": "elliesrailmod:block/rail_class_5"},
+    "shape=east_west": {"model": "elliesrailmod:block/rail_class_5", "y": 90},
+    "shape=ascending_east": {"model": "elliesrailmod:block/rail_class_5_asc_ne", "y": 90},
+    "shape=ascending_west": {"model": "elliesrailmod:block/rail_class_5_asc_sw", "y": 90},
+    "shape=ascending_north": {"model": "elliesrailmod:block/rail_class_5_asc_ne"},
+    "shape=ascending_south": {"model": "elliesrailmod:block/rail_class_5_asc_sw"},
+    "shape=south_east": {"model": "elliesrailmod:block/rail_class_5_turn", "y": 0},
+    "shape=south_west": {"model": "elliesrailmod:block/rail_class_5_turn", "y": 90},
+    "shape=north_west": {"model": "elliesrailmod:block/rail_class_5_turn", "y": 180},
+    "shape=north_east": {"model": "elliesrailmod:block/rail_class_5_turn", "y": 270}
+  }
+}
