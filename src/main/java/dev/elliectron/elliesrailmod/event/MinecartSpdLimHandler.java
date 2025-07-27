@@ -2,6 +2,7 @@ package dev.elliectron.elliesrailmod.event;
 
 import dev.elliectron.elliesrailmod.ElliesRailImprovements;
 import dev.elliectron.elliesrailmod.item.ModItems;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
@@ -13,6 +14,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
+import static dev.elliectron.elliesrailmod.event.MinecartStoppingHandler.*;
+
 @SuppressWarnings("DuplicatedCode")
 @EventBusSubscriber(modid = ElliesRailImprovements.MODID)
 public class MinecartSpdLimHandler {
@@ -22,12 +25,6 @@ public class MinecartSpdLimHandler {
     private static final double SPEED_MEDIUM = 13.4 / 20.0;
     private static final double SPEED_DIVERGING = 11.2 / 20.0;
     private static final double SPEED_RESTRICTED = 6.7 / 20.0;
-
-    // Base deceleration rate: 1 block/s² = 1/20 blocks/tick²
-    private static final double BASE_DECELERATION_RATE = -0.053 / 20;
-    private static final double RAIN_DECELERATION_MULTIPLIER = 0.7; // 30% less deceleration in rain
-    private static final double ATTACHED_PAX_DECEL_FACTOR = 0.955; // Reduced deceleration per attached minecart (player)
-    private static final double ATTACHED_FREIGHT_DECEL_FACTOR = 0.930; // Reduced deceleration per attached minecart (chest/hopper/etc)
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Pre event) {
@@ -60,16 +57,47 @@ public class MinecartSpdLimHandler {
     }
 
     private static void limitMinecartSpeed(AbstractMinecart minecart, double maxSpeed) {
-        Vec3 motion = minecart.getDeltaMovement();
-        double currSpd = Math.sqrt(motion.x * motion.x + motion.z * motion.z);
-        if (currSpd <= maxSpeed) return;
+        CompoundTag nbt = minecart.getPersistentData();
+        if (nbt.contains("spd")) {
+            double spd = nbt.getDouble("spd");
+            if (spd <= maxSpeed) return;
 
-        double dynamicDecelerationRate = calculateDynamicDecelerationRate(minecart);
-        Vec3 decelAmount = calcDecelAmount(motion.x, motion.y, motion.z, dynamicDecelerationRate);
-        minecart.setDeltaMovement(motion.add(decelAmount));
+            double dynDecelRate = calcDynamicDecelRate(minecart);
+            dynDecelRate += spd;
+            nbt.putDouble("spd", dynDecelRate);
+        } else {
+            Vec3 motion = minecart.getDeltaMovement();
+            double currSpd = Math.sqrt(motion.x * motion.x + motion.z * motion.z);
+            if (currSpd <= maxSpeed) return;
+
+            double dynamicDecelerationRate = calcDynamicDecelRate(minecart);
+            Vec3 decelAmount = calcDecelAmount(motion.x, motion.y, motion.z, dynamicDecelerationRate);
+            minecart.setDeltaMovement(motion.add(decelAmount));
+        }
+
+        updateBrakeTemperature(minecart);
     }
 
-    private static double calculateDynamicDecelerationRate(AbstractMinecart minecart) {
+    private static void updateBrakeTemperature(AbstractMinecart minecart) {
+        var nbt = minecart.getPersistentData();
+
+        // Get current brake temperature (default to 293K if not set)
+        double currentTemp = nbt.getDouble("brake_temperature");
+        if (currentTemp == 0.0) {
+            currentTemp = DEFAULT_BRAKE_TEMP;
+        }
+
+        Vec3 vv = minecart.getDeltaMovement();
+        double spd = Math.sqrt(vv.x*vv.x + vv.z*vv.z);
+        double baselineMultiplier = 2.0; // 2x heat at 100 mph baseline
+        double speedRatio = spd / 2.2352; // Speed relative to 100 mph
+        double speedMultiplier = Math.max(0.1, baselineMultiplier * speedRatio * speedRatio);
+        currentTemp = Math.min(MAX_BRAKE_TEMP, currentTemp + NORM_BRAKE_HEATING_RATE * speedMultiplier);
+
+        nbt.putDouble("brake_temperature", currentTemp);
+    }
+
+    private static double calcDynamicDecelRate(AbstractMinecart minecart) {
         Level level = minecart.level();
         double decelRate = BASE_DECELERATION_RATE;
 
@@ -80,7 +108,22 @@ public class MinecartSpdLimHandler {
         int freightMinecartsNum = attachedCount[1];
         decelRate *= Math.pow(ATTACHED_PAX_DECEL_FACTOR, paxMinecartsNum);
         decelRate *= Math.pow(ATTACHED_FREIGHT_DECEL_FACTOR, freightMinecartsNum);
+
+        double brakeEffectiveness = getBrakeEffectiveness(minecart);
+        decelRate *= brakeEffectiveness;
+
         return decelRate;
+    }
+
+    public static double getBrakeEffectiveness(AbstractMinecart minecart) {
+        var nbt = minecart.getPersistentData();
+        double currentTemp = nbt.getDouble("brake_temperature");
+        if (currentTemp == 0.0) currentTemp = DEFAULT_BRAKE_TEMP;
+
+        double tempAboveDefault = Math.max(0, currentTemp - DEFAULT_BRAKE_TEMP);
+        double effectivenessLoss = tempAboveDefault * BRAKE_EFFECTIVENESS_LOSS_PER_K;
+        double effectiveness = 1.0 - effectivenessLoss;
+        return Math.max(MIN_BRAKE_EFFECTIVENESS, effectiveness);
     }
 
     private static boolean isRainingAtPosition(Level level, AbstractMinecart minecart) {
@@ -94,11 +137,11 @@ public class MinecartSpdLimHandler {
         Level level = leadMinecart.level();
 
         for (Entity entity : level.getEntitiesOfClass(AbstractMinecart.class,
-                leadMinecart.getBoundingBox().inflate(9.0))) {
+                leadMinecart.getBoundingBox().inflate(CONNECTED_MINECART_SEARCH_RADIUS))) {
 
             if (entity != leadMinecart && entity instanceof AbstractMinecart otherCart) {
                 double distance = leadMinecart.distanceTo(entity);
-                if (distance <= 9.0) {
+                if (distance <= CONNECTED_MINECART_SEARCH_RADIUS) {
                     if (entity instanceof Minecart) ++countPax;
                     else ++countFreight;
                 }

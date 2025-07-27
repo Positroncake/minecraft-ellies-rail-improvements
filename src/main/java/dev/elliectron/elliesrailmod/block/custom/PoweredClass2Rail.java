@@ -109,7 +109,7 @@ public class PoweredClass2Rail extends RailBlock {
                     Vec3 vv = cart.getDeltaMovement();
                     double spd = Math.sqrt(vv.x * vv.x + vv.z * vv.z);
                     if (spd < 0.01) cart.setDeltaMovement(0, 0, 0);
-                    else MinecartStoppingHandler.DecelerateMinecart(cart, true, false);
+                    else MinecartStoppingHandler.DecelerateMinecart(cart, true);
                 }
             }
         } else {

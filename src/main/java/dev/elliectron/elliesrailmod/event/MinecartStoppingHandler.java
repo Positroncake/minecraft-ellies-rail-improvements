@@ -19,25 +19,25 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 public class MinecartStoppingHandler {
 
     // Base deceleration rates
-    private static final double BASE_DECELERATION_RATE = -0.0800/20;
-    private static final double RAIN_DECELERATION_MULTIPLIER = 0.7; // 30% less deceleration in rain
-    private static final double ATTACHED_PAX_DECEL_FACTOR = 0.955; // Reduced deceleration per attached minecart (player)
-    private static final double ATTACHED_FREIGHT_DECEL_FACTOR = 0.930; // Reduced deceleration per attached minecart (chest/hopper/etc)
+    public static final double BASE_DECELERATION_RATE = -0.0800/20;
+    public static final double RAIN_DECELERATION_MULTIPLIER = 0.7; // 30% less deceleration in rain
+    public static final double ATTACHED_PAX_DECEL_FACTOR = 0.955; // Reduced deceleration per attached minecart (player)
+    public static final double ATTACHED_FREIGHT_DECEL_FACTOR = 0.930; // Reduced deceleration per attached minecart (chest/hopper/etc)
     private static final double MIN_SPEED = 0.01;
 
     // Brake thermals values
     private static final double ESTOP_DECEL_BONUS = 1.50;
-    private static final double DEFAULT_BRAKE_TEMP = 293.0; // Kelvin
+    public static final double DEFAULT_BRAKE_TEMP = 293.0; // Kelvin
     private static final double EMER_BRAKE_HEATING_RATE = 0.800; // K heating per tick when using emergency brakes
-    private static final double NORM_BRAKE_HEATING_RATE = 0.355; // K heating per tick when using normal brakes
-    private static final double BRAKE_COOLING_RATE = 0.04; // K cooling amount per tick when not braking
-    private static final double MAX_BRAKE_TEMP = 1000.0; // Kelvin - maximum overheating
-    private static final double BRAKE_EFFECTIVENESS_LOSS_PER_K = 0.0015; // 0.15% per Kelvin above default
-    private static final double MIN_BRAKE_EFFECTIVENESS = 0.60; // minimum 60% effectiveness
+    public static final double NORM_BRAKE_HEATING_RATE = 0.355; // K heating per tick when using normal brakes
+    public static final double BRAKE_COOLING_RATE = 0.04; // K cooling amount per tick when not braking
+    public static final double MAX_BRAKE_TEMP = 1000.0; // Kelvin - maximum overheating
+    public static final double BRAKE_EFFECTIVENESS_LOSS_PER_K = 0.0015; // 0.15% per Kelvin above default
+    public static final double MIN_BRAKE_EFFECTIVENESS = 0.60; // minimum 60% effectiveness
 
     // note that the mod does not support minecart linking yet and therefore
     // , you will have to use other methods, whether it is vanilla or additional mod(s)
-    private static final double ATTACHED_MINECART_SEARCH_RADIUS = 9.0;
+    public static final double CONNECTED_MINECART_SEARCH_RADIUS = 9.0;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Pre event) {
@@ -57,31 +57,28 @@ public class MinecartStoppingHandler {
         // Update brake temperature every tick
         updateBrakeTemperature(minecart, player);
 
-    //    System.out.println("SCANNING PLAYER HAND ITEM");
         // Apply braking based on signals
         if (isHoldingSignalStop(player)) {
-    //        System.out.println("STOP HELD");
             CompoundTag tag = minecart.getPersistentData();
             boolean isClass5Plus = tag.contains("spd");
             if (isClass5Plus) {
-                DecelerateMinecart(minecart, false, true);
+                DecelerateMinecart(minecart, false);
             } else {
                 Vec3 rawMvmnt = minecart.getDeltaMovement();
                 double spd = Math.sqrt(rawMvmnt.x* rawMvmnt.x + rawMvmnt.z* rawMvmnt.z);
                 if (spd < 0.01) minecart.setDeltaMovement(0, 0, 0);
-                else DecelerateMinecart(minecart, false, false);
+                else DecelerateMinecart(minecart, false);
             }
         } else if (isHoldingEstopSignal(player)) {
-    //        System.out.println("EMER STOP HELD");
             CompoundTag tag = minecart.getPersistentData();
             boolean isClass5Plus = tag.contains("spd");
             if (isClass5Plus) {
-                DecelerateMinecart(minecart, true, true);
+                DecelerateMinecart(minecart, true);
             } else {
                 Vec3 rawMvmnt = minecart.getDeltaMovement();
                 double spd = Math.sqrt(rawMvmnt.x* rawMvmnt.x + rawMvmnt.z* rawMvmnt.z);
                 if (spd < 0.01) minecart.setDeltaMovement(0, 0, 0);
-                else DecelerateMinecart(minecart, true, false);
+                else DecelerateMinecart(minecart, true);
             }
         }
     }
@@ -160,11 +157,9 @@ public class MinecartStoppingHandler {
         return mainHand.is(ModItems.SIGNAL_E_STOP.get()) || offHand.is(ModItems.SIGNAL_E_STOP.get());
     }
 
-    public static void DecelerateMinecart(AbstractMinecart minecart, boolean isEstop, boolean isClass5Plus) {
-    //    System.out.println("CALLED EBRAKE " + isEstop);
-        if (isClass5Plus) { // if the 'spd' NBT tag exists, that means the minecart is on a class 5 or higher track which uses custom speed/acceleration physics/logic
-            CompoundTag nbt = minecart.getPersistentData();
-       //     System.out.println("DECEL CLASS 5");
+    public static void DecelerateMinecart(AbstractMinecart minecart, boolean isEstop) {
+        CompoundTag nbt = minecart.getPersistentData();
+        if (nbt.contains("spd")) { // if the 'spd' NBT tag exists, that means the minecart is on a class 5 or higher track which uses custom speed/acceleration physics/logic
             double spd = nbt.getDouble("spd");
             if (spd < MIN_SPEED) {
                 nbt.putDouble("spd", 0.0);
@@ -175,9 +170,6 @@ public class MinecartStoppingHandler {
             double dynDecelRate = calcDynamicDecelRate(minecart, isEstop);
             dynDecelRate += spd;
             nbt.putDouble("spd", dynDecelRate);
-    //        double deceledSpd = spd + dynDecelRate;
-    //        System.out.println(dynDecelRate + " += > " + deceledSpd);
-    //        nbt.putDouble("spd", deceledSpd);
         } else { // if the 'spd' NBT tag does not exist, that means the minecart is on a class 4 or lower track which uses vanilla speed/acceleration physics/logic
             Vec3 motion = minecart.getDeltaMovement();
             if (20 * Math.sqrt(motion.x * motion.x + motion.z * motion.z) < MIN_SPEED) {
@@ -220,10 +212,10 @@ public class MinecartStoppingHandler {
         int countFreight = 0;
         Level level = leadMinecart.level();
 
-        for (Entity entity : level.getEntitiesOfClass(AbstractMinecart.class, leadMinecart.getBoundingBox().inflate(ATTACHED_MINECART_SEARCH_RADIUS))) {
+        for (Entity entity : level.getEntitiesOfClass(AbstractMinecart.class, leadMinecart.getBoundingBox().inflate(CONNECTED_MINECART_SEARCH_RADIUS))) {
             if (entity != leadMinecart && entity instanceof AbstractMinecart otherCart) {
                 double distance = leadMinecart.distanceTo(entity);
-                if (distance <= ATTACHED_MINECART_SEARCH_RADIUS) {
+                if (distance <= CONNECTED_MINECART_SEARCH_RADIUS) {
                     if (entity instanceof Minecart) ++countPax;
                     else ++countFreight;
                 }
