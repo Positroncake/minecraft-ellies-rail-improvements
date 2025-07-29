@@ -21,10 +21,10 @@ import static dev.elliectron.elliesrailmod.event.MinecartStoppingHandler.*;
 public class MinecartSpdLimHandler {
 
     // Based on CROR signal aspect speed limits, converted from mph to m/s
-    private static final double SPEED_LIMITED = 20.1 / 20.0;
-    private static final double SPEED_MEDIUM = 13.4 / 20.0;
-    private static final double SPEED_DIVERGING = 11.2 / 20.0;
-    private static final double SPEED_RESTRICTED = 6.7 / 20.0;
+    private static final float SPEED_LIMITED = 20.1f / 20.0f;
+    private static final float SPEED_MEDIUM = 13.4f / 20.0f;
+    private static final float SPEED_DIVERGING = 11.2f / 20.0f;
+    private static final float SPEED_RESTRICTED = 6.7f / 20.0f;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Pre event) {
@@ -40,13 +40,17 @@ public class MinecartSpdLimHandler {
             }
         if (player == null) return;
 
-        double speedLimit = getSpeedLimit(player);
-        if (speedLimit > 0) limitMinecartSpeed(minecart, speedLimit);
+        float speedLimit = getSpdLimFromPlayer(player);
+        if (speedLimit == -1f) setSpdLimInNbt(minecart, 0f, true); // if player holding override signal, remove previous speed limit
+        else if (speedLimit > 0) setSpdLimInNbt(minecart, speedLimit, false); // if player has a new speed limit, update the NBT data to match
+        applySpdLimFromNbt(minecart);
     }
 
-    private static double getSpeedLimit(Player player) {
+    private static float getSpdLimFromPlayer(Player player) {
         ItemStack mainHand = player.getMainHandItem();
         ItemStack offHand = player.getOffhandItem();
+
+        if (mainHand.is(ModItems.SIGNAL_OVERRIDE.get()) || offHand.is(ModItems.SIGNAL_OVERRIDE.get())) return -1f;
 
         if (mainHand.is(ModItems.SIGNAL_SPEED_LIMITED.get()) || offHand.is(ModItems.SIGNAL_SPEED_LIMITED.get())) return SPEED_LIMITED;
         if (mainHand.is(ModItems.SIGNAL_SPEED_MEDIUM.get()) || offHand.is(ModItems.SIGNAL_SPEED_MEDIUM.get())) return SPEED_MEDIUM;
@@ -56,8 +60,20 @@ public class MinecartSpdLimHandler {
         return 0; // No speed limit
     }
 
-    private static void limitMinecartSpeed(AbstractMinecart minecart, double maxSpeed) {
+    private static void setSpdLimInNbt(AbstractMinecart minecart, float speedLimit, boolean remove) {
         CompoundTag nbt = minecart.getPersistentData();
+        if (remove) nbt.remove("signal_spdlim");
+        else nbt.putFloat("signal_spdlim", speedLimit);
+    }
+
+    private static void applySpdLimFromNbt(AbstractMinecart minecart) {
+        CompoundTag nbt = minecart.getPersistentData();
+
+        // check if minecart max speed exists, and set it as the max speed if exists
+        if (!nbt.contains("signal_spdlim")) return;
+        double maxSpeed = nbt.getFloat("signal_spdlim");
+
+        // check if this is a class 5+ rail or a class 4- rail, and apply the respective deceleration algorithm
         if (nbt.contains("spd")) {
             double spd = nbt.getDouble("spd");
             if (spd <= maxSpeed) return;
@@ -95,6 +111,8 @@ public class MinecartSpdLimHandler {
         currentTemp = Math.min(MAX_BRAKE_TEMP, currentTemp + NORM_BRAKE_HEATING_RATE * speedMultiplier);
 
         nbt.putDouble("brake_temperature", currentTemp);
+
+        System.out.println(nbt.getDouble("brake_temperature") + "");
     }
 
     private static double calcDynamicDecelRate(AbstractMinecart minecart) {

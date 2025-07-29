@@ -57,10 +57,31 @@ public class MinecartStoppingHandler {
         // Update brake temperature every tick
         updateBrakeTemperature(minecart, player);
 
-        // Apply braking based on signals
-        if (isHoldingSignalStop(player)) {
-            CompoundTag tag = minecart.getPersistentData();
-            boolean isClass5Plus = tag.contains("spd");
+        // Check whether the player is holding a stopping signal aspect, then store in NBT if so
+        ItemStack mainHand = player.getMainHandItem();
+        ItemStack offHand = player.getOffhandItem();
+        CompoundTag nbt = minecart.getPersistentData();
+        if (mainHand.is(ModItems.SIGNAL_E_STOP.get()) || offHand.is(ModItems.SIGNAL_E_STOP.get())) { // holding Estop signal
+            nbt.putInt("signal_aspect", -2);
+        } else if (mainHand.is(ModItems.SIGNAL_STOP.get()) || offHand.is(ModItems.SIGNAL_STOP.get())) { // holding stop signal
+            nbt.putInt("signal_aspect", -1);
+        } else if (nbt.contains("signal_aspect")) { // not holding any stopping signal **anymore**
+            int signalAspect = nbt.getInt("signal_aspect");
+            if ((signalAspect == -2) && (mainHand.is(ModItems.SIGNAL_OVERRIDE.get()) || offHand.is(ModItems.SIGNAL_OVERRIDE.get()))) { // only remove Estop if override is held
+                nbt.remove("signal_aspect");
+            } else if (signalAspect == -1) { // remove stop as soon as the item is no longer held
+                nbt.remove("signal_aspect");
+            }
+        }
+
+        // Check if there is currently any signal aspect, return if none
+        int signalAspect;
+        if (nbt.contains("signal_aspect")) signalAspect = nbt.getInt("signal_aspect");
+        else return;
+
+        // Apply braking based on signal aspect stored in NBT data
+        if (signalAspect == -1) {
+            boolean isClass5Plus = nbt.contains("spd");
             if (isClass5Plus) {
                 DecelerateMinecart(minecart, false);
             } else {
@@ -69,9 +90,8 @@ public class MinecartStoppingHandler {
                 if (spd < 0.01) minecart.setDeltaMovement(0, 0, 0);
                 else DecelerateMinecart(minecart, false);
             }
-        } else if (isHoldingEstopSignal(player)) {
-            CompoundTag tag = minecart.getPersistentData();
-            boolean isClass5Plus = tag.contains("spd");
+        } else if (signalAspect == -2) {
+            boolean isClass5Plus = nbt.contains("spd");
             if (isClass5Plus) {
                 DecelerateMinecart(minecart, true);
             } else {
@@ -92,8 +112,11 @@ public class MinecartStoppingHandler {
             currentTemp = DEFAULT_BRAKE_TEMP;
         }
 
-        boolean isEbraking = isHoldingEstopSignal(player);
-        boolean isNbraking = isHoldingSignalStop(player);
+//        boolean isEbraking = isHoldingEstopSignal(player);
+//        boolean isNbraking = isHoldingSignalStop(player);
+        int signalAspect = nbt.getInt("signal_aspect");
+        boolean isEbraking = signalAspect == -2;
+        boolean isNbraking = signalAspect == -1;
         Vec3 vv = minecart.getDeltaMovement();
         double spd = Math.sqrt(vv.x*vv.x + vv.z*vv.z);
 
@@ -145,18 +168,6 @@ public class MinecartStoppingHandler {
                         + " -" + ((currentTemp-DEFAULT_BRAKE_TEMP) * BRAKE_EFFECTIVENESS_LOSS_PER_K * 100) + "% effectiveness"));
     }
 
-    private static boolean isHoldingSignalStop(Player player) {
-        ItemStack mainHand = player.getMainHandItem();
-        ItemStack offHand = player.getOffhandItem();
-        return mainHand.is(ModItems.SIGNAL_STOP.get()) || offHand.is(ModItems.SIGNAL_STOP.get());
-    }
-
-    private static boolean isHoldingEstopSignal(Player player) {
-        ItemStack mainHand = player.getMainHandItem();
-        ItemStack offHand = player.getOffhandItem();
-        return mainHand.is(ModItems.SIGNAL_E_STOP.get()) || offHand.is(ModItems.SIGNAL_E_STOP.get());
-    }
-
     public static void DecelerateMinecart(AbstractMinecart minecart, boolean isEstop) {
         CompoundTag nbt = minecart.getPersistentData();
         if (nbt.contains("spd")) { // if the 'spd' NBT tag exists, that means the minecart is on a class 5 or higher track which uses custom speed/acceleration physics/logic
@@ -178,7 +189,7 @@ public class MinecartStoppingHandler {
             }
 
             double dynamicDecelerationRate = calcDynamicDecelRate(minecart, isEstop);
-            Vec3 decelAmount = calcDecelAmount(motion.x, motion.y, motion.z, dynamicDecelerationRate);
+            Vec3 decelAmount = calcDecelVector(motion.x, motion.y, motion.z, dynamicDecelerationRate);
             minecart.setDeltaMovement(motion.add(decelAmount));
         }
     }
@@ -225,7 +236,7 @@ public class MinecartStoppingHandler {
         return new int[] { countPax, countFreight } ;
     }
 
-    private static Vec3 calcDecelAmount(double x, double y, double z, double decelerationRate) {
+    private static Vec3 calcDecelVector(double x, double y, double z, double decelerationRate) {
         double xAccel = 0, zAccel = 0;
 
         if (x < 0) xAccel = -decelerationRate;

@@ -29,7 +29,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.POWERED_RAIL_CLASS_4.get())
                 .add(ModBlocks.RAIL_CLASS_5.get())
                 .add(ModBlocks.POWERED_RAIL_CLASS_5.get())
-                .add(ModBlocks.POWERED_RAIL_CLASS_5A.get());
+                .add(ModBlocks.INTERSECTION_CLASS_4.get());
 
         // Add our rail to the pickaxe mineable tag
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -43,7 +43,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.POWERED_RAIL_CLASS_4.get())
                 .add(ModBlocks.RAIL_CLASS_5.get())
                 .add(ModBlocks.POWERED_RAIL_CLASS_5.get())
-                .add(ModBlocks.POWERED_RAIL_CLASS_5A.get());
+                .add(ModBlocks.INTERSECTION_CLASS_4.get());
 
         // Add our rail to prevent mob spawning inside
         this.tag(BlockTags.PREVENT_MOB_SPAWNING_INSIDE)
@@ -57,6 +57,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.POWERED_RAIL_CLASS_4.get())
                 .add(ModBlocks.RAIL_CLASS_5.get())
                 .add(ModBlocks.POWERED_RAIL_CLASS_5.get())
-                .add(ModBlocks.POWERED_RAIL_CLASS_5A.get());
+                .add(ModBlocks.INTERSECTION_CLASS_4.get());
     }
 }

@@ -6,6 +6,7 @@ public class SpeedLimits {
     //TODO: figure out how to bypass the aforementioned speed limit
     public static final float[] DRY_PAX_LIMITS_MPH = new float[] { 12.5f, 30f, 50f, 65f, 100f };
     public static final float[] DRY_FREIGHT_LIMITS_MPH = new float[] { 8f, 20f, 35f, 50f, 65f };
+    public static final float ADVANCE_SPEED_MPH = 8f;
     public static final float WET_TRACK_PAX_PENALTY = 0.70f; // amount to reduce (multiply) speed limit by when tracks are wet
     public static final float WET_TRACK_FREIGHT_PENALTY = 0.67f;
 

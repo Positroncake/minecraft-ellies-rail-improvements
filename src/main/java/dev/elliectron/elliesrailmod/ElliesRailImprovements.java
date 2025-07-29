@@ -55,7 +55,7 @@ public class ElliesRailImprovements {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.POWERED_RAIL_CLASS_4.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAIL_CLASS_5.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.POWERED_RAIL_CLASS_5.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(ModBlocks.POWERED_RAIL_CLASS_5A.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.INTERSECTION_CLASS_4.get(), RenderType.cutout());
         });
     }
 
@@ -63,9 +63,10 @@ public class ElliesRailImprovements {
         if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(ModItems.SIGNAL_PROCEED);
             event.accept(ModItems.SIGNAL_OVERRIDE);
+            event.accept(ModItems.SIGNAL_SWITCH_ALTERNATE);
+            event.accept(ModItems.SIGNAL_ADVANCE);
             event.accept(ModItems.SIGNAL_STOP);
             event.accept(ModItems.SIGNAL_E_STOP);
-            event.accept(ModItems.SIGNAL_SWITCH_ALTERNATE);
             event.accept(ModItems.SIGNAL_SPEED_LIMITED);
             event.accept(ModItems.SIGNAL_SPEED_MEDIUM);
             event.accept(ModItems.SIGNAL_SPEED_DIVERGING);
@@ -80,7 +81,7 @@ public class ElliesRailImprovements {
             event.accept(ModBlocks.POWERED_RAIL_CLASS_4);
             event.accept(ModBlocks.RAIL_CLASS_5);
             event.accept(ModBlocks.POWERED_RAIL_CLASS_5);
-            event.accept(ModBlocks.POWERED_RAIL_CLASS_5A);
+            event.accept(ModBlocks.INTERSECTION_CLASS_4);
         }
     }
 

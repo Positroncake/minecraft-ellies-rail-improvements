@@ -6,9 +6,7 @@ import net.minecraft.world.phys.Vec3;
 public class Acceleration {
     public static final double MAX_ACCEL_600V = 0.0330;
     public static final double MAX_ACCEL_750V = 0.0370;
-    public static final double MAX_ACCEL_25KV = 0.0230;
-    public static final double MAX_ACCEL_25KV_FAST = 0.0250;
-    public static final double MAX_ACCEL_750V_UNDERWATER = 0.0130;
+    public static final double MAX_ACCEL_25KV = 0.0200;
 
     // for tweaking acceleration/deceleration values as you see fit
     public static double AccelMultiplier = 1;
@@ -16,27 +14,27 @@ public class Acceleration {
     // vvMpt = velocity vector, metres per tick
     // speedMps = speed, metres per second
     // accelMpt = amount to accelerate this tick, metres per tick
-    private static final double var601 = 1.5, var602 = 5.0;
+    private static final double var601 = 3.0, var602 = 7.5;
     public static Vec3 Calc600VAccelMpt(Vec3 vvMpt, RailShape railShape) {
         double speedMps = 20*Math.sqrt(vvMpt.x * vvMpt.x + vvMpt.z * vvMpt.z);
         double accelMpt = 0.0;
         if (speedMps < var601) {
-            accelMpt = 0.012 + 0.014*speedMps;
+            accelMpt = 0.010 + 0.00766667*speedMps;
         } else if (var601 <= speedMps && speedMps < var602) {
             accelMpt = MAX_ACCEL_600V;
         } else if (var602 <= speedMps) {
-            accelMpt = MAX_ACCEL_600V*Math.pow(var602 /speedMps, 0.650);
+            accelMpt = MAX_ACCEL_600V*Math.pow(var602 /speedMps, 0.600);
         }
         int slope = calcSlope(vvMpt.x, vvMpt.z, railShape);
         return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope);
     }
 
-    private static final double var751 = 1.5, var752 = 10.0;
+    private static final double var751 = 4.0, var752 = 10.0;
     public static Vec3 Calc750VAccelMpt(Vec3 vvMpt, RailShape railShape) {
         double speedMps = 20*Math.sqrt(vvMpt.x * vvMpt.x + vvMpt.z * vvMpt.z);
         double accelMpt = 0.0;
         if (speedMps < var751) {
-            accelMpt = 0.013 + 0.016*speedMps;
+            accelMpt = 0.010 + 0.00675*speedMps;
         } else if (var751 <= speedMps && speedMps < var752) {
             accelMpt = MAX_ACCEL_750V;
         } else if (var752 <= speedMps) {
@@ -50,7 +48,7 @@ public class Acceleration {
     public static double Calc25kVAccelMagnitude(double spdMps) {
         double accelMpt = 0.0;
         if (spdMps < var25k1) {
-            accelMpt = 0.0070 + 0.0040*spdMps;
+            accelMpt = 0.0070 + 0.00325*spdMps;
         } else if (var25k1 <= spdMps && spdMps < var25k2) {
             accelMpt = MAX_ACCEL_25KV;
         } else if (var25k2 <= spdMps) {
@@ -58,21 +56,6 @@ public class Acceleration {
         }
         accelMpt *= AccelMultiplier;
         return accelMpt/10.0;
-    }
-
-    private static final double var750uw1 = 2.0, var750uw2 = 5.0;
-    public static Vec3 Calc750VUnderwaterAccelMpt(Vec3 vvMpt, RailShape railShape) {
-        double speedMps = 20*Math.sqrt(vvMpt.x * vvMpt.x + vvMpt.z * vvMpt.z);
-        double accelMpt = 0.0;
-        if (speedMps < var750uw1) {
-            accelMpt = 0.003 + 0.005*speedMps;
-        } else if (var750uw1 <= speedMps && speedMps < var750uw2) {
-            accelMpt = MAX_ACCEL_750V_UNDERWATER;
-        } else if (var750uw2 <= speedMps) {
-            accelMpt = MAX_ACCEL_750V_UNDERWATER*Math.pow(var750uw2/speedMps, 10.0);
-        }
-        int slope = calcSlope(vvMpt.x, vvMpt.z, railShape);
-        return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope);
     }
 
     private static int calcSlope(double x, double z, RailShape railShape) {
@@ -102,20 +85,20 @@ public class Acceleration {
         if (Math.abs(x) > 0.01) {
             if (x > 0) {
                 xAccelMpt = accelMpt + bonusAccel;
-                System.out.println("speed " + 20*x + " m/s, +x accel " + 20* xAccelMpt + " m/s");
+        //        System.out.println("speed " + 20*x + " m/s, +x accel " + 20* xAccelMpt + " m/s");
             }
             else if (x < 0) {
                 xAccelMpt = -1 * (accelMpt + bonusAccel);
-                System.out.println("speed " + -20*x + " m/s, -x accel " + -20* xAccelMpt + " m/s");
+        //        System.out.println("speed " + -20*x + " m/s, -x accel " + -20* xAccelMpt + " m/s");
             }
         }
         if (Math.abs(z) > 0.01) {
             if (z > 0) {
                 zAccelMpt = accelMpt + bonusAccel;
-                System.out.println("speed " + 20*z + " m/s, +z accel " + 20* zAccelMpt + " m/s");
+        //        System.out.println("speed " + 20*z + " m/s, +z accel " + 20* zAccelMpt + " m/s");
             } else if (z < 0) {
                 zAccelMpt = -1 * (accelMpt + bonusAccel);
-                System.out.println("speed " + -20*z + " m/s, -z accel " + -20* zAccelMpt + " m/s");
+        //        System.out.println("speed " + -20*z + " m/s, -z accel " + -20* zAccelMpt + " m/s");
             }
         }
         return new Vec3(xAccelMpt /20, y, zAccelMpt /20);

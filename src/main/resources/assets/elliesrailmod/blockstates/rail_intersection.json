@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "shape=north_south": {"model": "elliesrailmod:block/rail_intersection"},
+    "shape=east_west": {"model": "elliesrailmod:block/rail_intersection"},
+    "shape=ascending_east": {"model": "elliesrailmod:block/rail_intersection"},
+    "shape=ascending_west": {"model": "elliesrailmod:block/rail_intersection"},
+    "shape=ascending_north": {"model": "elliesrailmod:block/rail_intersection"},
+    "shape=ascending_south": {"model": "elliesrailmod:block/rail_intersection"},
+    "shape=south_east": {"model": "elliesrailmod:block/rail_intersection"},
+    "shape=south_west": {"model": "elliesrailmod:block/rail_intersection"},
+    "shape=north_west": {"model": "elliesrailmod:block/rail_intersection"},
+    "shape=north_east": {"model": "elliesrailmod:block/rail_intersection"}
+  }
+}
