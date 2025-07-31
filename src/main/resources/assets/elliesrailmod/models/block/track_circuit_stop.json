@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/rail_flat",
+  "textures": {
+    "rail": "elliesrailmod:block/track_circuit_stop"
+  }
+}

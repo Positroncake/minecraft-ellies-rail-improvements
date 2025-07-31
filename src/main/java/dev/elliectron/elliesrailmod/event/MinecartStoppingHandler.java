@@ -67,9 +67,10 @@ public class MinecartStoppingHandler {
             nbt.putInt("signal_aspect", -1);
         } else if (nbt.contains("signal_aspect")) { // not holding any stopping signal **anymore**
             int signalAspect = nbt.getInt("signal_aspect");
-            if ((signalAspect == -2) && (mainHand.is(ModItems.SIGNAL_OVERRIDE.get()) || offHand.is(ModItems.SIGNAL_OVERRIDE.get()))) { // only remove Estop if override is held
+            if ((signalAspect == -2 || signalAspect == -3)
+                    && (mainHand.is(ModItems.SIGNAL_OVERRIDE.get()) || offHand.is(ModItems.SIGNAL_OVERRIDE.get()))) { // only remove Estop/SignalStop if override is held
                 nbt.remove("signal_aspect");
-            } else if (signalAspect == -1) { // remove stop as soon as the item is no longer held
+            } else if (signalAspect == -1) { // otherwise, remove normal stop as soon as the signal is no longer held
                 nbt.remove("signal_aspect");
             }
         }
@@ -80,7 +81,7 @@ public class MinecartStoppingHandler {
         else return;
 
         // Apply braking based on signal aspect stored in NBT data
-        if (signalAspect == -1) {
+        if (signalAspect == -1 || signalAspect == -3) { // manual or signal braking
             boolean isClass5Plus = nbt.contains("spd");
             if (isClass5Plus) {
                 DecelerateMinecart(minecart, false);
@@ -90,7 +91,7 @@ public class MinecartStoppingHandler {
                 if (spd < 0.01) minecart.setDeltaMovement(0, 0, 0);
                 else DecelerateMinecart(minecart, false);
             }
-        } else if (signalAspect == -2) {
+        } else if (signalAspect == -2) { // emergency braking
             boolean isClass5Plus = nbt.contains("spd");
             if (isClass5Plus) {
                 DecelerateMinecart(minecart, true);
@@ -112,8 +113,6 @@ public class MinecartStoppingHandler {
             currentTemp = DEFAULT_BRAKE_TEMP;
         }
 
-//        boolean isEbraking = isHoldingEstopSignal(player);
-//        boolean isNbraking = isHoldingSignalStop(player);
         int signalAspect = nbt.getInt("signal_aspect");
         boolean isEbraking = signalAspect == -2;
         boolean isNbraking = signalAspect == -1;

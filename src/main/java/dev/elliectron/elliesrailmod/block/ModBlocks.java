@@ -44,6 +44,8 @@ public class ModBlocks {
 
     public static final DeferredBlock<Class4Intersection> INTERSECTION_CLASS_4 = registerBlock("rail_intersection",
             () -> new Class4Intersection(BlockBehaviour.Properties.ofFullCopy(Blocks.RAIL)));
+    public static final DeferredBlock<TrackCircuitSignal> TRACK_CIRCUIT_SIGNAL = registerBlock("track_circuit_signal",
+            () -> new TrackCircuitSignal(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

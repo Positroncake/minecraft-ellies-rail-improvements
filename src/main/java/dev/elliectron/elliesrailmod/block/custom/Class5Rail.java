@@ -31,8 +31,8 @@ public class Class5Rail extends RailBlock {
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof AbstractMinecart cart) {
             CompoundTag nbt = cart.getPersistentData();
-            double a = 0.0;
-            double s = 0.0;
+            double debugAccel = 0.0;
+            double debugSpd = 0.0;
 
             // note: vv = velocity vector
             // set/reset direction of minecart's speed
@@ -60,41 +60,22 @@ public class Class5Rail extends RailBlock {
             }
        //     printDebug(cart, "SPD NBT DATA " + nbt.getDouble("spd"));
 
-            boolean holdingStoppingSignal = holdingStoppingSignal(cart);
-            if (!holdingStoppingSignal) {
-                // coast on unpowered track unless decelerating
-                // coasting involves slowing down slightly due to air resistance/friction and leaving the velocity otherwise unchanged
-                int vv = nbt.getInt("vv");
-                double spd = nbt.getDouble("spd");
-                spd = Math.max(spd-NATURAL_FRICTION_DECEL, 0);
-                nbt.putDouble("spd", spd);
-                if (vv == 1) {
-                    cart.setPos(cart.position().add(spd/4.0, 0, 0));
-                } else if (vv == -1) {
-                    cart.setPos(cart.position().add(-spd/4.0, 0, 0));
-                } else if (vv == 2) {
-                    cart.setPos(cart.position().add(0, 0, spd/4.0));
-                } else if (vv == -2) {
-                    cart.setPos(cart.position().add(0, 0, -spd/4.0));
-                }
-            } else {
-                // deceleration is handled in MinecartStoppingHandler.java, where the 'spd' NBT tag has its data updated
-                // here, we just need to let the minecart keep moving at the constantly-decelerating 'spd' NBT value
-                CompoundTag tag = cart.getPersistentData();
-                var spdMpt = tag.getDouble("spd");
-                var vv = tag.getInt("vv");
-                if (vv == 1) {
-                    cart.setPos(cart.position().add(spdMpt/4.0, 0, 0));
-                } else if (vv == -1) {
-                    cart.setPos(cart.position().add(-spdMpt/4.0, 0, 0));
-                } else if (vv == 2) {
-                    cart.setPos(cart.position().add(0, 0, spdMpt/4.0));
-                } else if (vv == -2) {
-                    cart.setPos(cart.position().add(0, 0, -spdMpt/4.0));
-                }
+            CompoundTag tag = cart.getPersistentData();
+            var vv = tag.getInt("vv");
+            var spdMpt = tag.getDouble("spd");
+            spdMpt = Math.max(spdMpt-NATURAL_FRICTION_DECEL, 0);
+            nbt.putDouble("spd", spdMpt);
+            if (vv == 1) {
+                cart.setPos(cart.position().add(spdMpt/4.0, 0, 0));
+            } else if (vv == -1) {
+                cart.setPos(cart.position().add(-spdMpt/4.0, 0, 0));
+            } else if (vv == 2) {
+                cart.setPos(cart.position().add(0, 0, spdMpt/4.0));
+            } else if (vv == -2) {
+                cart.setPos(cart.position().add(0, 0, -spdMpt/4.0));
             }
 
-            printDebug(cart, String.format("%06.3f", nbt.getDouble("spd")*20) + " [" + nbt.getInt("vv") + "] " + String.format("%06.3f", s) + " + " + String.format("%.5f", a));
+            printDebug(cart, String.format("%06.3f", nbt.getDouble("spd")*20) + " [" + nbt.getInt("vv") + "] " + String.format("%06.3f", debugSpd) + " + " + String.format("%.5f", debugAccel));
         } else {
             super.entityInside(state, level, pos, entity);
         }
@@ -108,26 +89,9 @@ public class Class5Rail extends RailBlock {
         }
     }
 
-    private boolean holdingStoppingSignal(AbstractMinecart cart) {
-        ResourceLocation stopSignalId = ResourceLocation.parse("elliesrailmod:signal_stop");
-        Item stopSignalItem = BuiltInRegistries.ITEM.get(stopSignalId);
-        ResourceLocation eStopSignalId = ResourceLocation.parse("elliesrailmod:signal_e_stop");
-        Item eStopSignalItem = BuiltInRegistries.ITEM.get(eStopSignalId);
-
-        for (var passenger : cart.getPassengers()) {
-            if (passenger instanceof Player player) {
-                ItemStack mainHand = player.getMainHandItem();
-                ItemStack offHand = player.getOffhandItem();
-                if (mainHand.is(stopSignalItem) || offHand.is(stopSignalItem)) return true;
-                if (mainHand.is(eStopSignalItem) || offHand.is(eStopSignalItem)) return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-        float[] spdLimsMps = SpeedLimits.GetSpdLimsMps(TRACK_CLASS);
+        float[] spdLimsMps = Speeds.GetSpdLimsMps(TRACK_CLASS);
 
         if (level.isRaining()) {
             if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper

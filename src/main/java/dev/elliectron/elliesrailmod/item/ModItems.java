@@ -13,7 +13,6 @@ public class ModItems {
     public static final DeferredItem<Item> SIGNAL_PROCEED = ITEMS.register("signal_proceed", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> SIGNAL_OVERRIDE = ITEMS.register("signal_override", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> SIGNAL_SWITCH_ALTERNATE = ITEMS.register("signal_switch_alternate", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final DeferredItem<Item> SIGNAL_ADVANCE = ITEMS.register("signal_advance", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> SIGNAL_STOP = ITEMS.register("signal_stop", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> SIGNAL_E_STOP = ITEMS.register("signal_e_stop", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> SIGNAL_SPEED_LIMITED = ITEMS.register("signal_speed_limited", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));

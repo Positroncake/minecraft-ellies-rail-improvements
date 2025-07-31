@@ -19,7 +19,7 @@ public class Class4Rail extends RailBlock {
 
     @Override
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-        float[] spdLimsMps = SpeedLimits.GetSpdLimsMps(TRACK_CLASS);
+        float[] spdLimsMps = Speeds.GetSpdLimsMps(TRACK_CLASS);
 
         if (level.isRaining()) {
             if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper

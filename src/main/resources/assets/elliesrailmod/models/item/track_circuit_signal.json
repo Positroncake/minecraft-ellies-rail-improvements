@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "elliesrailmod:item/signal_advance"
+    "layer0": "elliesrailmod:block/track_circuit_stop"
   }
 }

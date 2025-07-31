@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/rail_raised_ne",
+  "textures": {
+    "rail": "elliesrailmod:block/track_circuit_estop"
+  }
+}

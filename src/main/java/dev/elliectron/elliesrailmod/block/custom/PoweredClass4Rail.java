@@ -91,7 +91,6 @@ public class PoweredClass4Rail extends RailBlock {
             boolean hasStoppingSignal = holdingStoppingSignal(cart);
             boolean hasProceedSignal = holdingSignalById(cart, "elliesrailmod:signal_proceed");
             boolean hasOverrideSignal = holdingSignalById(cart, "elliesrailmod:signal_override");
-            boolean hasAdvanceSignal = holdingSignalById(cart, "elliesrailmod:signal_advance");
 
             // check to see the minecart came from a class 5+ rail, which is signified by the presence of a 'spd' NBT tag
             // , as class 4- rails do not rely on the custom speed system
@@ -144,18 +143,6 @@ public class PoweredClass4Rail extends RailBlock {
                         cart.setDeltaMovement(motionMpt.add(accelAmountT));
                     }
                 }
-                // power available + advance signal held
-                // => accelerate to max advance speed, ignoring all other restrictions
-                else if (isPowered && hasAdvanceSignal) {
-                    Vec3 motionMpt = cart.getDeltaMovement();
-                    float advSpdLim = SpeedLimits.ADVANCE_SPEED_MPH/2.237f/20f;
-
-                    double currSpd = Math.sqrt(motionMpt.x * motionMpt.x + motionMpt.z * motionMpt.z);
-                    if (currSpd <= advSpdLim) {
-                        Vec3 accelAmountT = Acceleration.Calc750VAccelMpt(motionMpt, getRailShape(state));
-                        cart.setDeltaMovement(motionMpt.add(accelAmountT));
-                    }
-                }
                 // no power and no override => treat as danger (red) signal aspect and trigger Estop
                 else if (!isPowered && !hasOverrideSignal) {}
             }
@@ -171,7 +158,7 @@ public class PoweredClass4Rail extends RailBlock {
 
     @Override
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-        float[] spdLimsMps = SpeedLimits.GetSpdLimsMps(TRACK_CLASS);
+        float[] spdLimsMps = Speeds.GetSpdLimsMps(TRACK_CLASS);
 
         if (level.isRaining()) {
             if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper
