@@ -84,6 +84,7 @@ public class TrackCircuitSignal extends DetectorRailBlock {
 
     private int sigStrengthToSigType(int signalStrength) {
         if (signalStrength > 4) return 4;
+        // 0 = stop
         // 1 = Estop
         // 2 = normal stop
         // 3 = switch alignment to alternate

@@ -21,10 +21,10 @@ import static dev.elliectron.elliesrailmod.event.MinecartStoppingHandler.*;
 public class MinecartSpdLimHandler {
 
     // Based on CROR signal aspect speed limits, converted from mph to m/s
-    private static final float SPEED_LIMITED = 20.1f / 20.0f;
-    private static final float SPEED_MEDIUM = 13.4f / 20.0f;
-    private static final float SPEED_DIVERGING = 11.2f / 20.0f;
-    private static final float SPEED_RESTRICTED = 6.7f / 20.0f;
+    public static final float SPEED_LIMITED_MPT = 20.1f / 20.0f;
+    public static final float SPEED_MEDIUM_MPT = 13.4f / 20.0f;
+    public static final float SPEED_DIVERGING_MPT = 11.2f / 20.0f;
+    public static final float SPEED_RESTRICTED_MPT = 6.7f / 20.0f;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Pre event) {
@@ -40,9 +40,9 @@ public class MinecartSpdLimHandler {
             }
         if (player == null) return;
 
-        float speedLimit = getSpdLimFromPlayer(player);
-        if (speedLimit == -1f) setSpdLimInNbt(minecart, 0f, true); // if player holding override signal, remove previous speed limit
-        else if (speedLimit > 0) setSpdLimInNbt(minecart, speedLimit, false); // if player has a new speed limit, update the NBT data to match
+        float speedLimitMpt = getSpdLimFromPlayer(player);
+        if (speedLimitMpt == -1f) setSpdLimInNbt(minecart, 0f, true); // if player holding override signal, remove previous speed limit
+        else if (speedLimitMpt > 0) setSpdLimInNbt(minecart, speedLimitMpt, false); // if player has a new speed limit, update the NBT data to match
         applySpdLimFromNbt(minecart);
     }
 
@@ -52,18 +52,18 @@ public class MinecartSpdLimHandler {
 
         if (mainHand.is(ModItems.SIGNAL_OVERRIDE.get()) || offHand.is(ModItems.SIGNAL_OVERRIDE.get())) return -1f;
 
-        if (mainHand.is(ModItems.SIGNAL_SPEED_LIMITED.get()) || offHand.is(ModItems.SIGNAL_SPEED_LIMITED.get())) return SPEED_LIMITED;
-        if (mainHand.is(ModItems.SIGNAL_SPEED_MEDIUM.get()) || offHand.is(ModItems.SIGNAL_SPEED_MEDIUM.get())) return SPEED_MEDIUM;
-        if (mainHand.is(ModItems.SIGNAL_SPEED_DIVERGING.get()) || offHand.is(ModItems.SIGNAL_SPEED_DIVERGING.get())) return SPEED_DIVERGING;
-        if (mainHand.is(ModItems.SIGNAL_SPEED_RESTRICTED.get()) || offHand.is(ModItems.SIGNAL_SPEED_RESTRICTED.get())) return SPEED_RESTRICTED;
+        if (mainHand.is(ModItems.SIGNAL_SPEED_LIMITED.get()) || offHand.is(ModItems.SIGNAL_SPEED_LIMITED.get())) return SPEED_LIMITED_MPT;
+        if (mainHand.is(ModItems.SIGNAL_SPEED_MEDIUM.get()) || offHand.is(ModItems.SIGNAL_SPEED_MEDIUM.get())) return SPEED_MEDIUM_MPT;
+        if (mainHand.is(ModItems.SIGNAL_SPEED_DIVERGING.get()) || offHand.is(ModItems.SIGNAL_SPEED_DIVERGING.get())) return SPEED_DIVERGING_MPT;
+        if (mainHand.is(ModItems.SIGNAL_SPEED_RESTRICTED.get()) || offHand.is(ModItems.SIGNAL_SPEED_RESTRICTED.get())) return SPEED_RESTRICTED_MPT;
 
         return 0; // No speed limit
     }
 
-    private static void setSpdLimInNbt(AbstractMinecart minecart, float speedLimit, boolean remove) {
+    private static void setSpdLimInNbt(AbstractMinecart minecart, float speedLimitMpt, boolean remove) {
         CompoundTag nbt = minecart.getPersistentData();
         if (remove) nbt.remove("signal_spdlim");
-        else nbt.putFloat("signal_spdlim", speedLimit);
+        else nbt.putFloat("signal_spdlim", speedLimitMpt);
     }
 
     private static void applySpdLimFromNbt(AbstractMinecart minecart) {
