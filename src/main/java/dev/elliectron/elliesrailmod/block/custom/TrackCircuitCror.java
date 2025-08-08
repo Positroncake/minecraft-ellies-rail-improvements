@@ -83,13 +83,12 @@ public class TrackCircuitCror extends DetectorRailBlock {
     }
 
     private int sigStrengthToSigType(int signalStrength) {
-        if (signalStrength > 5) return 5;
+        return Math.min(signalStrength, 5);
         // 0 = off
         // 1 = restrict
         // 2 = diverging
         // 3 = medium
         // 4 = limited
-        return signalStrength;
     }
 
     @Override
@@ -169,17 +168,6 @@ public class TrackCircuitCror extends DetectorRailBlock {
                 } else if (signalType == 5) {
                     nbt.remove("signal_spdlim");
                 }
-                /*
-                final int signalType = state.getValue(SIGNAL_TYPE);
-                if (signalType == 1) { // Estop signal
-                    nbt.putInt("signal_aspect", -2);
-                } else if (signalType == 2) { // signal-enforced stop signal, normal decel rate
-                    nbt.putInt("signal_aspect", -3);
-                } else if (signalType == 4) { // proceed signal: only remove normal or signalBrake
-                    int aspect = nbt.getInt("signal_aspect");
-                    if (aspect == -1 || aspect == -3) nbt.remove("signal_aspect");
-                }
-                 */
             }
         }
     }

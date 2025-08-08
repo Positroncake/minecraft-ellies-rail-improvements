@@ -21,5 +21,6 @@
   "block.elliesrailmod.powered_rail_class_5": "Class 5 Powered Rail (100 mph max)",
 
   "block.elliesrailmod.rail_intersection": "Intersection Rail",
-  "block.elliesrailmod.track_circuit_signal": "Track Circuit (Signal)"
+  "block.elliesrailmod.track_circuit_signal": "Track Circuit (Block signalling)",
+  "block.elliesrailmod.track_circuit_cror": "Track Circuit (CROR speeds)"
 }

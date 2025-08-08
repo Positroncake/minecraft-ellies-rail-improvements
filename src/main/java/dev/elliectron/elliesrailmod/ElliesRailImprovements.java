@@ -83,6 +83,7 @@ public class ElliesRailImprovements {
             event.accept(ModBlocks.POWERED_RAIL_CLASS_5);
             event.accept(ModBlocks.INTERSECTION_CLASS_4);
             event.accept(ModBlocks.TRACK_CIRCUIT_SIGNAL);
+            event.accept(ModBlocks.TRACK_CIRCUIT_CROR);
         }
     }
 
