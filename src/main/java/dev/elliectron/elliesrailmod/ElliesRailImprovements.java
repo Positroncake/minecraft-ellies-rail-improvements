@@ -57,6 +57,9 @@ public class ElliesRailImprovements {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.POWERED_RAIL_CLASS_5.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.INTERSECTION_CLASS_4.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.TRACK_CIRCUIT_SIGNAL.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.TRACK_CIRCUIT_CROR.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.TRACK_CIRCUIT_ATP.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.TRACK_CIRCUIT_ATO.get(), RenderType.cutout());
         });
     }
 
@@ -71,6 +74,10 @@ public class ElliesRailImprovements {
             event.accept(ModItems.SIGNAL_SPEED_MEDIUM);
             event.accept(ModItems.SIGNAL_SPEED_DIVERGING);
             event.accept(ModItems.SIGNAL_SPEED_RESTRICTED);
+            event.accept(ModItems.RAIL_SEGMENT);
+            event.accept(ModItems.PREMIUM_RAIL_SEGMENT);
+            event.accept(ModItems.POWERED_RAIL_SEGMENT);
+            event.accept(ModItems.POWERED_PREMIUM_RAIL_SEGMENT);
             event.accept(ModBlocks.RAIL_CLASS_1);
             event.accept(ModBlocks.POWERED_RAIL_CLASS_1);
             event.accept(ModBlocks.RAIL_CLASS_2);
@@ -84,6 +91,8 @@ public class ElliesRailImprovements {
             event.accept(ModBlocks.INTERSECTION_CLASS_4);
             event.accept(ModBlocks.TRACK_CIRCUIT_SIGNAL);
             event.accept(ModBlocks.TRACK_CIRCUIT_CROR);
+            event.accept(ModBlocks.TRACK_CIRCUIT_ATP);
+            event.accept(ModBlocks.TRACK_CIRCUIT_ATO);
         }
     }
 

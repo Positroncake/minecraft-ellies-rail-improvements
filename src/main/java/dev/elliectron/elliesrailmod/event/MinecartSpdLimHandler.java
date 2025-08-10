@@ -84,6 +84,10 @@ public class MinecartSpdLimHandler {
         } else {
             Vec3 motion = minecart.getDeltaMovement();
             double currSpd = Math.sqrt(motion.x * motion.x + motion.z * motion.z);
+            if (currSpd < 0.01 && maxSpeed == 0) {
+                minecart.setDeltaMovement(0, 0, 0);
+                return;
+            }
             if (currSpd <= maxSpeed) return;
 
             double dynamicDecelerationRate = calcDynamicDecelRate(minecart);
@@ -112,7 +116,7 @@ public class MinecartSpdLimHandler {
 
         nbt.putDouble("brake_temperature", currentTemp);
 
-        System.out.println(nbt.getDouble("brake_temperature") + "");
+        // System.out.println(nbt.getDouble("brake_temperature") + "");
     }
 
     private static double calcDynamicDecelRate(AbstractMinecart minecart) {

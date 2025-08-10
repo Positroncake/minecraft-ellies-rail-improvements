@@ -10,7 +10,7 @@ public class Speeds {
     public static final float WET_TRACK_PAX_PENALTY = 0.70f; // amount to reduce (multiply) speed limit by when tracks are wet
     public static final float WET_TRACK_FREIGHT_PENALTY = 0.67f;
 
-    public static final double[] SPEED_MPT_TO_SIGNAL_STRENGTH = new double[] { 0, 2, 5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 100 };
+    public static final double[] SIGNAL_STRENGTH_TO_SPEED_MPH = new double[] { 0, 0, 3, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 100 };
     // _______________________________ CORRESPONDING REDSTONE SIGNAL STRENGTH: 0, 1, 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,  15 :ARRAY INDEX
 
     @SuppressWarnings("SpellCheckingInspection")
@@ -24,11 +24,17 @@ public class Speeds {
         };
     }
 
-    public static int SpeedToSignalStrength(double spdMpt) {
+    public static int SpeedMptToSignalStr(double spdMpt) {
         if (spdMpt <= 0) return 0;
+        spdMpt *= 20.0;
+        spdMpt *= 2.237;
         for (var i = 0; i < 15; ++i) {
-            if (spdMpt < SPEED_MPT_TO_SIGNAL_STRENGTH[i]) return i;
+            if (spdMpt < SIGNAL_STRENGTH_TO_SPEED_MPH[i]) return i;
         }
         return 15;
+    }
+
+    public static double SignalStrToSpeedMpt(int signal) {
+        return (SIGNAL_STRENGTH_TO_SPEED_MPH[signal]*0.44704)/20.0;
     }
 }

@@ -48,6 +48,10 @@ public class ModBlocks {
             () -> new TrackCircuitSignal(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL)));
     public static final DeferredBlock<TrackCircuitCror> TRACK_CIRCUIT_CROR = registerBlock("track_circuit_cror",
             () -> new TrackCircuitCror(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL)));
+    public static final DeferredBlock<TrackCircuitAtp> TRACK_CIRCUIT_ATP = registerBlock("track_circuit_atp",
+            () -> new TrackCircuitAtp(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL)));
+    public static final DeferredBlock<TrackCircuitAto> TRACK_CIRCUIT_ATO = registerBlock("track_circuit_ato",
+            () -> new TrackCircuitAto(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

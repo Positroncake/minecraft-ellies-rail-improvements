@@ -24,14 +24,15 @@ import net.minecraft.world.phys.Vec3;
 @SuppressWarnings("DuplicatedCode")
 public class TrackCircuitSignal extends DetectorRailBlock {
     private static final int TRACK_CLASS = 5;
-    private static final double NATURAL_FRICTION_DECEL = 0.0012/20.0;
+    private static final double NATURAL_FRICTION_DECEL = 0.0008/20.0;
     public static final IntegerProperty SIGNAL_TYPE = IntegerProperty.create("signal_type", 0, 4);
 
     public TrackCircuitSignal(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(SIGNAL_TYPE, 0)
-                .setValue(POWERED, false));
+                .setValue(POWERED, false)
+                .setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -45,16 +46,13 @@ public class TrackCircuitSignal extends DetectorRailBlock {
         if (!level.isClientSide) {
             // Get the maximum incoming redstone signal from all directions
             int maxSignal = getMaxIncomingSignal(level, pos, state);
-            System.out.println("max signal " + maxSignal);
 
             // Convert signal strength to track type
             int newSignalType = sigStrengthToSigType(maxSignal);
-            System.out.println("new signal type " + newSignalType);
 
             // Update the track type if it changed
             if (state.getValue(SIGNAL_TYPE) != newSignalType) {
                 level.setBlock(pos, state.setValue(SIGNAL_TYPE, newSignalType), 3);
-                System.out.println("Updating");
             }
         }
 

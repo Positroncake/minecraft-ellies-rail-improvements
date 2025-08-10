@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 @SuppressWarnings("DuplicatedCode")
 public class Class5Rail extends RailBlock {
     private static final int TRACK_CLASS = 5;
-    private static final double NATURAL_FRICTION_DECEL = 0.0012/20.0;
+    private static final double NATURAL_FRICTION_DECEL = 0.0008/20.0;
 
     public Class5Rail(BlockBehaviour.Properties properties) {
         super(properties);

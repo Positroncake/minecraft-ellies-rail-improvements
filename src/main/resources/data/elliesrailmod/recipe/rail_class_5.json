@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "ABA",
+    "ACA",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "item": "elliesrailmod:premium_rail_segment"
+    },
+    "B": {
+      "tag": "minecraft:concrete"
+    },
+    "C": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "count": 32,
+    "id": "elliesrailmod:rail_class_5"
+  }
+}

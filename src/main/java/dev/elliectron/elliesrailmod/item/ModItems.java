@@ -20,6 +20,11 @@ public class ModItems {
     public static final DeferredItem<Item> SIGNAL_SPEED_DIVERGING = ITEMS.register("signal_speed_diverging", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> SIGNAL_SPEED_RESTRICTED = ITEMS.register("signal_speed_restricted", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
+    public static final DeferredItem<Item> RAIL_SEGMENT = ITEMS.register("rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
+    public static final DeferredItem<Item> PREMIUM_RAIL_SEGMENT = ITEMS.register("premium_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
+    public static final DeferredItem<Item> POWERED_RAIL_SEGMENT = ITEMS.register("powered_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
+    public static final DeferredItem<Item> POWERED_PREMIUM_RAIL_SEGMENT = ITEMS.register("powered_premium_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

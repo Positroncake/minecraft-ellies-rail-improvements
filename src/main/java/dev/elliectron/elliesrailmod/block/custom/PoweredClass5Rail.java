@@ -32,7 +32,7 @@ public class PoweredClass5Rail extends RailBlock {
     // - Speed display: multiply by 20 for m/s
     // The exact cause is unknown but these ratios are consistent
     private static final double MAX_SPEED_MPT = 2.2352;
-    private static final double NATURAL_FRICTION_DECEL = 0.0012/20.0;
+    private static final double NATURAL_FRICTION_DECEL = 0.0008/20.0;
 
     public PoweredClass5Rail(BlockBehaviour.Properties properties) {
         super(properties);

@@ -87,14 +87,15 @@ public class PoweredClass4Rail extends RailBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof AbstractMinecart cart) {
+            CompoundTag nbt = cart.getPersistentData();
             boolean isPowered = state.getValue(POWERED);
             boolean hasStoppingSignal = holdingStoppingSignal(cart);
             boolean hasProceedSignal = holdingSignalById(cart, "elliesrailmod:signal_proceed");
             boolean hasOverrideSignal = holdingSignalById(cart, "elliesrailmod:signal_override");
+            boolean hasAtoAccelFlag = nbt.getInt("signal_aspect") == 3;
 
             // check to see the minecart came from a class 5+ rail, which is signified by the presence of a 'spd' NBT tag
             // , as class 4- rails do not rely on the custom speed system
-            CompoundTag nbt = cart.getPersistentData();
             if (nbt.contains("spd")) {
                 double spd = nbt.getDouble("spd");
                 int vv = nbt.getInt("vv");
@@ -113,15 +114,16 @@ public class PoweredClass4Rail extends RailBlock {
 
             if (!hasStoppingSignal) {
                 // power available + proceed signal held
+                // **note: ATO mode (flag 3) will also allow it accel**
                 // => accelerate to max allowed signalled speed limit, or track speed limit if no signalled speed limit
-                if (isPowered && hasProceedSignal) {
+                if ((isPowered && hasProceedSignal) || (isPowered && hasAtoAccelFlag)) {
                     Vec3 motionMpt = cart.getDeltaMovement();
                     float trackSpdLim = getRailMaxSpeed(state, level, pos, cart);
                     float signalSpdLim = getSignalledMaxSpeed(cart);
                     float proceedSpdLim = signalSpdLim == -1f ? trackSpdLim : signalSpdLim;
 
                     double currSpd = Math.sqrt(motionMpt.x * motionMpt.x + motionMpt.z * motionMpt.z);
-                    System.out.println("current " + currSpd + " vs limit " + proceedSpdLim);
+                    // System.out.println("current " + currSpd + " vs limit " + proceedSpdLim);
                     if (currSpd <= proceedSpdLim) {
                         Vec3 accelAmountT = Acceleration.Calc750VAccelMpt(motionMpt, getRailShape(state));
                         cart.setDeltaMovement(motionMpt.add(accelAmountT));
@@ -208,7 +210,7 @@ public class PoweredClass4Rail extends RailBlock {
     private float getSignalledMaxSpeed(AbstractMinecart cart) {
         CompoundTag nbt = cart.getPersistentData();
         if (nbt.contains("signal_spdlim")) {
-            System.out.println(20f*nbt.getFloat("signal_spdlim"));
+            // System.out.println(20f*nbt.getFloat("signal_spdlim"));
             return nbt.getFloat("signal_spdlim");
         }
         return -1f;

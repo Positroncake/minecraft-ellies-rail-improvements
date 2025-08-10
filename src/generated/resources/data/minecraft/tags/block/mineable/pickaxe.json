@@ -11,6 +11,9 @@
     "elliesrailmod:rail_class_5",
     "elliesrailmod:powered_rail_class_5",
     "elliesrailmod:rail_intersection",
-    "elliesrailmod:track_circuit_signal"
+    "elliesrailmod:track_circuit_signal",
+    "elliesrailmod:track_circuit_cror",
+    "elliesrailmod:track_circuit_atp",
+    "elliesrailmod:track_circuit_ato"
   ]
 }

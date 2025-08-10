@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "elliesrailmod:item/powered_premium_rail_segment"
+  }
+}

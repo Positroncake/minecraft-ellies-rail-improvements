@@ -9,6 +9,11 @@
   "item.elliesrailmod.signal_speed_diverging": "Signal: Diverging speed",
   "item.elliesrailmod.signal_speed_restricted": "Signal: Restricted speed",
 
+  "item.elliesrailmod.rail_segment": "Rail Segment",
+  "item.elliesrailmod.premium_rail_segment": "Premium Rail Segment",
+  "item.elliesrailmod.powered_rail_segment": "Powered Rail Segment",
+  "item.elliesrailmod.powered_premium_rail_segment": "Premium Powered Rail Segment",
+
   "block.elliesrailmod.rail_class_1": "Class 1 Rail (12 mph max)",
   "block.elliesrailmod.powered_rail_class_1": "Class 1 Powered Rail (12 mph max)",
   "block.elliesrailmod.rail_class_2": "Class 2 Rail (25 mph max)",
@@ -22,5 +27,7 @@
 
   "block.elliesrailmod.rail_intersection": "Intersection Rail",
   "block.elliesrailmod.track_circuit_signal": "Track Circuit (Block signalling)",
-  "block.elliesrailmod.track_circuit_cror": "Track Circuit (CROR speeds)"
+  "block.elliesrailmod.track_circuit_cror": "Track Circuit (CROR speeds)",
+  "block.elliesrailmod.track_circuit_atp": "Track Circuit (Automatic Train Protection)",
+  "block.elliesrailmod.track_circuit_ato": "Track Circuit (Automatic Train Operation)"
 }

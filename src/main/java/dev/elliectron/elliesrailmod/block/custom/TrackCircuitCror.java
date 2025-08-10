@@ -24,14 +24,15 @@ import net.minecraft.world.phys.Vec3;
 @SuppressWarnings("DuplicatedCode")
 public class TrackCircuitCror extends DetectorRailBlock {
     private static final int TRACK_CLASS = 5;
-    private static final double NATURAL_FRICTION_DECEL = 0.0012/20.0;
+    private static final double NATURAL_FRICTION_DECEL = 0.0008/20.0;
     public static final IntegerProperty CROR_SIGNAL = IntegerProperty.create("cror_signal", 0, 5);
 
     public TrackCircuitCror(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(CROR_SIGNAL, 0)
-                .setValue(POWERED, false));
+                .setValue(POWERED, false)
+                .setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -45,16 +46,13 @@ public class TrackCircuitCror extends DetectorRailBlock {
         if (!level.isClientSide) {
             // Get the maximum incoming redstone signal from all directions
             int maxSignal = getMaxIncomingSignal(level, pos, state);
-            System.out.println("max signal " + maxSignal);
 
             // Convert signal strength to track type
             int newSignalType = sigStrengthToSigType(maxSignal);
-            System.out.println("new signal type " + newSignalType);
 
             // Update the track type if it changed
             if (state.getValue(CROR_SIGNAL) != newSignalType) {
                 level.setBlock(pos, state.setValue(CROR_SIGNAL, newSignalType), 3);
-                System.out.println("Updating");
             }
         }
 
@@ -113,6 +111,7 @@ public class TrackCircuitCror extends DetectorRailBlock {
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof AbstractMinecart cart) {
             CompoundTag nbt = cart.getPersistentData();
+            System.out.println(20.0*nbt.getDouble("signal_spdlim"));
 
             // if minecart has NBT "spd", it is running on class5+ track
             //noinspection StatementWithEmptyBody
