@@ -1,16 +1,21 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_shaped",
   "category": "redstone",
-  "ingredients": [
-    {
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
       "item": "elliesrailmod:rail_class_1"
     },
-    {
+    "B": {
       "item": "minecraft:gold_ingot"
     }
-  ],
+  },
   "result": {
-    "count": 1,
+    "count": 8,
     "id": "elliesrailmod:powered_rail_class_1"
   }
 }

@@ -2,20 +2,23 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "pattern": [
-    "ABA",
-    "A A",
-    "ABA"
+    "CBA",
+    "C A",
+    "CBA"
   ],
   "key": {
     "A": {
-      "item": "elliesrailmod:powered_rail_segment"
+      "item": "elliesrailmod:rail_segment"
     },
     "B": {
       "tag": "minecraft:planks"
+    },
+    "C": {
+      "item": "elliesrailmod:powered_rail_segment"
     }
   },
   "result": {
-    "count": 16,
+    "count": 24,
     "id": "elliesrailmod:powered_rail_class_1"
   }
 }

@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 
 public class Class4Intersection extends RailBlock {
     private static final int TRACK_CLASS = 4;
+    private boolean lastRailNorthSouth = true;
 
     public Class4Intersection(BlockBehaviour.Properties properties) {
         super(properties);
@@ -23,8 +24,15 @@ public class Class4Intersection extends RailBlock {
     public RailShape getRailDirection(BlockState state, BlockGetter world, BlockPos pos, @Nullable AbstractMinecart cart) {
         if (cart == null) return RailShape.NORTH_SOUTH;
         Vec3 vv = cart.getDeltaMovement(); // vv = velocity vector (of minecart 'cart')
-        if (Math.abs(vv.x) > Math.abs(vv.z)) return RailShape.EAST_WEST;
-        else return RailShape.NORTH_SOUTH;
+        if (vv.x == 0 && vv.z == 0) {
+            return lastRailNorthSouth ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST;
+        }
+        if (Math.abs(vv.x) > Math.abs(vv.z)) {
+            lastRailNorthSouth = false;
+            return RailShape.EAST_WEST;
+        }
+        lastRailNorthSouth = false;
+        return RailShape.NORTH_SOUTH;
     }
 
     @Override

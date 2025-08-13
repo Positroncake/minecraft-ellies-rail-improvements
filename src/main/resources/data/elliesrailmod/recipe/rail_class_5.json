@@ -11,14 +11,14 @@
       "item": "elliesrailmod:premium_rail_segment"
     },
     "B": {
-      "tag": "minecraft:concrete"
+      "tag": "minecraft:concrete_powder"
     },
     "C": {
       "item": "minecraft:quartz"
     }
   },
   "result": {
-    "count": 32,
+    "count": 24,
     "id": "elliesrailmod:rail_class_5"
   }
 }

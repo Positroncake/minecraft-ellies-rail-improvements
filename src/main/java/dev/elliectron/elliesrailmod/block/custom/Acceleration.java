@@ -80,7 +80,7 @@ public class Acceleration {
         double xAccelMpt = 0.0, zAccelMpt = 0.0;
         double bonusAccel = 0.0;
         if (slope == 1) bonusAccel = 0.1132;
-        else if (slope == -1) bonusAccel = -0.3210;
+        else if (slope == -1) bonusAccel = -0.1132;
 
         if (Math.abs(x) > 0.01) {
             if (x > 0) {

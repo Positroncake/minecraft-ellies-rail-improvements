@@ -19,7 +19,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 public class MinecartStoppingHandler {
 
     // Base deceleration rates
-    public static final double BASE_DECELERATION_RATE = -0.0800/20;
+    public static final double BASE_DECELERATION_RATE = -0.08/20;
     public static final double RAIN_DECELERATION_MULTIPLIER = 0.7; // 30% less deceleration in rain
     public static final double ATTACHED_PAX_DECEL_FACTOR = 0.955; // Reduced deceleration per attached minecart (player)
     public static final double ATTACHED_FREIGHT_DECEL_FACTOR = 0.930; // Reduced deceleration per attached minecart (chest/hopper/etc)

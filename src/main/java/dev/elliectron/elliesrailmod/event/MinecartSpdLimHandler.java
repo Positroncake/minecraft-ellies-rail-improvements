@@ -21,6 +21,7 @@ import static dev.elliectron.elliesrailmod.event.MinecartStoppingHandler.*;
 public class MinecartSpdLimHandler {
 
     // Based on CROR signal aspect speed limits, converted from mph to m/s
+    // mph -> m/s ~2.237
     public static final float SPEED_LIMITED_MPT = 20.1f / 20.0f;
     public static final float SPEED_MEDIUM_MPT = 13.4f / 20.0f;
     public static final float SPEED_DIVERGING_MPT = 11.2f / 20.0f;
