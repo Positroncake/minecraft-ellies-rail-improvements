@@ -1,8 +1,8 @@
 package dev.elliectron.elliesrailmod.block.custom;
 
-import dev.elliectron.elliesrailmod.event.MinecartStoppingHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +24,7 @@ import net.minecraft.world.phys.Vec3;
 public class PoweredClass1Rail extends RailBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final double ACCEL_BUFFER = Acceleration.MAX_ACCEL_600V/20;
-    private static final int TRACK_CLASS = 1;
+    private static final int TRACK_CLASS = 2;
 
     public PoweredClass1Rail(BlockBehaviour.Properties properties) {
         super(properties);
@@ -87,30 +87,66 @@ public class PoweredClass1Rail extends RailBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof AbstractMinecart cart) {
+            CompoundTag nbt = cart.getPersistentData();
             boolean isPowered = state.getValue(POWERED);
-            boolean hasOverrideSignal = holdingOverrideSignal(cart);
+            boolean hasStoppingSignal = holdingStoppingSignal(cart);
+            boolean hasProceedSignal = holdingSignalById(cart, "elliesrailmod:signal_proceed");
+            boolean hasOverrideSignal = holdingSignalById(cart, "elliesrailmod:signal_override");
+            boolean hasAtoAccelFlag = nbt.getInt("signal_aspect") == 3;
 
-            if (!holdingStoppingSignal(cart)) {
-                if (isPowered && !hasOverrideSignal) { // power and no override => accelerate as normal
+            // check to see the minecart came from a class 5+ rail, which is signified by the presence of a 'spd' NBT tag
+            // , as class 4- rails do not rely on the custom speed system
+            if (nbt.contains("spd")) {
+                double spd = nbt.getDouble("spd");
+                int vv = nbt.getInt("vv");
+                if (vv == 1) {
+                    cart.setDeltaMovement(spd, 0, 0);
+                } else if (vv == -1) {
+                    cart.setDeltaMovement(-spd, 0, 0);
+                } else if (vv == 2) {
+                    cart.setDeltaMovement(0, 0, spd);
+                } else if (vv == -2) {
+                    cart.setDeltaMovement(0, 0, -spd);
+                } else cart.setDeltaMovement(0, 0, 0);
+                nbt.remove("spd");
+                nbt.remove("vv");
+            }
+
+            if (!hasStoppingSignal) {
+                // power available + proceed signal held
+                // **note: ATO mode (flag 3) will also allow it accel**
+                // => accelerate to max allowed signalled speed limit, or track speed limit if no signalled speed limit
+                if ((isPowered && hasProceedSignal) || (isPowered && hasAtoAccelFlag)) {
                     Vec3 motionMpt = cart.getDeltaMovement();
-                    float maxSpd = getRailMaxSpeed(state, level, pos, cart);
+                    float trackSpdLim = getRailMaxSpeed(state, level, pos, cart);
+                    float signalSpdLim = getSignalledMaxSpeed(cart);
+                    float proceedSpdLim = signalSpdLim == -1f ? trackSpdLim : signalSpdLim;
+
+                    double currSpd = Math.sqrt(motionMpt.x * motionMpt.x + motionMpt.z * motionMpt.z);
+                    // System.out.println("current " + currSpd + " vs limit " + proceedSpdLim);
+                    if (currSpd <= proceedSpdLim) {
+                        Vec3 accelAmountT = Acceleration.Calc600VAccelMpt(motionMpt, getRailShape(state), false);
+                        cart.setDeltaMovement(motionMpt.add(accelAmountT));
+                    }
+                }
+                // power available + override signal held
+                // => accelerate to max track speed limit, ignoring all other restrictions
+                else if (isPowered && hasOverrideSignal) {
+                    Vec3 motionMpt = cart.getDeltaMovement();
+                    float ovrdSpdLim = getRailMaxSpeed(state, level, pos, cart);
 
                     double currSpd = Math.sqrt(motionMpt.x * motionMpt.x + motionMpt.z * motionMpt.z);
                     // ACCEL_BUFFER is to prevent over-acceleration (e.g. if maxSpd is 10.00 and the maximum possible acceleration is 0.03,
                     // then by having ACCEL_BUFFER as 0.03, the maximum currSpd can ever be at is 9.97 and therefore not over-accelerate,
                     // as a value of 9.98 would give the minecart extra momentum equal to 10.01 (and the if statement therefore fails such
                     // a condition (9.97 <= 10.00 - 0.03, but 9.98 </= 10.00 - 0.03))
-                    if (currSpd <= maxSpd - ACCEL_BUFFER) {
-                        Vec3 accelAmountT = Acceleration.Calc600VAccelMpt(motionMpt, getRailShape(state));
+                    if (currSpd <= ovrdSpdLim - ACCEL_BUFFER) {
+                        Vec3 accelAmountT = Acceleration.Calc600VAccelMpt(motionMpt, getRailShape(state), false);
                         cart.setDeltaMovement(motionMpt.add(accelAmountT));
                     }
                 }
-                else if (!isPowered && !hasOverrideSignal) { // no power and no override => treat as danger (red) signal aspect
-                    Vec3 vv = cart.getDeltaMovement();
-                    double spd = Math.sqrt(vv.x * vv.x + vv.z * vv.z);
-                    if (spd < 0.01) cart.setDeltaMovement(0, 0, 0);
-                    else MinecartStoppingHandler.DecelerateMinecart(cart, true);
-                }
+                // no power and no override => treat as danger (red) signal aspect and trigger Estop
+                else if (!isPowered && !hasOverrideSignal) {}
             }
         } else {
             super.entityInside(state, level, pos, entity);
@@ -140,33 +176,15 @@ public class PoweredClass1Rail extends RailBlock {
         return spdLimsMps[3] / 20f; // Full speed for passenger carts on dry tracks
     }
 
-    private boolean holdingOverrideSignal(AbstractMinecart cart) {
-        ResourceLocation overrideSignalId = ResourceLocation.parse("elliesrailmod:signal_override");
-        Item overrideItem = BuiltInRegistries.ITEM.get(overrideSignalId);
+    private boolean holdingSignalById(AbstractMinecart cart, String id) {
+        ResourceLocation signalId = ResourceLocation.parse(id);
+        Item signalItem = BuiltInRegistries.ITEM.get(signalId);
 
         for (var passenger : cart.getPassengers()) {
             if (passenger instanceof Player player) {
                 ItemStack mainHand = player.getMainHandItem();
                 ItemStack offHand = player.getOffhandItem();
-                if (mainHand.is(overrideItem) || offHand.is(overrideItem)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean holdingProceedSignal(AbstractMinecart cart) {
-        ResourceLocation proceedSignalId = ResourceLocation.parse("elliesrailmod:signal_proceed");
-        Item proceedItem = BuiltInRegistries.ITEM.get(proceedSignalId);
-
-        for (var passenger : cart.getPassengers()) {
-            if (passenger instanceof Player player) {
-                ItemStack mainHand = player.getMainHandItem();
-                ItemStack offHand = player.getOffhandItem();
-                if (mainHand.is(proceedItem) || offHand.is(proceedItem)) {
-                    return true;
-                }
+                if (mainHand.is(signalItem) || offHand.is(signalItem)) return true;
             }
         }
         return false;
@@ -187,5 +205,14 @@ public class PoweredClass1Rail extends RailBlock {
             }
         }
         return false;
+    }
+
+    private float getSignalledMaxSpeed(AbstractMinecart cart) {
+        CompoundTag nbt = cart.getPersistentData();
+        if (nbt.contains("signal_spdlim")) {
+            // System.out.println(20f*nbt.getFloat("signal_spdlim"));
+            return nbt.getFloat("signal_spdlim");
+        }
+        return -1f;
     }
 }

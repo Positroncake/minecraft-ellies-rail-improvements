@@ -125,7 +125,7 @@ public class PoweredClass4Rail extends RailBlock {
                     double currSpd = Math.sqrt(motionMpt.x * motionMpt.x + motionMpt.z * motionMpt.z);
                     // System.out.println("current " + currSpd + " vs limit " + proceedSpdLim);
                     if (currSpd <= proceedSpdLim) {
-                        Vec3 accelAmountT = Acceleration.Calc750VAccelMpt(motionMpt, getRailShape(state));
+                        Vec3 accelAmountT = Acceleration.Calc750VAccelMpt(motionMpt, getRailShape(state), false);
                         cart.setDeltaMovement(motionMpt.add(accelAmountT));
                     }
                 }
@@ -141,7 +141,7 @@ public class PoweredClass4Rail extends RailBlock {
                     // as a value of 9.98 would give the minecart extra momentum equal to 10.01 (and the if statement therefore fails such
                     // a condition (9.97 <= 10.00 - 0.03, but 9.98 </= 10.00 - 0.03))
                     if (currSpd <= ovrdSpdLim - ACCEL_BUFFER) {
-                        Vec3 accelAmountT = Acceleration.Calc750VAccelMpt(motionMpt, getRailShape(state));
+                        Vec3 accelAmountT = Acceleration.Calc750VAccelMpt(motionMpt, getRailShape(state), false);
                         cart.setDeltaMovement(motionMpt.add(accelAmountT));
                     }
                 }

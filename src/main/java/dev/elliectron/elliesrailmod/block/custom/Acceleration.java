@@ -8,14 +8,15 @@ public class Acceleration {
     public static final double MAX_ACCEL_750V = 0.0370;
     public static final double MAX_ACCEL_25KV = 0.0200;
 
-    // for tweaking acceleration/deceleration values as you see fit
-    public static double AccelMultiplier = 1;
+    public static final double CONVENTIONAL_ACCEL_MULTIPLIER = 0.825; // for conventional, rotational-based motor propulsion
+    public static final double LINEAR_INDUCTION_ACCEL_MULTIPLIER = 1.175; // for linear-induction-motor-based propulsion
+    public static double GLOBAL_ACCEL_MULTIPLIER = 1; // for tweaking acceleration/deceleration values as you see fit
 
     // vvMpt = velocity vector, metres per tick
     // speedMps = speed, metres per second
     // accelMpt = amount to accelerate this tick, metres per tick
     private static final double var601 = 3.0, var602 = 7.5;
-    public static Vec3 Calc600VAccelMpt(Vec3 vvMpt, RailShape railShape) {
+    public static Vec3 Calc600VAccelMpt(Vec3 vvMpt, RailShape railShape, boolean hasLinearMotors) {
         double speedMps = 20*Math.sqrt(vvMpt.x * vvMpt.x + vvMpt.z * vvMpt.z);
         double accelMpt = 0.0;
         if (speedMps < var601) {
@@ -26,11 +27,11 @@ public class Acceleration {
             accelMpt = MAX_ACCEL_600V*Math.pow(var602 /speedMps, 0.600);
         }
         int slope = calcSlope(vvMpt.x, vvMpt.z, railShape);
-        return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope);
+        return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope, hasLinearMotors);
     }
 
     private static final double var751 = 4.0, var752 = 10.0;
-    public static Vec3 Calc750VAccelMpt(Vec3 vvMpt, RailShape railShape) {
+    public static Vec3 Calc750VAccelMpt(Vec3 vvMpt, RailShape railShape, boolean hasLinearMotors) {
         double speedMps = 20*Math.sqrt(vvMpt.x * vvMpt.x + vvMpt.z * vvMpt.z);
         double accelMpt = 0.0;
         if (speedMps < var751) {
@@ -41,11 +42,12 @@ public class Acceleration {
             accelMpt = MAX_ACCEL_750V*Math.pow(var752/speedMps, 0.430);
         }
         int slope = calcSlope(vvMpt.x, vvMpt.z, railShape);
-        return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope);
+        return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope, hasLinearMotors);
     }
 
     private static final double var25k1 = 4.0, var25k2 = 15.0;
-    public static double Calc25kVAccelMagnitude(double spdMps) {
+    public static double Calc25kVAccelMagnitude(double spdMps, boolean hasLinearMotors) {
+        //calculate acceleration amount
         double accelMpt = 0.0;
         if (spdMps < var25k1) {
             accelMpt = 0.0070 + 0.00325*spdMps;
@@ -54,7 +56,11 @@ public class Acceleration {
         } else if (var25k2 <= spdMps) {
             accelMpt = MAX_ACCEL_25KV*Math.pow(var25k2/ spdMps, 0.390);
         }
-        accelMpt *= AccelMultiplier;
+
+        // apply acceleration modifiers
+        accelMpt *= GLOBAL_ACCEL_MULTIPLIER;
+        accelMpt *= hasLinearMotors ? LINEAR_INDUCTION_ACCEL_MULTIPLIER : CONVENTIONAL_ACCEL_MULTIPLIER;
+
         return accelMpt/10.0;
     }
 
@@ -74,33 +80,35 @@ public class Acceleration {
         } return 0;
     }
 
-    private static Vec3 calcNewVvMpt(double x, double y, double z, double accelMpt, int slope) {
-        accelMpt *= AccelMultiplier;
+    private static Vec3 calcNewVvMpt(double x, double y, double z, double accelMpt, int slope, boolean hasLinearMotors) {
+        // apply acceleration modifiers
+        accelMpt *= GLOBAL_ACCEL_MULTIPLIER;
+        accelMpt *= hasLinearMotors ? LINEAR_INDUCTION_ACCEL_MULTIPLIER : CONVENTIONAL_ACCEL_MULTIPLIER;
+
+        // compensate for sloped tracks
         //TODO: on diagonal track sections, the acceleration will apply on the x-axis and not the z-axis - fix later
         double xAccelMpt = 0.0, zAccelMpt = 0.0;
         double bonusAccel = 0.0;
-        if (slope == 1) bonusAccel = 0.1132;
+        if (slope == 1) bonusAccel = hasLinearMotors? 0.1932 : 0.1132;
         else if (slope == -1) bonusAccel = -0.1132;
 
+        // calculate the minecart's new velocity vector
         if (Math.abs(x) > 0.01) {
             if (x > 0) {
                 xAccelMpt = accelMpt + bonusAccel;
-        //        System.out.println("speed " + 20*x + " m/s, +x accel " + 20* xAccelMpt + " m/s");
             }
             else if (x < 0) {
                 xAccelMpt = -1 * (accelMpt + bonusAccel);
-        //        System.out.println("speed " + -20*x + " m/s, -x accel " + -20* xAccelMpt + " m/s");
             }
         }
         if (Math.abs(z) > 0.01) {
             if (z > 0) {
                 zAccelMpt = accelMpt + bonusAccel;
-        //        System.out.println("speed " + 20*z + " m/s, +z accel " + 20* zAccelMpt + " m/s");
             } else if (z < 0) {
                 zAccelMpt = -1 * (accelMpt + bonusAccel);
-        //        System.out.println("speed " + -20*z + " m/s, -z accel " + -20* zAccelMpt + " m/s");
             }
         }
+
         return new Vec3(xAccelMpt /20, y, zAccelMpt /20);
     }
 }
