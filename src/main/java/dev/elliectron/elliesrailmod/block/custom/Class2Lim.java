@@ -1,4 +1,4 @@
-﻿package dev.elliectron.elliesrailmod.block.custom;
+package dev.elliectron.elliesrailmod.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -10,10 +10,10 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
 @SuppressWarnings("DuplicatedCode")
-public class Class1Lim extends RailBlock {
-    private static final int LIM_TRACK_CLASS = 1;
+public class Class2Lim extends RailBlock {
+    private static final int LIM_TRACK_CLASS = 2;
 
-    public Class1Lim(BlockBehaviour.Properties properties) {
+    public Class2Lim(BlockBehaviour.Properties properties) {
         super(properties);
     }
 
