@@ -95,6 +95,8 @@ public class PoweredClass5Rail extends RailBlock {
     @SuppressWarnings("ConstantValue")
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (level.isClientSide) return;
+
         if (entity instanceof AbstractMinecart cart) {
             boolean isPowered = state.getValue(POWERED);
             boolean hasProceedSignal = holdingProceedSignal(cart);
@@ -135,7 +137,7 @@ public class PoweredClass5Rail extends RailBlock {
                     // calculate amount to accelerate minecart by
                     double newSpdMpt = currSpdMpt;
                     if (vv != 0 && currSpdMpt < MAX_SPEED_MPT) {
-                        double accelMpt = Acceleration.Calc25kVAccelMagnitude(currSpdMpt*20, false)/2.0; // I have no idea why I need to do /2.0 but if I don't, the acceleration ends up being too quick
+                        double accelMpt = Acceleration.Calc25kVAccelMagnitude(currSpdMpt*20)/2.0; // I have no idea why I need to do /2.0 but if I don't, the acceleration ends up being too quick
                         newSpdMpt += accelMpt;
                         a = accelMpt*20;
                         s = currSpdMpt*20;
@@ -205,7 +207,7 @@ public class PoweredClass5Rail extends RailBlock {
 
     @Override
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-        float[] spdLimsMps = Speeds.GetSpdLimsMps(TRACK_CLASS);
+        float[] spdLimsMps = Speeds.GetConventionalSpdLimsMps(TRACK_CLASS);
 
         if (level.isRaining()) {
             if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper

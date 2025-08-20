@@ -1,0 +1,16 @@
+﻿{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "elliesrailmod:premium_rail_segment"
+    }
+  ],
+  "result": {
+    "id": "elliesrailmod:unfinished_reaction_rail_segment",
+    "count": 8
+  }
+}

@@ -1,4 +1,4 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "pattern": [
@@ -11,10 +11,10 @@
       "item": "elliesrailmod:premium_rail_segment"
     },
     "B": {
-      "tag": "c:concretes"
+      "item": "minecraft:stone"
     },
     "C": {
-      "item": "minecraft:quartz"
+      "item": "elliesrailmod:reaction_rail_segment"
     },
     "D": {
       "item": "elliesrailmod:powered_premium_rail_segment"
@@ -22,6 +22,6 @@
   },
   "result": {
     "count": 24,
-    "id": "elliesrailmod:powered_rail_class_5"
+    "id": "elliesrailmod:linear_induction_rail"
   }
 }

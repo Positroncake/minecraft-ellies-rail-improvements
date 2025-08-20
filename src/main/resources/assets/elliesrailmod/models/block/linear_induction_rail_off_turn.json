@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/rail_corner",
+  "textures": {
+    "rail": "elliesrailmod:block/linear_rail_off_turn"
+  }
+}

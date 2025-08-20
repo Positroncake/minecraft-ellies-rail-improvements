@@ -4,19 +4,18 @@ import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraft.world.phys.Vec3;
 
 public class Acceleration {
-    public static final double MAX_ACCEL_600V = 0.0330;
-    public static final double MAX_ACCEL_750V = 0.0370;
-    public static final double MAX_ACCEL_25KV = 0.0200;
+    public static final double MAX_ACCEL_600V = 0.033;
+    public static final double MAX_ACCEL_650V = 0.040;
+    public static final double MAX_ACCEL_750V = 0.037;
+    public static final double MAX_ACCEL_25KV = 0.020;
 
-    public static final double CONVENTIONAL_ACCEL_MULTIPLIER = 0.825; // for conventional, rotational-based motor propulsion
-    public static final double LINEAR_INDUCTION_ACCEL_MULTIPLIER = 1.175; // for linear-induction-motor-based propulsion
     public static double GLOBAL_ACCEL_MULTIPLIER = 1; // for tweaking acceleration/deceleration values as you see fit
 
     // vvMpt = velocity vector, metres per tick
     // speedMps = speed, metres per second
     // accelMpt = amount to accelerate this tick, metres per tick
     private static final double var601 = 3.0, var602 = 7.5;
-    public static Vec3 Calc600VAccelMpt(Vec3 vvMpt, RailShape railShape, boolean hasLinearMotors) {
+    public static Vec3 Calc600VAccelMpt(Vec3 vvMpt, RailShape railShape) {
         double speedMps = 20*Math.sqrt(vvMpt.x * vvMpt.x + vvMpt.z * vvMpt.z);
         double accelMpt = 0.0;
         if (speedMps < var601) {
@@ -27,11 +26,26 @@ public class Acceleration {
             accelMpt = MAX_ACCEL_600V*Math.pow(var602 /speedMps, 0.600);
         }
         int slope = calcSlope(vvMpt.x, vvMpt.z, railShape);
-        return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope, hasLinearMotors);
+        return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope, false);
+    }
+
+    private static final double var651 = 3.0, var652 = 18.0;
+    public static Vec3 Calc650VAccelMpt(Vec3 vvMpt, RailShape railShape) {
+        double speedMps = 20*Math.sqrt(vvMpt.x * vvMpt.x + vvMpt.z * vvMpt.z);
+        double accelMpt = 0.0;
+        if (speedMps < var651) {
+            accelMpt = 0.010 + 0.010*speedMps;
+        } else if (var651 <= speedMps && speedMps < var652) {
+            accelMpt = MAX_ACCEL_650V;
+        } else if (var652 <= speedMps) {
+            accelMpt = MAX_ACCEL_650V*Math.pow(var652/speedMps, 1.000);
+        }
+        int slope = calcSlope(vvMpt.x, vvMpt.z, railShape);
+        return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope, true);
     }
 
     private static final double var751 = 4.0, var752 = 10.0;
-    public static Vec3 Calc750VAccelMpt(Vec3 vvMpt, RailShape railShape, boolean hasLinearMotors) {
+    public static Vec3 Calc750VAccelMpt(Vec3 vvMpt, RailShape railShape) {
         double speedMps = 20*Math.sqrt(vvMpt.x * vvMpt.x + vvMpt.z * vvMpt.z);
         double accelMpt = 0.0;
         if (speedMps < var751) {
@@ -42,11 +56,11 @@ public class Acceleration {
             accelMpt = MAX_ACCEL_750V*Math.pow(var752/speedMps, 0.430);
         }
         int slope = calcSlope(vvMpt.x, vvMpt.z, railShape);
-        return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope, hasLinearMotors);
+        return calcNewVvMpt(vvMpt.x, vvMpt.y, vvMpt.z, accelMpt, slope, false);
     }
 
     private static final double var25k1 = 4.0, var25k2 = 15.0;
-    public static double Calc25kVAccelMagnitude(double spdMps, boolean hasLinearMotors) {
+    public static double Calc25kVAccelMagnitude(double spdMps) {
         //calculate acceleration amount
         double accelMpt = 0.0;
         if (spdMps < var25k1) {
@@ -59,7 +73,6 @@ public class Acceleration {
 
         // apply acceleration modifiers
         accelMpt *= GLOBAL_ACCEL_MULTIPLIER;
-        accelMpt *= hasLinearMotors ? LINEAR_INDUCTION_ACCEL_MULTIPLIER : CONVENTIONAL_ACCEL_MULTIPLIER;
 
         return accelMpt/10.0;
     }
@@ -83,7 +96,6 @@ public class Acceleration {
     private static Vec3 calcNewVvMpt(double x, double y, double z, double accelMpt, int slope, boolean hasLinearMotors) {
         // apply acceleration modifiers
         accelMpt *= GLOBAL_ACCEL_MULTIPLIER;
-        accelMpt *= hasLinearMotors ? LINEAR_INDUCTION_ACCEL_MULTIPLIER : CONVENTIONAL_ACCEL_MULTIPLIER;
 
         // compensate for sloped tracks
         //TODO: on diagonal track sections, the acceleration will apply on the x-axis and not the z-axis - fix later

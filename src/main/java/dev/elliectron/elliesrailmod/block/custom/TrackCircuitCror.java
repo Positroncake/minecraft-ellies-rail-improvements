@@ -91,7 +91,7 @@ public class TrackCircuitCror extends DetectorRailBlock {
 
     @Override
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-        float[] spdLimsMps = Speeds.GetSpdLimsMps(TRACK_CLASS);
+        float[] spdLimsMps = Speeds.GetConventionalSpdLimsMps(TRACK_CLASS);
 
         if (level.isRaining()) {
             if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper

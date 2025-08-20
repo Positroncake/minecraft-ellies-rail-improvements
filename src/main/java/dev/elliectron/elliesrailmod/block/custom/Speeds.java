@@ -4,17 +4,20 @@ public class Speeds {
     // DRY_PAX_LIMITS_MPH is based on the CROR "Rules Respecting Track Safety Part II - Track Safety Rules",
     // adapted/scaled for Minecraft due to a ~32 m/s speed limit imposed by the game (class 5 track uses custom movement logic and therefore is not affected by said limits)
     //TODO: figure out how to bypass the aforementioned speed limit without implementing custom physics (e.g. in class 5)
-    public static final float[] DRY_PAX_LIMITS_MPH = new float[] { 12.5f, 30f, 50f, 65f, 100f };
-    public static final float[] LINEAR_INDUCTION_LIMITS_MPH = new float[] { 12.5f, 30f, 45f, 60f, 90f };
+    public static final float[] DRY_PAX_LIMITS_MPH = new float[] { 12.5f, 30f, 45f, 65f, 100f };
     public static final float[] DRY_FREIGHT_LIMITS_MPH = new float[] { 8f, 20f, 35f, 50f, 65f }; // amount to reduce speed limit by when treight train is present
     public static final float WET_TRACK_PAX_PENALTY = 0.70f; // amount to reduce (multiply) speed limit by when tracks are wet
     public static final float WET_TRACK_FREIGHT_PENALTY = 0.67f; // amount to reduce speed limit by when tracks are wet and freight train is present
+    public static final float LINEAR_INDUCTION_SPEED_LIMIT_KMH = 95f;
+    public static final float WET_LINEAR_TRACK_PENALTY = 0.95f; // only reduce max speed by a minor amount when a train is on wet LIM tracks,
+    // as braking is mostly unaffected by wheel-to-rail adhesion for LIM-powered trains,
+    // but interference when the centre reaction rail is significantly contaminated can still cause decreases in performance
 
     public static final double[] SIGNAL_STRENGTH_TO_SPEED_MPH = new double[] { 0, 0, 3, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 100 };
     // _______________________________ CORRESPONDING REDSTONE SIGNAL STRENGTH: 0, 1, 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,  15 :ARRAY INDEX
 
     @SuppressWarnings("SpellCheckingInspection")
-    public static float[] GetSpdLimsMps(int trackClass) {
+    public static float[] GetConventionalSpdLimsMps(int trackClass) {
         --trackClass;
         return new float[] {
                 (WET_TRACK_FREIGHT_PENALTY*DRY_FREIGHT_LIMITS_MPH[trackClass])/2.237f, // [0] = wet, freight
@@ -24,9 +27,11 @@ public class Speeds {
         };
     }
 
-    public static float GetLinearSpdLimsMps(int trackClass) {
-        --trackClass;
-        return LINEAR_INDUCTION_LIMITS_MPH[trackClass]/2.237f;
+    public static float[] GetLinearInductionSpdLimsMps() {
+        return new float[] {
+                (WET_LINEAR_TRACK_PENALTY*LINEAR_INDUCTION_SPEED_LIMIT_KMH)/3.6f, // [0] = wet (pax)
+                LINEAR_INDUCTION_SPEED_LIMIT_KMH/3.6f // [1] = dry (pax)
+        };
     }
 
     public static int SpeedMptToSignalStr(double spdMpt) {

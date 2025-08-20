@@ -1,15 +1,11 @@
 package dev.elliectron.elliesrailmod.block.custom;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.*;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RailBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -29,6 +25,8 @@ public class Class5Rail extends RailBlock {
     @SuppressWarnings("ConstantValue")
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (level.isClientSide) return;
+
         if (entity instanceof AbstractMinecart cart) {
             CompoundTag nbt = cart.getPersistentData();
             double debugAccel = 0.0;
@@ -91,7 +89,7 @@ public class Class5Rail extends RailBlock {
 
     @Override
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-        float[] spdLimsMps = Speeds.GetSpdLimsMps(TRACK_CLASS);
+        float[] spdLimsMps = Speeds.GetConventionalSpdLimsMps(TRACK_CLASS);
 
         if (level.isRaining()) {
             if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper

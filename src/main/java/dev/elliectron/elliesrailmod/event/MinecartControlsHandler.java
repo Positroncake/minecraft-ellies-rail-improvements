@@ -16,7 +16,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 @EventBusSubscriber(modid = ElliesRailImprovements.MODID)
-public class MinecartStoppingHandler {
+public class MinecartControlsHandler {
 
     // Base deceleration rates
     public static final double BASE_DECELERATION_RATE = -0.08/20;
@@ -35,13 +35,14 @@ public class MinecartStoppingHandler {
     public static final double BRAKE_EFFECTIVENESS_LOSS_PER_K = 0.0015; // 0.15% per Kelvin above default
     public static final double MIN_BRAKE_EFFECTIVENESS = 0.60; // minimum 60% effectiveness
 
-    // note that the mod does not support minecart linking yet and therefore
-    // , you will have to use other methods, whether it is vanilla or additional mod(s)
+    // note that the mod does not support minecart linking yet, and therefore
+    // you will have to use other methods, whether it is vanilla or additional mod(s)
     public static final double CONNECTED_MINECART_SEARCH_RADIUS = 9.0;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Pre event) {
         Entity entity = event.getEntity();
+        if (event.getEntity().level().isClientSide()) return;
 
         if (!(entity instanceof AbstractMinecart minecart)) return;
         if (minecart.getPassengers().isEmpty()) return;
@@ -105,6 +106,7 @@ public class MinecartStoppingHandler {
     }
 
     private static void updateBrakeTemperature(AbstractMinecart minecart, Player player) {
+        if (minecart.level().isClientSide) return;
         var nbt = minecart.getPersistentData();
 
         // Get current brake temperature (default to 293K if not set)
@@ -141,8 +143,14 @@ public class MinecartStoppingHandler {
         // Store updated temperature
         nbt.putDouble("brake_temperature", currentTemp);
 
+        // gather data to send to client for HUD display
+        double hudBrakeTemp = nbt.getDouble("brake_temperature");
+        int hudSignalAspect = nbt.getInt("signal_aspect");
+        player.sendSystemMessage(Component.literal("HUD_DATA:" + hudBrakeTemp + ":" + hudSignalAspect));
+        // System.out.println(nbt.getDouble("brake_temperature") + " H");
+
         // Optional: Send temperature warnings to player
-        sendTemperatureWarnings(player, currentTemp);
+        // sendTemperatureWarnings(player, currentTemp);
     }
 
     public static double getBrakeEffectiveness(AbstractMinecart minecart) {
@@ -156,16 +164,16 @@ public class MinecartStoppingHandler {
         return Math.max(MIN_BRAKE_EFFECTIVENESS, effectiveness);
     }
 
-    private static void sendTemperatureWarnings(Player player, double currentTemp) {
-        // Only send warnings occasionally to avoid spam
-        if (player.level().getGameTime() % 60 != 0) return; // Every 3 seconds
-
-        // warn every 20 *C
-        double tempCDeg = currentTemp - 273;
-        if (tempCDeg > 20 && tempCDeg % 20 == 0) player.sendSystemMessage(Component.literal(
-                "§e§l[CAUTION] BRAKE TEMP: " + String.format("%.0f°C", tempCDeg)
-                        + " -" + ((currentTemp-DEFAULT_BRAKE_TEMP) * BRAKE_EFFECTIVENESS_LOSS_PER_K * 100) + "% effectiveness"));
-    }
+//    private static void sendTemperatureWarnings(Player player, double currentTemp) {
+//        // Only send warnings occasionally to avoid spam
+//        if (player.level().getGameTime() % 60 != 0) return; // Every 3 seconds
+//
+//        // warn every 20 *C
+//        double tempCDeg = currentTemp - 273;
+//        if (tempCDeg > 20 && tempCDeg % 20 == 0) player.sendSystemMessage(Component.literal(
+//                "§e§l[CAUTION] BRAKE TEMP: " + String.format("%.0f°C", tempCDeg)
+//                        + " -" + ((currentTemp-DEFAULT_BRAKE_TEMP) * BRAKE_EFFECTIVENESS_LOSS_PER_K * 100) + "% effectiveness"));
+//    }
 
     public static void DecelerateMinecart(AbstractMinecart minecart, boolean isEstop) {
         CompoundTag nbt = minecart.getPersistentData();

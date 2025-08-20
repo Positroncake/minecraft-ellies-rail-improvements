@@ -25,6 +25,9 @@ public class ModItems {
     public static final DeferredItem<Item> POWERED_RAIL_SEGMENT = ITEMS.register("powered_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
     public static final DeferredItem<Item> POWERED_PREMIUM_RAIL_SEGMENT = ITEMS.register("powered_premium_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
 
+    public static final DeferredItem<Item> UNFINISHED_REACTION_RAIL_SEGMENT = ITEMS.register("unfinished_reaction_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
+    public static final DeferredItem<Item> REACTION_RAIL_SEGMENT = ITEMS.register("reaction_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

@@ -1,12 +1,12 @@
-{
+﻿{
   "type": "minecraft:blasting",
   "category": "misc",
   "cookingtime": 60,
   "experience": 0.2,
   "ingredient": {
-    "item": "elliesrailmod:powered_rail_segment"
+    "item": "elliesrailmod:unfinished_reaction_rail_segment"
   },
   "result": {
-    "id": "elliesrailmod:powered_premium_rail_segment"
+    "id": "elliesrailmod:reaction_rail_segment"
   }
 }

@@ -21,12 +21,11 @@ import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraft.world.phys.Vec3;
 
 @SuppressWarnings("DuplicatedCode")
-public class PoweredClass3Rail extends RailBlock {
+public class LinearInductionRail extends RailBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-    public static final double ACCEL_BUFFER = Acceleration.MAX_ACCEL_750V/20;
-    private static final int TRACK_CLASS = 3;
+    public static final double ACCEL_BUFFER = Acceleration.MAX_ACCEL_650V/20;
 
-    public PoweredClass3Rail(BlockBehaviour.Properties properties) {
+    public LinearInductionRail(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(POWERED, false));
     }
@@ -72,7 +71,7 @@ public class PoweredClass3Rail extends RailBlock {
             }
 
             // Check if there's powered custom rail redstone wire on an adjacent block
-            if (adjacentState.getBlock() instanceof Electrification750V) {
+            if (adjacentState.getBlock() instanceof Electrification650V) {
                 int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
                 if (power > 0) {
                     return true;
@@ -86,6 +85,8 @@ public class PoweredClass3Rail extends RailBlock {
     // Custom acceleration logic
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (level.isClientSide) return;
+
         if (entity instanceof AbstractMinecart cart) {
             CompoundTag nbt = cart.getPersistentData();
             boolean isPowered = state.getValue(POWERED);
@@ -125,7 +126,7 @@ public class PoweredClass3Rail extends RailBlock {
                     double currSpd = Math.sqrt(motionMpt.x * motionMpt.x + motionMpt.z * motionMpt.z);
                     // System.out.println("current " + currSpd + " vs limit " + proceedSpdLim);
                     if (currSpd <= proceedSpdLim) {
-                        Vec3 accelAmountT = Acceleration.Calc750VAccelMpt(motionMpt, getRailShape(state));
+                        Vec3 accelAmountT = Acceleration.Calc650VAccelMpt(motionMpt, getRailShape(state));
                         cart.setDeltaMovement(motionMpt.add(accelAmountT));
                     }
                 }
@@ -141,7 +142,7 @@ public class PoweredClass3Rail extends RailBlock {
                     // as a value of 9.98 would give the minecart extra momentum equal to 10.01 (and the if statement therefore fails such
                     // a condition (9.97 <= 10.00 - 0.03, but 9.98 </= 10.00 - 0.03))
                     if (currSpd <= ovrdSpdLim - ACCEL_BUFFER) {
-                        Vec3 accelAmountT = Acceleration.Calc750VAccelMpt(motionMpt, getRailShape(state));
+                        Vec3 accelAmountT = Acceleration.Calc650VAccelMpt(motionMpt, getRailShape(state));
                         cart.setDeltaMovement(motionMpt.add(accelAmountT));
                     }
                 }
@@ -160,20 +161,13 @@ public class PoweredClass3Rail extends RailBlock {
 
     @Override
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-        float[] spdLimsMps = Speeds.GetConventionalSpdLimsMps(TRACK_CLASS);
+        float[] spdLimsMps = Speeds.GetLinearInductionSpdLimsMps();
 
-        if (level.isRaining()) {
-            if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper
-                    || cart instanceof MinecartTNT || cart instanceof MinecartCommandBlock || cart instanceof MinecartSpawner) {
-                return spdLimsMps[0] / 20f; // Slowest when freight carts are on wet tracks
-            }
-            return spdLimsMps[1] / 20f; // Reduced speed for freight carts on dry tracks
-        }
-        if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper
-                || cart instanceof MinecartTNT || cart instanceof MinecartCommandBlock || cart instanceof MinecartSpawner) {
-            return spdLimsMps[2] / 20f; // Slower speed when passenger carts are on wet tracks
-        }
-        return spdLimsMps[3] / 20f; // Full speed for passenger carts on dry tracks
+        // slightly reduced speed for passenger carts on wet tracks
+        if (level.isRaining()) return spdLimsMps[0] / 20f;
+
+        // full speed for passenger carts on dry tracks
+        return spdLimsMps[1] / 20f;
     }
 
     private boolean holdingSignalById(AbstractMinecart cart, String id) {

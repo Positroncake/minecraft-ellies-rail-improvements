@@ -41,6 +41,8 @@ public class ModBlocks {
             () -> new Class5Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.RAIL)));
     public static final DeferredBlock<PoweredClass5Rail> POWERED_RAIL_CLASS_5 = registerBlock("powered_rail_class_5",
             () -> new PoweredClass5Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.POWERED_RAIL)));
+    public static final DeferredBlock<LinearInductionRail> LINEAR_INDUCTION_RAIL = registerBlock("linear_induction_rail",
+            () -> new LinearInductionRail(BlockBehaviour.Properties.ofFullCopy(Blocks.POWERED_RAIL)));
 
     public static final DeferredBlock<Class4Intersection> INTERSECTION_CLASS_4 = registerBlock("rail_intersection",
             () -> new Class4Intersection(BlockBehaviour.Properties.ofFullCopy(Blocks.RAIL)));

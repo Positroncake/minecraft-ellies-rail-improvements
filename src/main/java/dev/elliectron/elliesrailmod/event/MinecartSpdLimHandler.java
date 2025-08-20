@@ -14,7 +14,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
-import static dev.elliectron.elliesrailmod.event.MinecartStoppingHandler.*;
+import static dev.elliectron.elliesrailmod.event.MinecartControlsHandler.*;
 
 @SuppressWarnings("DuplicatedCode")
 @EventBusSubscriber(modid = ElliesRailImprovements.MODID)
@@ -30,6 +30,7 @@ public class MinecartSpdLimHandler {
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Pre event) {
         Entity entity = event.getEntity();
+        if (event.getEntity().level().isClientSide()) return;
 
         if (!(entity instanceof AbstractMinecart minecart)) return;
         if (minecart.getPassengers().isEmpty()) return;
@@ -68,6 +69,7 @@ public class MinecartSpdLimHandler {
     }
 
     private static void applySpdLimFromNbt(AbstractMinecart minecart) {
+        if (minecart.level().isClientSide) return;
         CompoundTag nbt = minecart.getPersistentData();
 
         // check if minecart max speed exists, and set it as the max speed if exists
@@ -100,6 +102,7 @@ public class MinecartSpdLimHandler {
     }
 
     private static void updateBrakeTemperature(AbstractMinecart minecart) {
+        if (minecart.level().isClientSide) return;
         var nbt = minecart.getPersistentData();
 
         // Get current brake temperature (default to 293K if not set)
@@ -117,7 +120,7 @@ public class MinecartSpdLimHandler {
 
         nbt.putDouble("brake_temperature", currentTemp);
 
-        // System.out.println(nbt.getDouble("brake_temperature") + "");
+        // System.out.println(nbt.getDouble("brake_temperature") + " S");
     }
 
     private static double calcDynamicDecelRate(AbstractMinecart minecart) {

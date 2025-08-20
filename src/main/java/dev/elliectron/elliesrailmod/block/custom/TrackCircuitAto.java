@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.phys.Vec3;
 
 @SuppressWarnings("DuplicatedCode")
 public class TrackCircuitAto extends DetectorRailBlock {
@@ -87,7 +86,7 @@ public class TrackCircuitAto extends DetectorRailBlock {
 
     @Override
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-        float[] spdLimsMps = Speeds.GetSpdLimsMps(TRACK_CLASS);
+        float[] spdLimsMps = Speeds.GetConventionalSpdLimsMps(TRACK_CLASS);
 
         if (level.isRaining()) {
             if (cart instanceof MinecartChest || cart instanceof MinecartFurnace || cart instanceof MinecartHopper
