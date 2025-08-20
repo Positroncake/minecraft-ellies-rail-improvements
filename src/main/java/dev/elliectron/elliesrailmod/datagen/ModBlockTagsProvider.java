@@ -32,7 +32,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.LINEAR_INDUCTION_RAIL.get())
                 .add(ModBlocks.INTERSECTION_CLASS_4.get())
                 .add(ModBlocks.TRACK_CIRCUIT_SIGNAL.get())
-                .add(ModBlocks.TRACK_CIRCUIT_CROR.get())
                 .add(ModBlocks.TRACK_CIRCUIT_ATP.get())
                 .add(ModBlocks.TRACK_CIRCUIT_ATO.get());
 
@@ -51,7 +50,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.LINEAR_INDUCTION_RAIL.get())
                 .add(ModBlocks.INTERSECTION_CLASS_4.get())
                 .add(ModBlocks.TRACK_CIRCUIT_SIGNAL.get())
-                .add(ModBlocks.TRACK_CIRCUIT_CROR.get())
                 .add(ModBlocks.TRACK_CIRCUIT_ATP.get())
                 .add(ModBlocks.TRACK_CIRCUIT_ATO.get());
 
@@ -70,7 +68,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.LINEAR_INDUCTION_RAIL.get())
                 .add(ModBlocks.INTERSECTION_CLASS_4.get())
                 .add(ModBlocks.TRACK_CIRCUIT_SIGNAL.get())
-                .add(ModBlocks.TRACK_CIRCUIT_CROR.get())
                 .add(ModBlocks.TRACK_CIRCUIT_ATP.get())
                 .add(ModBlocks.TRACK_CIRCUIT_ATO.get());
     }

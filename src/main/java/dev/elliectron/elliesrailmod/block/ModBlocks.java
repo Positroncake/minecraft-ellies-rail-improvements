@@ -48,8 +48,6 @@ public class ModBlocks {
             () -> new Class4Intersection(BlockBehaviour.Properties.ofFullCopy(Blocks.RAIL)));
     public static final DeferredBlock<TrackCircuitSignal> TRACK_CIRCUIT_SIGNAL = registerBlock("track_circuit_signal",
             () -> new TrackCircuitSignal(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL)));
-    public static final DeferredBlock<TrackCircuitCror> TRACK_CIRCUIT_CROR = registerBlock("track_circuit_cror",
-            () -> new TrackCircuitCror(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL)));
     public static final DeferredBlock<TrackCircuitAtp> TRACK_CIRCUIT_ATP = registerBlock("track_circuit_atp",
             () -> new TrackCircuitAtp(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL)));
     public static final DeferredBlock<TrackCircuitAto> TRACK_CIRCUIT_ATO = registerBlock("track_circuit_ato",

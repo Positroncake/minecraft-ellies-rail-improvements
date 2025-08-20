@@ -1,5 +1,6 @@
 package dev.elliectron.elliesrailmod.block.custom;
 
+import dev.elliectron.elliesrailmod.event.MinecartSpdLimHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -25,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
 public class TrackCircuitSignal extends DetectorRailBlock {
     private static final int TRACK_CLASS = 5;
     private static final double NATURAL_FRICTION_DECEL = 0.0008/20.0;
-    public static final IntegerProperty SIGNAL_TYPE = IntegerProperty.create("signal_type", 0, 4);
+    public static final IntegerProperty SIGNAL_TYPE = IntegerProperty.create("signal_type", 0, 9);
 
     public TrackCircuitSignal(BlockBehaviour.Properties properties) {
         super(properties);
@@ -81,12 +82,17 @@ public class TrackCircuitSignal extends DetectorRailBlock {
     }
 
     private int sigStrengthToSigType(int signalStrength) {
-        if (signalStrength > 4) return 4;
+        if (signalStrength > 9) return 9;
         // 0 = stop
         // 1 = Estop
         // 2 = normal stop
         // 3 = switch alignment to alternate
         // 4 = proceed
+        // 5 = restrict
+        // 6 = diverging
+        // 7 = medium
+        // 8 = limited
+        // 9 = clear limits
         return signalStrength;
     }
 
@@ -160,9 +166,20 @@ public class TrackCircuitSignal extends DetectorRailBlock {
                     nbt.putInt("signal_aspect", -2);
                 } else if (signalType == 2) { // signal-enforced stop signal, normal decel rate
                     nbt.putInt("signal_aspect", -3);
-                } else if (signalType == 4) { // proceed signal: only remove normal or signalBrake
+                } // {else if signalType is 3} is handled in the overridden getSignal and getDirectSignal methods
+                else if (signalType == 4) { // proceed signal: only remove normal or signalBrake
                     int aspect = nbt.getInt("signal_aspect");
                     if (aspect == -1 || aspect == -3) nbt.remove("signal_aspect");
+                } else if (signalType == 5) {
+                    nbt.putFloat("signal_spdlim", MinecartSpdLimHandler.SPEED_RESTRICTED_MPT);
+                } else if (signalType == 6) {
+                    nbt.putFloat("signal_spdlim", MinecartSpdLimHandler.SPEED_DIVERGING_MPT);
+                } else if (signalType == 7) {
+                    nbt.putFloat("signal_spdlim", MinecartSpdLimHandler.SPEED_MEDIUM_MPT);
+                } else if (signalType == 8) {
+                    nbt.putFloat("signal_spdlim", MinecartSpdLimHandler.SPEED_LIMITED_MPT);
+                } else if (signalType == 9) {
+                    nbt.remove("signal_spdlim");
                 }
             }
         }

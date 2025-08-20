@@ -33,6 +33,41 @@
     "signal_type=4,shape=ascending_east": {"model": "elliesrailmod:block/track_circuit_proceed_asc_ne", "y": 90},
     "signal_type=4,shape=ascending_west": {"model": "elliesrailmod:block/track_circuit_proceed_asc_sw", "y": 90},
     "signal_type=4,shape=ascending_north": {"model": "elliesrailmod:block/track_circuit_proceed_asc_ne"},
-    "signal_type=4,shape=ascending_south": {"model": "elliesrailmod:block/track_circuit_proceed_asc_sw"}
+    "signal_type=4,shape=ascending_south": {"model": "elliesrailmod:block/track_circuit_proceed_asc_sw"},
+
+    "signal_type=5,shape=north_south": {"model": "elliesrailmod:block/track_circuit_cror"},
+    "signal_type=5,shape=east_west": {"model": "elliesrailmod:block/track_circuit_cror", "y": 90},
+    "signal_type=5,shape=ascending_east": {"model": "elliesrailmod:block/track_circuit_cror_asc_ne", "y": 90},
+    "signal_type=5,shape=ascending_west": {"model": "elliesrailmod:block/track_circuit_cror_asc_sw", "y": 90},
+    "signal_type=5,shape=ascending_north": {"model": "elliesrailmod:block/track_circuit_cror_asc_ne"},
+    "signal_type=5,shape=ascending_south": {"model": "elliesrailmod:block/track_circuit_cror_asc_sw"},
+
+    "signal_type=6,shape=north_south": {"model": "elliesrailmod:block/track_circuit_cror"},
+    "signal_type=6,shape=east_west": {"model": "elliesrailmod:block/track_circuit_cror", "y": 90},
+    "signal_type=6,shape=ascending_east": {"model": "elliesrailmod:block/track_circuit_cror_asc_ne", "y": 90},
+    "signal_type=6,shape=ascending_west": {"model": "elliesrailmod:block/track_circuit_cror_asc_sw", "y": 90},
+    "signal_type=6,shape=ascending_north": {"model": "elliesrailmod:block/track_circuit_cror_asc_ne"},
+    "signal_type=6,shape=ascending_south": {"model": "elliesrailmod:block/track_circuit_cror_asc_sw"},
+
+    "signal_type=7,shape=north_south": {"model": "elliesrailmod:block/track_circuit_cror"},
+    "signal_type=7,shape=east_west": {"model": "elliesrailmod:block/track_circuit_cror", "y": 90},
+    "signal_type=7,shape=ascending_east": {"model": "elliesrailmod:block/track_circuit_cror_asc_ne", "y": 90},
+    "signal_type=7,shape=ascending_west": {"model": "elliesrailmod:block/track_circuit_cror_asc_sw", "y": 90},
+    "signal_type=7,shape=ascending_north": {"model": "elliesrailmod:block/track_circuit_cror_asc_ne"},
+    "signal_type=7,shape=ascending_south": {"model": "elliesrailmod:block/track_circuit_cror_asc_sw"},
+
+    "signal_type=8,shape=north_south": {"model": "elliesrailmod:block/track_circuit_cror"},
+    "signal_type=8,shape=east_west": {"model": "elliesrailmod:block/track_circuit_cror", "y": 90},
+    "signal_type=8,shape=ascending_east": {"model": "elliesrailmod:block/track_circuit_cror_asc_ne", "y": 90},
+    "signal_type=8,shape=ascending_west": {"model": "elliesrailmod:block/track_circuit_cror_asc_sw", "y": 90},
+    "signal_type=8,shape=ascending_north": {"model": "elliesrailmod:block/track_circuit_cror_asc_ne"},
+    "signal_type=8,shape=ascending_south": {"model": "elliesrailmod:block/track_circuit_cror_asc_sw"},
+
+    "signal_type=9,shape=north_south": {"model": "elliesrailmod:block/track_circuit_cror_clear"},
+    "signal_type=9,shape=east_west": {"model": "elliesrailmod:block/track_circuit_cror_clear", "y": 90},
+    "signal_type=9,shape=ascending_east": {"model": "elliesrailmod:block/track_circuit_cror_clear_asc_ne", "y": 90},
+    "signal_type=9,shape=ascending_west": {"model": "elliesrailmod:block/track_circuit_cror_clear_asc_sw", "y": 90},
+    "signal_type=9,shape=ascending_north": {"model": "elliesrailmod:block/track_circuit_cror_clear_asc_ne"},
+    "signal_type=9,shape=ascending_south": {"model": "elliesrailmod:block/track_circuit_cror_clear_asc_sw"}
   }
 }

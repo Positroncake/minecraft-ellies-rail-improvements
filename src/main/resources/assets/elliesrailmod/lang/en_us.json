@@ -14,9 +14,6 @@
   "item.elliesrailmod.powered_rail_segment": "Powered Rail Segment",
   "item.elliesrailmod.powered_premium_rail_segment": "Premium Powered Rail Segment",
 
-  "item.elliesrailmod.unfinished_reaction_rail_segment": "Unfinished Reaction Rail Segment",
-  "item.elliesrailmod.reaction_rail_segment": "Reaction Rail Segment",
-
   "block.elliesrailmod.rail_intersection": "Intersection Rail",
   "block.elliesrailmod.rail_class_1": "Class 1 Rail (12.5 mph max)",
   "block.elliesrailmod.powered_rail_class_1": "Class 1 Powered Rail (12.5 mph max)",
@@ -28,10 +25,13 @@
   "block.elliesrailmod.powered_rail_class_4": "Class 4 Powered Rail (65 mph max)",
   "block.elliesrailmod.rail_class_5": "Class 5 Rail (100 mph max)",
   "block.elliesrailmod.powered_rail_class_5": "Class 5 Powered Rail (100 mph max)",
+
+  "item.elliesrailmod.unfinished_reaction_rail_segment": "Unfinished Reaction Rail Segment",
+  "item.elliesrailmod.reaction_rail_segment": "Reaction Rail Segment",
   "block.elliesrailmod.linear_induction_rail": "Linear Induction Rail (90 km/h max)",
 
-  "block.elliesrailmod.track_circuit_signal": "Track Circuit (Block signalling)",
-  "block.elliesrailmod.track_circuit_cror": "Track Circuit (CROR speeds)",
-  "block.elliesrailmod.track_circuit_atp": "Track Circuit (Automatic Train Protection)",
-  "block.elliesrailmod.track_circuit_ato": "Track Circuit (Automatic Train Operation)"
+  "block.elliesrailmod.track_circuit_signal": "Basic Block Signalling Track Circuit",
+  "block.elliesrailmod.track_circuit_cror": "Basic Speed Control Track Circuit",
+  "block.elliesrailmod.track_circuit_atp": "Automatic Train Protection Track Circuit",
+  "block.elliesrailmod.track_circuit_ato": "Automatic Train Operation Track Circuit"
 }

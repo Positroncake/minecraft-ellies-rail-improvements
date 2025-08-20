@@ -13,7 +13,6 @@
     "elliesrailmod:linear_induction_rail",
     "elliesrailmod:rail_intersection",
     "elliesrailmod:track_circuit_signal",
-    "elliesrailmod:track_circuit_cror",
     "elliesrailmod:track_circuit_atp",
     "elliesrailmod:track_circuit_ato"
   ]
