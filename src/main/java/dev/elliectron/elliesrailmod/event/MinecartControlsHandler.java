@@ -144,9 +144,13 @@ public class MinecartControlsHandler {
         nbt.putDouble("brake_temperature", currentTemp);
 
         // gather data to send to client for HUD display
-        double hudBrakeTemp = nbt.getDouble("brake_temperature");
-        int hudSignalAspect = nbt.getInt("signal_aspect");
-        player.sendSystemMessage(Component.literal("HUD_DATA:" + hudBrakeTemp + ":" + hudSignalAspect));
+        // send every 1.0 seconds, and stagger for each minecart to avoid
+        // lag/load spikes (if many people are riding minecarts)
+        if ((minecart.level().getGameTime() + minecart.getId()) % 20 == 0) {
+            double hudBrakeTemp = nbt.getDouble("brake_temperature");
+            int hudSignalAspect = nbt.getInt("signal_aspect");
+            player.sendSystemMessage(Component.literal("HUD_DATA:" + hudBrakeTemp + ":" + hudSignalAspect));
+        }
         // System.out.println(nbt.getDouble("brake_temperature") + " H");
 
         // Optional: Send temperature warnings to player
