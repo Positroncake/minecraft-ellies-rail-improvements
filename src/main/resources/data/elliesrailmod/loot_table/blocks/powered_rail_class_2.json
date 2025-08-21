@@ -1,0 +1,57 @@
+﻿{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "elliesrailmod:powered_rail_segment",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 3,
+              "add": false
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "elliesrailmod:rail_segment",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 3,
+              "add": false
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_nugget",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 1,
+              "add": false
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "elliesrailmod:blocks/powered_rail_class_2"
+}

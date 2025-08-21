@@ -37,6 +37,8 @@ public class Class1Rail extends RailBlock {
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (level.isClientSide) return;
+
         if (entity instanceof AbstractMinecart cart) {
             // check to see the minecart came from a class 5+ rail, which is signified by the presence of a 'spd' NBT tag
             // , as class 4- rails do not rely on the custom speed system

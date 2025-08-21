@@ -1,0 +1,40 @@
+﻿{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "elliesrailmod:premium_rail_segment",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 6,
+              "add": false
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "elliesrailmod:iron_nugget",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 1,
+              "add": false
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "elliesrailmod:blocks/rail_class_3"
+}

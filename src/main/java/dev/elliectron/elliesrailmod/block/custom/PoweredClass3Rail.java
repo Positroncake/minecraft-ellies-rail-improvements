@@ -86,6 +86,8 @@ public class PoweredClass3Rail extends RailBlock {
     // Custom acceleration logic
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (level.isClientSide) return;
+
         if (entity instanceof AbstractMinecart cart) {
             CompoundTag nbt = cart.getPersistentData();
             boolean isPowered = state.getValue(POWERED);
