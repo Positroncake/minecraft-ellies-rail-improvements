@@ -57,7 +57,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_ingot",
+          "name": "minecraft:copper_ingot",
           "functions": [
             {
               "function": "minecraft:set_count",
