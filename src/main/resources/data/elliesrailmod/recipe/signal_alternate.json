@@ -2,16 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "pattern": [
-    "B  ",
     " A ",
-    "   "
+    "A  ",
+    " A "
   ],
   "key": {
     "A": {
-      "item": "elliesrailmod:rail_segment"
-    },
-    "B": {
-      "tag": "minecraft:copper_nugget"
+      "item": "elliesrailmod:signal_component"
     }
   },
   "result": {

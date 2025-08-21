@@ -3,15 +3,12 @@
   "category": "redstone",
   "pattern": [
     "   ",
-    " A ",
-    "  B"
+    "AAA",
+    " A "
   ],
   "key": {
     "A": {
-      "item": "elliesrailmod:rail_segment"
-    },
-    "B": {
-      "tag": "minecraft:copper_nugget"
+      "item": "elliesrailmod:signal_component"
     }
   },
   "result": {
