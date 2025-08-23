@@ -71,7 +71,7 @@ public class LinearInductionRail extends RailBlock {
             }
 
             // Check if there's powered custom rail redstone wire on an adjacent block
-            if (adjacentState.getBlock() instanceof Electrification650V) {
+            if (adjacentState.getBlock() instanceof Elec650VWalkway) {
                 int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
                 if (power > 0) {
                     return true;

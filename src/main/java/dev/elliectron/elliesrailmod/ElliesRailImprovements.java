@@ -95,6 +95,7 @@ public class ElliesRailImprovements {
             event.accept(ModBlocks.TRACK_CIRCUIT_SIGNAL);
             event.accept(ModBlocks.TRACK_CIRCUIT_ATP);
             event.accept(ModBlocks.TRACK_CIRCUIT_ATO);
+            event.accept(ModBlocks.ELEC_650V_WALKWAY);
         }
     }
 

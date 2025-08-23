@@ -51,6 +51,9 @@ public class ModBlocks {
     public static final DeferredBlock<TrackCircuitAto> TRACK_CIRCUIT_ATO = registerBlock("track_circuit_ato",
             () -> new TrackCircuitAto(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL).requiresCorrectToolForDrops().strength(2.75f, 8f)));
 
+    public static final DeferredBlock<Elec650VWalkway> ELEC_650V_WALKWAY = registerBlock("elec_650v_walkway",
+            () -> new Elec650VWalkway(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WIRE).requiresCorrectToolForDrops().strength(3f, 12f)));
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

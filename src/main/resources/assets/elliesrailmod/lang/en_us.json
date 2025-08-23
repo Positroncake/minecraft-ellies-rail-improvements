@@ -33,5 +33,7 @@
   "block.elliesrailmod.track_circuit_signal": "Basic Block Signalling Track Circuit",
   "block.elliesrailmod.track_circuit_cror": "Basic Speed Control Track Circuit",
   "block.elliesrailmod.track_circuit_atp": "Automatic Train Protection Track Circuit",
-  "block.elliesrailmod.track_circuit_ato": "Automatic Train Operation Track Circuit"
+  "block.elliesrailmod.track_circuit_ato": "Automatic Train Operation Track Circuit",
+
+  "block.elliesrailmod.elec_650v_walkway": "650V Electrification with Walkway"
 }
