@@ -81,6 +81,7 @@ public class MinecartSpdLimHandler {
             double spd = nbt.getDouble("spd");
             if (spd <= maxSpeed) return;
 
+            nbt.putInt("signal_aspect", -3);
             double dynDecelRate = calcDynamicDecelRate(minecart);
             dynDecelRate += spd;
             nbt.putDouble("spd", dynDecelRate);
@@ -93,6 +94,7 @@ public class MinecartSpdLimHandler {
             }
             if (currSpd <= maxSpeed) return;
 
+            nbt.putInt("signal_aspect", -3);
             double dynamicDecelerationRate = calcDynamicDecelRate(minecart);
             Vec3 decelAmount = calcDecelAmount(motion.x, motion.y, motion.z, dynamicDecelerationRate);
             minecart.setDeltaMovement(motion.add(decelAmount));

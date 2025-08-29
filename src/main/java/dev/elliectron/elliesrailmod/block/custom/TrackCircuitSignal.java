@@ -116,7 +116,7 @@ public class TrackCircuitSignal extends DetectorRailBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (entity instanceof AbstractMinecart cart) {
+        if (!level.isClientSide && entity instanceof AbstractMinecart cart) {
             CompoundTag nbt = cart.getPersistentData();
 
             // if minecart has NBT "spd", it is running on class5+ track
@@ -166,7 +166,7 @@ public class TrackCircuitSignal extends DetectorRailBlock {
                     nbt.putInt("signal_aspect", -2);
                 } else if (signalType == 2) { // signal-enforced stop signal, normal decel rate
                     nbt.putInt("signal_aspect", -3);
-                } // {else if signalType is 3} is handled in the overridden getSignal and getDirectSignal methods
+                } // {else if signalType is 3} which was originally for activating the switch, has had its functionality moved to TrackCircuitSwitch. numbers are not changed in order to not mess up existing circuitry
                 else if (signalType == 4) { // proceed signal: only remove normal or signalBrake
                     int aspect = nbt.getInt("signal_aspect");
                     if (aspect == -1 || aspect == -3) nbt.remove("signal_aspect");
@@ -205,19 +205,5 @@ public class TrackCircuitSignal extends DetectorRailBlock {
             }
         }
         return false;
-    }
-
-    // Unidirectionally-emitted signal
-    @Override
-    protected int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
-        int signalType = blockState.getValue(SIGNAL_TYPE);
-        return signalType == 3 ? 2 : 0;
-    }
-
-    // Directionally-emitted signal
-    @Override
-    protected int getDirectSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
-        int signalType = blockState.getValue(SIGNAL_TYPE);
-        return (side == Direction.UP && signalType == 3) ? 2 : 0;
     }
 }

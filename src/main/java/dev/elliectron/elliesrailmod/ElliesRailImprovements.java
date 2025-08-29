@@ -57,6 +57,7 @@ public class ElliesRailImprovements {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.POWERED_RAIL_CLASS_5.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.LINEAR_INDUCTION_RAIL.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.INTERSECTION_CLASS_4.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.TRACK_CIRCUIT_SWITCH.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.TRACK_CIRCUIT_SIGNAL.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.TRACK_CIRCUIT_ATP.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.TRACK_CIRCUIT_ATO.get(), RenderType.cutout());
@@ -81,21 +82,31 @@ public class ElliesRailImprovements {
             event.accept(ModItems.UNFINISHED_REACTION_RAIL_SEGMENT);
             event.accept(ModItems.REACTION_RAIL_SEGMENT);
             event.accept(ModBlocks.RAIL_CLASS_1);
-            event.accept(ModBlocks.POWERED_RAIL_CLASS_1);
             event.accept(ModBlocks.RAIL_CLASS_2);
-            event.accept(ModBlocks.POWERED_RAIL_CLASS_2);
             event.accept(ModBlocks.RAIL_CLASS_3);
-            event.accept(ModBlocks.POWERED_RAIL_CLASS_3);
             event.accept(ModBlocks.RAIL_CLASS_4);
-            event.accept(ModBlocks.POWERED_RAIL_CLASS_4);
             event.accept(ModBlocks.RAIL_CLASS_5);
-            event.accept(ModBlocks.POWERED_RAIL_CLASS_5);
             event.accept(ModBlocks.LINEAR_INDUCTION_RAIL);
+            event.accept(ModBlocks.POWERED_RAIL_CLASS_1);
+            event.accept(ModBlocks.POWERED_RAIL_CLASS_2);
+            event.accept(ModBlocks.POWERED_RAIL_CLASS_3);
+            event.accept(ModBlocks.POWERED_RAIL_CLASS_4);
+            event.accept(ModBlocks.POWERED_RAIL_CLASS_5);
             event.accept(ModBlocks.INTERSECTION_CLASS_4);
+            event.accept(ModBlocks.TRACK_CIRCUIT_SWITCH);
             event.accept(ModBlocks.TRACK_CIRCUIT_SIGNAL);
             event.accept(ModBlocks.TRACK_CIRCUIT_ATP);
             event.accept(ModBlocks.TRACK_CIRCUIT_ATO);
+            event.accept(ModBlocks.ELEC_600V_BARE);
+            event.accept(ModBlocks.ELEC_650V_BARE);
+            event.accept(ModBlocks.ELEC_750V_BARE);
+            event.accept(ModBlocks.ELEC_25kV_BARE);
+            event.accept(ModBlocks.VVVFVCF_GENERATOR_BARE);
+            event.accept(ModBlocks.ELEC_600V_WALKWAY);
             event.accept(ModBlocks.ELEC_650V_WALKWAY);
+            event.accept(ModBlocks.ELEC_750V_WALKWAY);
+            event.accept(ModBlocks.ELEC_25kV_WALKWAY);
+            event.accept(ModBlocks.VVVFVCF_GENERATOR_WALKWAY);
         }
     }
 

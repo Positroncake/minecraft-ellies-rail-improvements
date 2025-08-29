@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "switch_state=0,shape=north_south": {"model": "elliesrailmod:block/track_circuit_off_class5"},
+    "switch_state=0,shape=east_west": {"model": "elliesrailmod:block/track_circuit_off_class5", "y": 90},
+    "switch_state=0,shape=ascending_east": {"model": "elliesrailmod:block/track_circuit_off_class5_asc_ne", "y": 90},
+    "switch_state=0,shape=ascending_west": {"model": "elliesrailmod:block/track_circuit_off_class5_asc_sw", "y": 90},
+    "switch_state=0,shape=ascending_north": {"model": "elliesrailmod:block/track_circuit_off_class5_asc_ne"},
+    "switch_state=0,shape=ascending_south": {"model": "elliesrailmod:block/track_circuit_off_class5_asc_sw"},
+
+    "switch_state=1,shape=north_south": {"model": "elliesrailmod:block/track_circuit_off_class5"},
+    "switch_state=1,shape=east_west": {"model": "elliesrailmod:block/track_circuit_off_class5", "y": 90},
+    "switch_state=1,shape=ascending_east": {"model": "elliesrailmod:block/track_circuit_off_class5_asc_ne", "y": 90},
+    "switch_state=1,shape=ascending_west": {"model": "elliesrailmod:block/track_circuit_off_class5_asc_sw", "y": 90},
+    "switch_state=1,shape=ascending_north": {"model": "elliesrailmod:block/track_circuit_off_class5_asc_ne"},
+    "switch_state=1,shape=ascending_south": {"model": "elliesrailmod:block/track_circuit_off_class5_asc_sw"},
+
+    "switch_state=2,shape=north_south": {"model": "elliesrailmod:block/track_circuit_switch"},
+    "switch_state=2,shape=east_west": {"model": "elliesrailmod:block/track_circuit_switch", "y": 90},
+    "switch_state=2,shape=ascending_east": {"model": "elliesrailmod:block/track_circuit_switch_asc_ne", "y": 90},
+    "switch_state=2,shape=ascending_west": {"model": "elliesrailmod:block/track_circuit_switch_asc_sw", "y": 90},
+    "switch_state=2,shape=ascending_north": {"model": "elliesrailmod:block/track_circuit_switch_asc_ne"},
+    "switch_state=2,shape=ascending_south": {"model": "elliesrailmod:block/track_circuit_switch_asc_sw"}
+  }
+}

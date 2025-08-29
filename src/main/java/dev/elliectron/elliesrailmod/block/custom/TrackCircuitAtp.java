@@ -104,7 +104,7 @@ public class TrackCircuitAtp extends DetectorRailBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (entity instanceof AbstractMinecart cart) {
+        if (!level.isClientSide && entity instanceof AbstractMinecart cart) {
             CompoundTag nbt = cart.getPersistentData();
             System.out.println(20.0*nbt.getDouble("signal_spdlim")*2.23694);
 

@@ -44,6 +44,8 @@ public class ModBlocks {
 
     public static final DeferredBlock<Class4Intersection> INTERSECTION_CLASS_4 = registerBlock("rail_intersection",
             () -> new Class4Intersection(BlockBehaviour.Properties.ofFullCopy(Blocks.RAIL).requiresCorrectToolForDrops().strength(2.5f, 7.5f)));
+    public static final DeferredBlock<TrackCircuitSwitch> TRACK_CIRCUIT_SWITCH = registerBlock("track_circuit_switch",
+            () -> new TrackCircuitSwitch(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL).requiresCorrectToolForDrops().strength(2.75f, 8f)));
     public static final DeferredBlock<TrackCircuitSignal> TRACK_CIRCUIT_SIGNAL = registerBlock("track_circuit_signal",
             () -> new TrackCircuitSignal(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL).requiresCorrectToolForDrops().strength(2.75f, 8f)));
     public static final DeferredBlock<TrackCircuitAtp> TRACK_CIRCUIT_ATP = registerBlock("track_circuit_atp",
@@ -51,8 +53,26 @@ public class ModBlocks {
     public static final DeferredBlock<TrackCircuitAto> TRACK_CIRCUIT_ATO = registerBlock("track_circuit_ato",
             () -> new TrackCircuitAto(BlockBehaviour.Properties.ofFullCopy(Blocks.DETECTOR_RAIL).requiresCorrectToolForDrops().strength(2.75f, 8f)));
 
+    public static final DeferredBlock<Elec600VBare> ELEC_600V_BARE = registerBlock("elec_600v_bare",
+            () -> new Elec600VBare(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WIRE).requiresCorrectToolForDrops().strength(2.5f, 8f)));
+    public static final DeferredBlock<Elec650VBare> ELEC_650V_BARE = registerBlock("elec_650v_bare",
+            () -> new Elec650VBare(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WIRE).requiresCorrectToolForDrops().strength(2.5f, 8f)));
+    public static final DeferredBlock<Elec750VBare> ELEC_750V_BARE = registerBlock("elec_750v_bare",
+            () -> new Elec750VBare(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WIRE).requiresCorrectToolForDrops().strength(2.5f, 8f)));
+    public static final DeferredBlock<Elec25kVBare> ELEC_25kV_BARE = registerBlock("elec_25kv_bare",
+            () -> new Elec25kVBare(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WIRE).requiresCorrectToolForDrops().strength(2.5f, 8f)));
+    public static final DeferredBlock<Elec600VWalkway> ELEC_600V_WALKWAY = registerBlock("elec_600v_walkway",
+            () -> new Elec600VWalkway(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WIRE).requiresCorrectToolForDrops().strength(3f, 12f)));
     public static final DeferredBlock<Elec650VWalkway> ELEC_650V_WALKWAY = registerBlock("elec_650v_walkway",
             () -> new Elec650VWalkway(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WIRE).requiresCorrectToolForDrops().strength(3f, 12f)));
+    public static final DeferredBlock<Elec750VWalkway> ELEC_750V_WALKWAY = registerBlock("elec_750v_walkway",
+            () -> new Elec750VWalkway(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WIRE).requiresCorrectToolForDrops().strength(3f, 12f)));
+    public static final DeferredBlock<Elec25kVWalkway> ELEC_25kV_WALKWAY = registerBlock("elec_25kv_walkway",
+            () -> new Elec25kVWalkway(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WIRE).requiresCorrectToolForDrops().strength(3f, 12f)));
+    public static final DeferredBlock<VvvfvcfGeneratorBare> VVVFVCF_GENERATOR_BARE = registerBlock("vvvfvcf_generator_bare",
+            () -> new VvvfvcfGeneratorBare(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_TORCH).requiresCorrectToolForDrops().strength(3.5f, 7f)));
+    public static final DeferredBlock<VvvfvcfGeneratorWalkway> VVVFVCF_GENERATOR_WALKWAY = registerBlock("vvvfvcf_generator_walkway",
+            () -> new VvvfvcfGeneratorWalkway(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_TORCH).requiresCorrectToolForDrops().strength(4f, 11f)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

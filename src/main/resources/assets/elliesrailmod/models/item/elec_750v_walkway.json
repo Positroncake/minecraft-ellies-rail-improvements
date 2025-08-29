@@ -1,0 +1,6 @@
+﻿{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "elliesrailmod:item/elec_750v_walkway_icon"
+  }
+}

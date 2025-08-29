@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "elliesrailmod:item/elec_600v_bare_icon"
+  }
+}

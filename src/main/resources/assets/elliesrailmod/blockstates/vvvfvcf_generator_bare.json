@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "elliesrailmod:block/bare_vvvfvcfgen_off"
+    },
+    "lit=true": {
+      "model": "elliesrailmod:block/bare_vvvfvcfgen"
+    }
+  }
+}

@@ -62,13 +62,13 @@ public class LinearInductionRail extends RailBlock {
             BlockPos adjacentPos = pos.relative(direction);
             BlockState adjacentState = level.getBlockState(adjacentPos);
 
-            // Check if there's powered vanilla redstone wire on an adjacent block
-            if (adjacentState.is(net.minecraft.world.level.block.Blocks.REDSTONE_WIRE)) {
-                int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
-                if (power > 0) {
-                    return true;
-                }
-            }
+//            // Check if there's powered vanilla redstone wire on an adjacent block
+//            if (adjacentState.is(net.minecraft.world.level.block.Blocks.REDSTONE_WIRE)) {
+//                int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
+//                if (power > 0) {
+//                    return true;
+//                }
+//            }
 
             // Check if there's powered custom rail redstone wire on an adjacent block
             if (adjacentState.getBlock() instanceof Elec650VWalkway) {

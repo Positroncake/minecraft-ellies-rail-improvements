@@ -55,7 +55,7 @@ public class HudOverlayHandler {
 
         // Prepare text
         String brakeText = String.format("Brake Temp: %.0f°C", tempCelsius);
-        String signalText = "Signal Aspect: " + currentSignalAspect;
+        String signalText = "Status: " + signalAspectToText(currentSignalAspect);
 
         // Calculate positions (lower center of screen, above hotbar)
         int brakeTextWidth = font.width(brakeText);
@@ -68,5 +68,14 @@ public class HudOverlayHandler {
         // Draw text with shadow
         graphics.drawString(font, brakeText, brakeX, baseY, 0xFFFFFF, true);
         graphics.drawString(font, signalText, signalX, baseY + 12, 0xFFFFFF, true);
+    }
+
+    private static String signalAspectToText(int signalAspect) {
+        if (signalAspect == -1) return "Brakes applied";
+        if (signalAspect == -2) return "Emergency brakes applied";
+        if (signalAspect == -3) return "Signal/ATP/ATO brake application";
+        if (signalAspect == 0) return "Normal operation";
+        if (signalAspect == 3) return "ATO-controlled acceleration";
+        else return "Unknown";
     }
 }
