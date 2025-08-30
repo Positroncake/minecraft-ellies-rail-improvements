@@ -15,6 +15,16 @@
     "elliesrailmod:track_circuit_switch",
     "elliesrailmod:track_circuit_signal",
     "elliesrailmod:track_circuit_atp",
-    "elliesrailmod:track_circuit_ato"
+    "elliesrailmod:track_circuit_ato",
+    "elliesrailmod:elec_600v_bare",
+    "elliesrailmod:elec_650v_bare",
+    "elliesrailmod:elec_750v_bare",
+    "elliesrailmod:elec_25kv_bare",
+    "elliesrailmod:elec_600v_walkway",
+    "elliesrailmod:elec_650v_walkway",
+    "elliesrailmod:elec_750v_walkway",
+    "elliesrailmod:elec_25kv_walkway",
+    "elliesrailmod:vvvfvcf_generator_bare",
+    "elliesrailmod:vvvfvcf_generator_walkway"
   ]
 }

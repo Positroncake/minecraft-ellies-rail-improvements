@@ -1,8 +1,8 @@
-﻿{
-  "type": "minecraft:blasting",
+{
+  "type": "minecraft:smelting",
   "category": "misc",
-  "cookingtime": 40,
-  "experience": 0.25,
+  "cookingtime": 80,
+  "experience": 0.20,
   "ingredient": {
     "item": "elliesrailmod:unfinished_reaction_rail_segment"
   },

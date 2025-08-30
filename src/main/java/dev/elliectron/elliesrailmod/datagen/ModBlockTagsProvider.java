@@ -53,7 +53,17 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.TRACK_CIRCUIT_SWITCH.get())
                 .add(ModBlocks.TRACK_CIRCUIT_SIGNAL.get())
                 .add(ModBlocks.TRACK_CIRCUIT_ATP.get())
-                .add(ModBlocks.TRACK_CIRCUIT_ATO.get());
+                .add(ModBlocks.TRACK_CIRCUIT_ATO.get())
+                .add(ModBlocks.ELEC_600V_BARE.get())
+                .add(ModBlocks.ELEC_650V_BARE.get())
+                .add(ModBlocks.ELEC_750V_BARE.get())
+                .add(ModBlocks.ELEC_25kV_BARE.get())
+                .add(ModBlocks.ELEC_600V_WALKWAY.get())
+                .add(ModBlocks.ELEC_650V_WALKWAY.get())
+                .add(ModBlocks.ELEC_750V_WALKWAY.get())
+                .add(ModBlocks.ELEC_25kV_WALKWAY.get())
+                .add(ModBlocks.VVVFVCF_GENERATOR_BARE.get())
+                .add(ModBlocks.VVVFVCF_GENERATOR_WALKWAY.get());
 
         // Add our rail to prevent mob spawning inside
         this.tag(BlockTags.PREVENT_MOB_SPAWNING_INSIDE)
@@ -72,6 +82,16 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.TRACK_CIRCUIT_SWITCH.get())
                 .add(ModBlocks.TRACK_CIRCUIT_SIGNAL.get())
                 .add(ModBlocks.TRACK_CIRCUIT_ATP.get())
-                .add(ModBlocks.TRACK_CIRCUIT_ATO.get());
+                .add(ModBlocks.TRACK_CIRCUIT_ATO.get())
+                .add(ModBlocks.ELEC_600V_BARE.get())
+                .add(ModBlocks.ELEC_650V_BARE.get())
+                .add(ModBlocks.ELEC_750V_BARE.get())
+                .add(ModBlocks.ELEC_25kV_BARE.get())
+                .add(ModBlocks.ELEC_600V_WALKWAY.get())
+                .add(ModBlocks.ELEC_650V_WALKWAY.get())
+                .add(ModBlocks.ELEC_750V_WALKWAY.get())
+                .add(ModBlocks.ELEC_25kV_WALKWAY.get())
+                .add(ModBlocks.VVVFVCF_GENERATOR_BARE.get())
+                .add(ModBlocks.VVVFVCF_GENERATOR_WALKWAY.get());
     }
 }

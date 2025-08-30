@@ -147,14 +147,25 @@ public class TrackCircuitSwitch extends DetectorRailBlock {
             else {
                 // at this time, nothing shall happen - the minecraft continues moving as normal, per vanilla minecart physics/logic
             }
+        }
 
-            boolean holdingAlternate = holdingSignalById(cart, "elliesrailmod:signal_switch_alternate");
-            boolean holdingOverride = holdingSignalById(cart, "elliesrailmod:signal_override");
+        if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
+            level.scheduleTick(pos, this, 4);
+        }
+    }
 
-            if (holdingAlternate || holdingOverride) {
-                // Update neighbors to trigger redstone recalculation
-                level.updateNeighborsAt(pos, this);
-            }
+    @Override
+    public void tick(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, net.minecraft.util.RandomSource random) {
+        // Update neighbors to trigger redstone recalculation
+        level.updateNeighborsAt(pos, this);
+
+        // Keep scheduling ticks while players are nearby or carts are on rail
+        boolean hasNearbyPlayers = isPlayerHoldingItemNearby(level, pos, "elliesrailmod:signal_override", 6.0) ||
+                isPlayerHoldingItemNearby(level, pos, "elliesrailmod:signal_switch_alternate", 6.0);
+        boolean hasCartsOnRail = !level.getEntitiesOfClass(AbstractMinecart.class, new net.minecraft.world.phys.AABB(pos).inflate(0.5)).isEmpty();
+
+        if (hasNearbyPlayers || hasCartsOnRail) {
+            level.scheduleTick(pos, this, 4);
         }
     }
 
@@ -180,23 +191,27 @@ public class TrackCircuitSwitch extends DetectorRailBlock {
         return false;
     }
 
-    // TODO: Figure out how to make the switch revert back to its normal position (whether that's normal or alternate) after the player's minecart passes
     @Override
     protected int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
-        // Check if any player is holding override first
-        if (blockAccess instanceof Level level && isPlayerHoldingItemOnRail(level, pos, "elliesrailmod:signal_override")) {
-            return 0; // Override blocks all signals
-        }
-
-        if (blockState.getValue(SWITCH_STATE) == 2) {
-            return 1;
-        }
-
-        // Check if any player on a minecart at this position is holding the alternate switch item
         if (blockAccess instanceof Level level) {
-            if (isPlayerHoldingItemOnRail(level, pos, "elliesrailmod:signal_switch_alternate")) {
+            // Check for players within 3-block radius holding relevant items
+            boolean holdingOverride = isPlayerHoldingItemNearby(level, pos, "elliesrailmod:signal_override", 3.0);
+            boolean holdingAlternate = isPlayerHoldingItemNearby(level, pos, "elliesrailmod:signal_switch_alternate", 3.0);
+
+            // If player is holding override, emit signal strength 0
+            if (holdingOverride) {
+                return 0;
+            }
+
+            // If player is holding alternate, emit signal strength 1
+            if (holdingAlternate) {
                 return 1;
             }
+        }
+
+        // Otherwise, follow the normal switch state logic
+        if (blockState.getValue(SWITCH_STATE) == 2) {
+            return 1;
         }
 
         return 0;
@@ -204,32 +219,48 @@ public class TrackCircuitSwitch extends DetectorRailBlock {
 
     @Override
     protected int getDirectSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
-        // Check if any player is holding override first
-        if (blockAccess instanceof Level level && isPlayerHoldingItemOnRail(level, pos, "elliesrailmod:signal_override")) {
-            return 0; // Override blocks all signals
-        }
-
-        if (blockState.getValue(SWITCH_STATE) == 2) {
-            return 1;
-        }
-
-        // Check if any player on a minecart at this position is holding the alternate switch item
         if (blockAccess instanceof Level level) {
-            if (isPlayerHoldingItemOnRail(level, pos, "elliesrailmod:signal_switch_alternate")) {
+            // Check for players within 3-block radius holding relevant items
+            boolean holdingOverride = isPlayerHoldingItemNearby(level, pos, "elliesrailmod:signal_override", 3.0);
+            boolean holdingAlternate = isPlayerHoldingItemNearby(level, pos, "elliesrailmod:signal_switch_alternate", 3.0);
+
+            // If player is holding override, emit signal strength 0
+            if (holdingOverride) {
+                return 0;
+            }
+
+            // If player is holding alternate, emit signal strength 1
+            if (holdingAlternate) {
                 return 1;
             }
+        }
+
+        // Otherwise, follow the normal switch state logic
+        if (blockState.getValue(SWITCH_STATE) == 2) {
+            return 1;
         }
 
         return 0;
     }
 
-    private boolean isPlayerHoldingItemOnRail(Level level, BlockPos pos, String itemId) {
-        var entities = level.getEntitiesOfClass(AbstractMinecart.class,
-                new net.minecraft.world.phys.AABB(pos).inflate(0.5));
+    private boolean isPlayerHoldingItemNearby(Level level, BlockPos pos, String itemId, double radius) {
+        ResourceLocation signalId = ResourceLocation.parse(itemId);
+        Item signalItem = BuiltInRegistries.ITEM.get(signalId);
 
-        for (AbstractMinecart cart : entities) {
-            if (holdingSignalById(cart, itemId)) {
-                return true;
+        Vec3 blockCenter = Vec3.atCenterOf(pos);
+
+        // Get all players within the radius
+        var players = level.getEntitiesOfClass(Player.class,
+                new net.minecraft.world.phys.AABB(pos).inflate(radius));
+
+        for (Player player : players) {
+            // Check if player is within exact radius (AABB inflate can be slightly larger)
+            if (player.position().distanceTo(blockCenter) <= radius) {
+                ItemStack mainHand = player.getMainHandItem();
+                ItemStack offHand = player.getOffhandItem();
+                if (mainHand.is(signalItem) || offHand.is(signalItem)) {
+                    return true;
+                }
             }
         }
         return false;

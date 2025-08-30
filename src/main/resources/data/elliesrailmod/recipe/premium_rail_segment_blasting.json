@@ -1,8 +1,8 @@
 {
   "type": "minecraft:blasting",
   "category": "misc",
-  "cookingtime": 60,
-  "experience": 0.2,
+  "cookingtime": 40,
+  "experience": 0.20,
   "ingredient": {
     "item": "elliesrailmod:rail_segment"
   },

@@ -2,7 +2,7 @@ package dev.elliectron.elliesrailmod.block.custom;
 
 public class Speeds {
     // DRY_PAX_LIMITS_MPH is based on the CROR "Rules Respecting Track Safety Part II - Track Safety Rules",
-    // adapted/scaled for Minecraft due to a ~32 m/s speed limit imposed by the game (class 5 track uses custom movement logic and therefore is not affected by said limits)
+    // adapted/scaled for Minecraft due to a ~32 m/s speed limit imposed by the game (class 5+ track uses custom movement logic and therefore is not affected by said limits)
     //TODO: figure out how to bypass the aforementioned speed limit without implementing custom physics (e.g. in class 5)
     public static final float[] DRY_PAX_LIMITS_MPH = new float[] { 12.5f, 30f, 45f, 65f, 100f };
     public static final float[] DRY_FREIGHT_LIMITS_MPH = new float[] { 8f, 20f, 35f, 50f, 65f }; // amount to reduce speed limit by when treight train is present

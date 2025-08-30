@@ -1,8 +1,8 @@
 {
   "type": "minecraft:smelting",
   "category": "misc",
-  "cookingtime": 480,
-  "experience": 0.2,
+  "cookingtime": 320,
+  "experience": 0.30,
   "ingredient": {
     "item": "minecraft:iron_ingot"
   },

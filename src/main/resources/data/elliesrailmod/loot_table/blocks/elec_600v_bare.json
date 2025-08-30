@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "minecraft:block",
   "pools": [
     {
@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "elliesrailmod:rail_class_4",
+          "name": "elliesrailmod:elec_600v_bare",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -19,5 +19,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "elliesrailmod:blocks/rail_class_4"
+  "random_sequence": "elliesrailmod:blocks/elec_600v_bare"
 }

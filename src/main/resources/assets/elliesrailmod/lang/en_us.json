@@ -1,7 +1,7 @@
 {
   "item.elliesrailmod.signal_switch_alternate": "Set switch alignment to alternate",
   "item.elliesrailmod.signal_proceed": "Proceed",
-  "item.elliesrailmod.signal_override": "Override signal/train control",
+  "item.elliesrailmod.signal_override": "Override signal/track switch/train control",
   "item.elliesrailmod.signal_stop": "Stop / decelerate",
   "item.elliesrailmod.signal_e_stop": "Emergency stop",
   "item.elliesrailmod.signal_speed_limited": "Signal: Limited speed",
@@ -43,6 +43,6 @@
   "block.elliesrailmod.elec_750v_bare": "750VDC Electrification without Walkway",
   "block.elliesrailmod.elec_25kv_walkway": "25kVAC Electrification with Walkway",
   "block.elliesrailmod.elec_25kv_bare": "25kVAC Electrification without Walkway",
-  "block.elliesrailmod.vvvfvcf_generator_bare": "VVVFVCF Generator without Walkway",
-  "block.elliesrailmod.vvvfvcf_generator_walkway": "VVVFVCF Generator with Walkway"
+  "block.elliesrailmod.vvvfvcf_generator_bare": "VVVFVCF Rail Power Generator without Walkway",
+  "block.elliesrailmod.vvvfvcf_generator_walkway": "VVVFVCF Rail Power Generator with Walkway"
 }

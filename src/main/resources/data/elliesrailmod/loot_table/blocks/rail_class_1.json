@@ -6,11 +6,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "elliesrailmod:rail_segment",
+          "name": "elliesrailmod:rail_class_1",
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 6,
+              "count": 1,
               "add": false
             }
           ]

@@ -6,58 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "elliesrailmod:powered_premium_rail_segment",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 3,
-              "add": false
-            }
-          ]
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "elliesrailmod:premium_rail_segment",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 3,
-              "add": false
-            }
-          ]
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:redstone",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1,
-              "add": false
-            }
-          ]
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:diamond",
+          "name": "elliesrailmod:track_circuit_ato",
           "functions": [
             {
               "function": "minecraft:set_count",

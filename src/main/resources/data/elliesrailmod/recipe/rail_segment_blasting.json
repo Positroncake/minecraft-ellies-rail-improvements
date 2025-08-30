@@ -1,8 +1,8 @@
 {
   "type": "minecraft:blasting",
   "category": "misc",
-  "cookingtime": 240,
-  "experience": 0.2,
+  "cookingtime": 160,
+  "experience": 0.40,
   "ingredient": {
     "item": "minecraft:iron_ingot"
   },

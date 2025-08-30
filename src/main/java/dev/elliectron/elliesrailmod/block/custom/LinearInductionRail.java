@@ -147,7 +147,9 @@ public class LinearInductionRail extends RailBlock {
                     }
                 }
                 // no power and no override => treat as danger (red) signal aspect and trigger Estop
-                else if (!isPowered && !hasOverrideSignal) {}
+                else if (!isPowered && !hasOverrideSignal) {
+                    nbt.putInt("signal_aspect", -2);
+                }
             }
         } else {
             super.entityInside(state, level, pos, entity);

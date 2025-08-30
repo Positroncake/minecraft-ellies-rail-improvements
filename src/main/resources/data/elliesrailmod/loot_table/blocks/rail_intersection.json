@@ -6,11 +6,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "elliesrailmod:premium_rail_segment",
+          "name": "elliesrailmod:rail_intersection",
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 8,
+              "count": 1,
               "add": false
             }
           ]

@@ -176,6 +176,7 @@ public class PoweredClass5Rail extends RailBlock {
                 }
                 // power NOT available + NO override signal held => treat as danger (red) signal aspect
                 else if (!isPowered && !hasOverrideSignal) {
+                    nbt.putInt("signal_aspect", -2);
                 }
             } else {
                 // deceleration is handled in MinecartStoppingHandler.java, where the 'spd' NBT tag has its data updated
