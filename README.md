@@ -1,25 +1,15 @@
+### Ellie's Rail Improvements - v0.1.0-beta
 
-Installation information
-=======
+The initial beta release of Ellie's Rail Improvements, a mod designed to improve upon the default minecart experience in Minecraft by adding various features including:
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+- Different classes of track (supporting different speeds) including linear induction motors
+- Controllable switches
+- Dynamic speed limits based on weather and minecart type
+- Train signalling systems ranging from basic block signalling to precise ATP
+- Different electrification standards
+- Custom 3D block models for rails, electrification, and more
+- and other quality-of-life improvements (e.g. set points for dismounting minecarts at stations)
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+Manual containing crafting recipes and details will be included in the next release, v0.1.1-beta.
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
-
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
-
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+For support, to provide feedback, or to contribute to the project, a Discord server is available at [https://discord.gg/asZBYkazAC](https://discord.gg/asZBYkazAC)
