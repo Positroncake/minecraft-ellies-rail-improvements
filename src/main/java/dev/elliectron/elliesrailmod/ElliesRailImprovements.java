@@ -76,12 +76,6 @@ public class ElliesRailImprovements {
             event.accept(ModItems.SIGNAL_SPEED_MEDIUM);
             event.accept(ModItems.SIGNAL_SPEED_DIVERGING);
             event.accept(ModItems.SIGNAL_SPEED_RESTRICTED);
-            event.accept(ModItems.RAIL_SEGMENT);
-            event.accept(ModItems.PREMIUM_RAIL_SEGMENT);
-            event.accept(ModItems.POWERED_RAIL_SEGMENT);
-            event.accept(ModItems.POWERED_PREMIUM_RAIL_SEGMENT);
-            event.accept(ModItems.UNFINISHED_REACTION_RAIL_SEGMENT);
-            event.accept(ModItems.REACTION_RAIL_SEGMENT);
             event.accept(ModBlocks.RAIL_CLASS_1);
             event.accept(ModBlocks.RAIL_CLASS_2);
             event.accept(ModBlocks.RAIL_CLASS_3);
@@ -109,6 +103,15 @@ public class ElliesRailImprovements {
             event.accept(ModBlocks.ELEC_750V_WALKWAY);
             event.accept(ModBlocks.ELEC_25kV_WALKWAY);
             event.accept(ModBlocks.VVVFVCF_GENERATOR_WALKWAY);
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(ModItems.RAIL_SEGMENT);
+            event.accept(ModItems.PREMIUM_RAIL_SEGMENT);
+            event.accept(ModItems.POWERED_RAIL_SEGMENT);
+            event.accept(ModItems.POWERED_PREMIUM_RAIL_SEGMENT);
+            event.accept(ModItems.UNFINISHED_REACTION_RAIL_SEGMENT);
+            event.accept(ModItems.REACTION_RAIL_SEGMENT);
         }
     }
 
