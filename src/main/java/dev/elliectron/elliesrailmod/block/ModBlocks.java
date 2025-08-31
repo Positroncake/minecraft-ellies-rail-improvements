@@ -38,6 +38,8 @@ public class ModBlocks {
             () -> new PoweredClass4Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.POWERED_RAIL).requiresCorrectToolForDrops().strength(3.5f, 8f)));
     public static final DeferredBlock<PoweredClass5Rail> POWERED_RAIL_CLASS_5 = registerBlock("powered_rail_class_5",
             () -> new PoweredClass5Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.POWERED_RAIL).requiresCorrectToolForDrops().strength(3.5f, 8f)));
+    public static final DeferredBlock<PoweredClass5HRail> POWERED_RAIL_CLASS_5H = registerBlock("powered_rail_class_5h",
+            () -> new PoweredClass5HRail(BlockBehaviour.Properties.ofFullCopy(Blocks.POWERED_RAIL).requiresCorrectToolForDrops().strength(4f, 9f)));
 
     public static final DeferredBlock<LinearInductionRail> LINEAR_INDUCTION_RAIL = registerBlock("linear_induction_rail",
             () -> new LinearInductionRail(BlockBehaviour.Properties.ofFullCopy(Blocks.POWERED_RAIL).requiresCorrectToolForDrops().strength(3f, 10f)));

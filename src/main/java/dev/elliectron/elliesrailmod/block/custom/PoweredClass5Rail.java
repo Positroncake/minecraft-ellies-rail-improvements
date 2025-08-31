@@ -31,8 +31,8 @@ public class PoweredClass5Rail extends RailBlock {
     // - Acceleration: divide by 10
     // - Speed display: multiply by 20 for m/s
     // The exact cause is unknown but these ratios are consistent
-    private static final double MAX_SPEED_MPT = 2.2352;
-    private static final double NATURAL_FRICTION_DECEL = 0.0008/20.0;
+    private static final double MAX_SPEED_MPT = Speeds.CLASS5PLUS_LIMITS_MPT[TRACK_CLASS-5];
+    private static final double NATURAL_FRICTION_DECEL = Speeds.CLASS5PLUS_NATURAL_DECEL_MPT[TRACK_CLASS-5]/20.0;
 
     public PoweredClass5Rail(BlockBehaviour.Properties properties) {
         super(properties);
@@ -61,26 +61,36 @@ public class PoweredClass5Rail extends RailBlock {
      * Check if this rail should be powered, including redstone wire detection
      */
     private boolean isRailPowered(Level level, BlockPos pos) {
-        // Check for direct redstone power first
         if (level.hasNeighborSignal(pos)) {
             return true;
         }
 
-        // Check for redstone wire on adjacent blocks (the common case)
         for (net.minecraft.core.Direction direction : net.minecraft.core.Direction.Plane.HORIZONTAL) {
             BlockPos adjacentPos = pos.relative(direction);
             BlockState adjacentState = level.getBlockState(adjacentPos);
 
-            // Check if there's powered vanilla redstone wire on an adjacent block
-            if (adjacentState.is(net.minecraft.world.level.block.Blocks.REDSTONE_WIRE)) {
+            if (adjacentState.getBlock() instanceof Elec25kVBare) {
                 int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
                 if (power > 0) {
                     return true;
                 }
             }
 
-            // Check if there's powered custom rail redstone wire on an adjacent block
-            if (adjacentState.getBlock() instanceof Electrification25kV) {
+            if (adjacentState.getBlock() instanceof Elec25kVWalkway) {
+                int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
+                if (power > 0) {
+                    return true;
+                }
+            }
+
+            if (adjacentState.getBlock() instanceof VvvfvcfGeneratorBare) {
+                int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
+                if (power > 0) {
+                    return true;
+                }
+            }
+
+            if (adjacentState.getBlock() instanceof VvvfvcfGeneratorWalkway) {
                 int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
                 if (power > 0) {
                     return true;
@@ -195,19 +205,18 @@ public class PoweredClass5Rail extends RailBlock {
                 }
             }
 
-            printDebug(cart, String.format("%06.3f", nbt.getDouble("spd")*20) + " [" + nbt.getInt("vv") + "] " + String.format("%06.3f", s) + " + " + String.format("%.5f", a));
+            // printDebug(cart, String.format("%06.3f", nbt.getDouble("spd")*20) + " [" + nbt.getInt("vv") + "] " + String.format("%06.3f", s) + " + " + String.format("%.5f", a));
         } else {
             super.entityInside(state, level, pos, entity);
         }
     }
 
     private RailShape getRailShape(BlockState state) {
-        if (state.hasProperty(SHAPE)) return state.getValue(SHAPE);
-        return RailShape.EAST_WEST;
+        if (state.hasProperty(SHAPE)) return state.getValue(SHAPE);        return RailShape.EAST_WEST;
     }
 
     @Override
-    public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
+   public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
         float[] spdLimsMps = Speeds.GetConventionalSpdLimsMps(TRACK_CLASS);
 
         if (level.isRaining()) {

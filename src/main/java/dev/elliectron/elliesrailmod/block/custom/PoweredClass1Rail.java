@@ -53,26 +53,36 @@ public class PoweredClass1Rail extends RailBlock {
      * Check if this rail should be powered, including redstone wire detection
      */
     private boolean isRailPowered(Level level, BlockPos pos) {
-        // Check for direct redstone power first
         if (level.hasNeighborSignal(pos)) {
             return true;
         }
 
-        // Check for redstone wire on adjacent blocks (the common case)
         for (net.minecraft.core.Direction direction : net.minecraft.core.Direction.Plane.HORIZONTAL) {
             BlockPos adjacentPos = pos.relative(direction);
             BlockState adjacentState = level.getBlockState(adjacentPos);
 
-            // Check if there's powered vanilla redstone wire on an adjacent block
-            if (adjacentState.is(net.minecraft.world.level.block.Blocks.REDSTONE_WIRE)) {
+            if (adjacentState.getBlock() instanceof Elec600VBare) {
                 int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
                 if (power > 0) {
                     return true;
                 }
             }
 
-            // Check if there's powered custom rail redstone wire on an adjacent block
-            if (adjacentState.getBlock() instanceof Electrification600V) {
+            if (adjacentState.getBlock() instanceof Elec600VWalkway) {
+                int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
+                if (power > 0) {
+                    return true;
+                }
+            }
+
+            if (adjacentState.getBlock() instanceof VvvfvcfGeneratorBare) {
+                int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
+                if (power > 0) {
+                    return true;
+                }
+            }
+
+            if (adjacentState.getBlock() instanceof VvvfvcfGeneratorWalkway) {
                 int power = adjacentState.getValue(net.minecraft.world.level.block.RedStoneWireBlock.POWER);
                 if (power > 0) {
                     return true;
