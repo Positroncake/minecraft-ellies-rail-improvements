@@ -1,4 +1,4 @@
-### Ellie's Rail Improvements - v0.1.0-beta
+### Ellie's Rail Improvements - v0.2.0-beta
 
 The initial beta release of Ellie's Rail Improvements, a mod designed to improve upon the default minecart experience in Minecraft by adding various features including:
 
