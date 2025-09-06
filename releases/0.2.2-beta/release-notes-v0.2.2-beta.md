@@ -3,6 +3,7 @@
 Patch notes:
 
 - Crafting recipes are slightly more generous, to facilitate easier construction of rail infrastructure.
+    - Note that this is done to accommodate various terrain generation mods which often increase the scale and distance of the world.
     - Recipes will continue to be tweaked based on user feedback.
 - Moved all rail segments to the Ingredients tab in the creative menu, from the Redstone tab.
 
