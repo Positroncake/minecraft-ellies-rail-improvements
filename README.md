@@ -5,7 +5,7 @@ Ellie's Rail Improvements is a mod designed to improve upon the default minecart
 - Different classes of track (supporting different speeds) including linear induction motors
 - Controllable switches
 - Dynamic speed limits based on weather and minecart type
-- Train signalling systems ranging from basic block signalling to precise ATP
+- Train signalling systems ranging from basic block signalling to Automatic Train Operation (ATO)
 - Different electrification standards
 - Custom 3D block models for rails, electrification, and more
 - and other quality-of-life improvements (e.g. set points for dismounting minecarts at stations)
