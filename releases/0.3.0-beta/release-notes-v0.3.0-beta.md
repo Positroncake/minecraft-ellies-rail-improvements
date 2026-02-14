@@ -4,7 +4,7 @@
 - Overhauled signals, transitioned from unwieldy standard recipes to a custom Signal Programmer block
 - Overhauled power delivery, transitioned from standard recipes to integration with the Rail Welder
 
-Manual containing crafting recipes and details will be included in the next release, v0.3.1-beta.
+Manual containing crafting recipes and details will be included in the next release, v0.3.1-beta. Integration with JEI and Mekanism energy to come in a future update.
 
 ### Previous version v0.2.2-beta - More Generous Recipes
 

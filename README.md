@@ -10,7 +10,7 @@ Ellie's Rail Improvements is a mod designed to improve upon the default minecart
 - Custom 3D block models for rails, electrification, and more
 - and other quality-of-life improvements (e.g. set points for dismounting minecarts at stations)
 
-Manual containing crafting recipes and details will be included in the next release, v0.3.1-beta.
+Manual containing crafting recipes and details will be included in the next release, v0.3.1-beta. Integration with JEI and Mekanism energy to come in a future update.
 
 ## Installation
 
