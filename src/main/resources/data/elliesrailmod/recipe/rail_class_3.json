@@ -1,24 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "ABA",
-    "ACA",
-    "ABA"
-  ],
-  "key": {
-    "A": {
-      "item": "elliesrailmod:premium_rail_segment"
-    },
-    "B": {
-      "tag": "minecraft:planks"
-    },
-    "C": {
-      "item": "minecraft:iron_nugget"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input1": {
+    "item": "elliesrailmod:premium_rail_segment"
+  },
+  "input2": {
+    "tag": "minecraft:planks"
+  },
+  "input3": {
+    "item": "elliesrailmod:premium_rail_segment"
   },
   "result": {
-    "count": 32,
-    "id": "elliesrailmod:rail_class_3"
+    "id": "elliesrailmod:rail_class_3",
+    "count": 32
   }
 }

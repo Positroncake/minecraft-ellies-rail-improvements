@@ -1,30 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "DXA",
-    "DYA",
-    "DZA"
-  ],
-  "key": {
-    "D": {
-      "item": "elliesrailmod:powered_premium_rail_segment"
-    },
-    "A": {
-      "item": "elliesrailmod:premium_rail_segment"
-    },
-    "X": {
-      "item": "minecraft:redstone"
-    },
-    "Y": {
-      "item": "minecraft:stone"
-    },
-    "Z": {
-      "item": "minecraft:redstone"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input1": {
+    "item": "elliesrailmod:premium_rail_segment"
+  },
+  "input2": {
+    "item": "minecraft:stone"
+  },
+  "input3": {
+    "item": "elliesrailmod:redstone"
   },
   "result": {
-    "count": 3,
-    "id": "elliesrailmod:track_circuit_switch"
+    "id": "elliesrailmod:track_circuit_switch",
+    "count": 8
   }
 }

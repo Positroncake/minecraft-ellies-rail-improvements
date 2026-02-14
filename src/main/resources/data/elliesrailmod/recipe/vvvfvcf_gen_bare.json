@@ -1,21 +1,13 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "   ",
-    "T T",
-    "TCT"
-  ],
-  "key": {
-    "T": {
-      "item": "minecraft:redstone_torch"
-    },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input2": {
+    "item": "minecraft:redstone_torch"
+  },
+  "input4": {
+    "item": "minecraft:copper_ingot"
   },
   "result": {
-    "count": 8,
-    "id": "elliesrailmod:vvvfvcf_generator_bare"
+    "id": "elliesrailmod:vvvfvcf_generator_bare",
+    "count": 8
   }
 }

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "elliesrailmod:third_rail"
+    }
+  ],
+  "result": {
+    "id": "elliesrailmod:single_third_rail",
+    "count": 1
+  }
+}

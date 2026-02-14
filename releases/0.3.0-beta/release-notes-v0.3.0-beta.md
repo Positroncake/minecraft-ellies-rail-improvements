@@ -1,0 +1,18 @@
+### v0.3.0-beta - Revamped Crafting
+
+- Overhauled rail crafting, transitioned from clunky standard recipes to a custom Rail Welder block
+- Overhauled signals, transitioned from unwieldy standard recipes to a custom Signal Programmer block
+- Overhauled power delivery, transitioned from standard recipes to integration with the Rail Welder
+
+Manual containing crafting recipes and details will be included in the next release, v0.3.1-beta.
+
+### Previous version v0.2.2-beta - More Generous Recipes
+
+Patch notes:
+
+- Crafting recipes are slightly more generous, to facilitate easier construction of rail infrastructure.
+    - Note that this is done to accommodate various terrain generation mods which often increase the scale and distance of the world.
+    - Recipes will continue to be tweaked based on user feedback.
+- Moved all rail segments to the Ingredients tab in the creative menu, from the Redstone tab.
+
+A manual/guide with crafting recipes, details on how to use the mod, and other information will be added in the next version, v0.2.3-beta. Integration with JEI to come in a future update.

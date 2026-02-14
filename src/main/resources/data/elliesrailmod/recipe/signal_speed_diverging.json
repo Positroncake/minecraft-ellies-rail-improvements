@@ -1,0 +1,10 @@
+﻿{
+  "type": "elliesrailmod:signal_programmer",
+  "input9": {
+    "item": "elliesrailmod:signal_component"
+  },
+  "result": {
+    "id": "elliesrailmod:signal_speed_diverging",
+    "count": 1
+  }
+}

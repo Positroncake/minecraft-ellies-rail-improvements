@@ -1,0 +1,10 @@
+{
+  "type": "elliesrailmod:signal_programmer",
+  "input1": {
+    "item": "elliesrailmod:signal_component"
+  },
+  "result": {
+    "id": "elliesrailmod:signal_component",
+    "count": 1
+  }
+}

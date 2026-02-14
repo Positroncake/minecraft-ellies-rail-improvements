@@ -1,21 +1,13 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "AAA",
-    "ABA",
-    "AAA"
-  ],
-  "key": {
-    "A": {
-      "item": "elliesrailmod:rail_class_4"
-    },
-    "B": {
-      "item": "minecraft:gold_ingot"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input2": {
+    "item": "elliesrailmod:rail_class_4"
+  },
+  "input4": {
+    "item": "elliesrailmod:single_third_rail"
   },
   "result": {
-    "count": 8,
-    "id": "elliesrailmod:powered_rail_class_4"
+    "id": "elliesrailmod:powered_rail_class_4",
+    "count": 1
   }
 }

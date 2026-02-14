@@ -1,27 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "BIB",
-    "T T",
-    "TCT"
-  ],
-  "key": {
-    "T": {
-      "item": "minecraft:redstone_torch"
-    },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "B": {
-      "item": "minecraft:iron_bars"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input1": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input2": {
+    "item": "minecraft:redstone_torch"
+  },
+  "input4": {
+    "item": "minecraft:copper_ingot"
   },
   "result": {
-    "count": 8,
-    "id": "elliesrailmod:vvvfvcf_generator_walkway"
+    "id": "elliesrailmod:vvvfvcf_generator_walkway",
+    "count": 16
   }
 }

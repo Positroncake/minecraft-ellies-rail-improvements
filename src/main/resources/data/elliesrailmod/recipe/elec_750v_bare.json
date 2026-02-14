@@ -1,24 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "   ",
-    "ARC",
-    "   "
-  ],
-  "key": {
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "A": {
-      "item": "minecraft:copper_ingot"
-    },
-    "C": {
-      "item": "minecraft:gold_nugget"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input1": {
+    "item": "elliesrailmod:third_rail"
+  },
+  "input2": {
+    "item": "minecraft:iron_nugget"
+  },
+  "input4": {
+    "item": "minecraft:redstone_torch"
   },
   "result": {
-    "count": 32,
-    "id": "elliesrailmod:elec_750v_bare"
+    "id": "elliesrailmod:elec_750v_bare",
+    "count": 64
   }
 }

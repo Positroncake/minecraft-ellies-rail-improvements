@@ -1,0 +1,16 @@
+{
+  "type": "elliesrailmod:rail_workshop",
+  "input2": {
+    "item": "minecraft:redstone_torch"
+  },
+  "input3": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input4": {
+    "item": "minecraft:copper_ingot"
+  },
+  "result": {
+    "id": "elliesrailmod:vvvfvcf_generator_walkway",
+    "count": 16
+  }
+}

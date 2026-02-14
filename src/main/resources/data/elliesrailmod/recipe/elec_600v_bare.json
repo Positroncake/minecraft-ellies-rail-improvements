@@ -1,21 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "   ",
-    "AR ",
-    "   "
-  ],
-  "key": {
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "A": {
-      "item": "minecraft:copper_ingot"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input1": {
+    "item": "elliesrailmod:third_rail"
+  },
+  "input2": {
+    "tag": "minecraft:planks"
+  },
+  "input4": {
+    "item": "minecraft:redstone_torch"
   },
   "result": {
-    "count": 32,
-    "id": "elliesrailmod:elec_600v_bare"
+    "id": "elliesrailmod:elec_600v_bare",
+    "count": 64
   }
 }

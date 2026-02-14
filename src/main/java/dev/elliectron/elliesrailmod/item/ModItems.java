@@ -1,11 +1,15 @@
 package dev.elliectron.elliesrailmod.item;
 
 import dev.elliectron.elliesrailmod.ElliesRailImprovements;
+import dev.elliectron.elliesrailmod.block.ModBlocks;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ElliesRailImprovements.MODID);
@@ -23,11 +27,20 @@ public class ModItems {
 
     public static final DeferredItem<Item> RAIL_SEGMENT = ITEMS.register("rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
     public static final DeferredItem<Item> PREMIUM_RAIL_SEGMENT = ITEMS.register("premium_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
-    public static final DeferredItem<Item> POWERED_RAIL_SEGMENT = ITEMS.register("powered_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
-    public static final DeferredItem<Item> POWERED_PREMIUM_RAIL_SEGMENT = ITEMS.register("powered_premium_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
+    // public static final DeferredItem<Item> POWERED_RAIL_SEGMENT = ITEMS.register("powered_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
+    // public static final DeferredItem<Item> POWERED_PREMIUM_RAIL_SEGMENT = ITEMS.register("powered_premium_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
 
     public static final DeferredItem<Item> UNFINISHED_REACTION_RAIL_SEGMENT = ITEMS.register("unfinished_reaction_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
     public static final DeferredItem<Item> REACTION_RAIL_SEGMENT = ITEMS.register("reaction_rail_segment", () -> new Item(new Item.Properties().stacksTo(64)));
+
+    public static final DeferredItem<Item> THIRD_RAIL = ITEMS.register("third_rail", () -> new Item(new Item.Properties().stacksTo(64)));
+    public static final DeferredItem<Item> SINGLE_THIRD_RAIL = ITEMS.register("single_third_rail", () -> new Item(new Item.Properties().stacksTo(64)));
+
+    public static final Supplier<BlockItem> RAIL_WORKSHOP = ITEMS.register("rail_workshop",
+            () -> new BlockItem(ModBlocks.RAIL_WORKSHOP.get(), new Item.Properties()));
+
+    public static final Supplier<BlockItem> SIGNAL_PROGRAMMER = ITEMS.register("signal_programmer",
+            () -> new BlockItem(ModBlocks.SIGNAL_PROGRAMMER.get(), new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

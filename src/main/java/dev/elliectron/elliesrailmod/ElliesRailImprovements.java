@@ -2,9 +2,13 @@ package dev.elliectron.elliesrailmod;
 
 import dev.elliectron.elliesrailmod.block.ModBlocks;
 import dev.elliectron.elliesrailmod.item.ModItems;
+import dev.elliectron.elliesrailmod.menu.ModMenuTypes;
+import dev.elliectron.elliesrailmod.recipe.ModRecipes;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -32,8 +36,17 @@ public class ElliesRailImprovements {
 
         NeoForge.EVENT_BUS.register(this);
 
-        ModItems.register(modEventBus);
-        ModBlocks.register(modEventBus);
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModBlocks.BLOCK_ENTITIES.register(modEventBus);
+
+        ModItems.ITEMS.register(modEventBus);
+
+        ModMenuTypes.MENUS.register(modEventBus);
+
+        ModRecipes.RECIPE_TYPES.register(modEventBus);
+        ModRecipes.RECIPE_SERIALIZERS.register(modEventBus);
+
+        modEventBus.addListener(this::registerCapabilities);
 
         modEventBus.addListener(this::addCreative);
 
@@ -103,16 +116,33 @@ public class ElliesRailImprovements {
             event.accept(ModBlocks.ELEC_750V_WALKWAY);
             event.accept(ModBlocks.ELEC_25kV_WALKWAY);
             event.accept(ModBlocks.VVVFVCF_GENERATOR_WALKWAY);
+            event.accept(ModItems.RAIL_WORKSHOP.get());
+            event.accept(ModItems.SIGNAL_PROGRAMMER.get());
         }
 
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ModItems.RAIL_SEGMENT);
             event.accept(ModItems.PREMIUM_RAIL_SEGMENT);
-            event.accept(ModItems.POWERED_RAIL_SEGMENT);
-            event.accept(ModItems.POWERED_PREMIUM_RAIL_SEGMENT);
+            event.accept(ModItems.THIRD_RAIL);
+            event.accept(ModItems.SINGLE_THIRD_RAIL);
             event.accept(ModItems.UNFINISHED_REACTION_RAIL_SEGMENT);
             event.accept(ModItems.REACTION_RAIL_SEGMENT);
+            event.accept(ModItems.SIGNAL_COMPONENT);
         }
+    }
+
+    private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ModBlocks.RAIL_WORKSHOP_BE.get(),
+                (blockEntity, direction) -> blockEntity.getInputHandler()
+        );
+
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ModBlocks.SIGNAL_PROGRAMMER_BE.get(),
+                (blockEntity, direction) -> blockEntity.getInputHandler()
+        );
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

@@ -3,7 +3,7 @@
   "category": "redstone",
   "ingredients": [
     {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:copper_ingot"
     },
     {
       "item": "elliesrailmod:premium_rail_segment"

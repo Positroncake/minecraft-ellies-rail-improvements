@@ -1,21 +1,10 @@
 ﻿{
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "BBB",
-    "ABA",
-    " A "
-  ],
-  "key": {
-    "A": {
-      "item": "elliesrailmod:signal_component"
-    },
-    "B": {
-      "item": "minecraft:gold_nugget"
-    }
+  "type": "elliesrailmod:signal_programmer",
+  "input10": {
+    "item": "elliesrailmod:signal_component"
   },
   "result": {
-    "count": 1,
-    "id": "elliesrailmod:signal_speed_restricted"
+    "id": "elliesrailmod:signal_speed_restricted",
+    "count": 1
   }
 }

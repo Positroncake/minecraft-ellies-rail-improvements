@@ -7,7 +7,7 @@ Patch notes:
     - Recipes will continue to be tweaked based on user feedback.
 - Moved all rail segments to the Ingredients tab in the creative menu, from the Redstone tab.
 
-A manual/guide with crafting recipes, details on how to use the mod, and other information will be added in the next version, v0.2.2-beta. Integration with JEI to come in a future update.
+A manual/guide with crafting recipes, details on how to use the mod, and other information will be added in the next version, v0.2.3-beta. Integration with JEI to come in a future update.
 
 ### Previous version v0.2.1-beta - New Mod Logo
 

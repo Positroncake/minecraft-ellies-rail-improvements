@@ -1,27 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "BIB",
-    "AR ",
-    "   "
-  ],
-  "key": {
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "A": {
-      "item": "minecraft:copper_ingot"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "B": {
-      "item": "minecraft:iron_bars"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input1": {
+    "item": "elliesrailmod:third_rail"
+  },
+  "input2": {
+    "tag": "minecraft:planks"
+  },
+  "input3": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input4": {
+    "item": "minecraft:redstone_torch"
   },
   "result": {
-    "count": 32,
-    "id": "elliesrailmod:elec_600v_walkway"
+    "id": "elliesrailmod:elec_600v_walkway",
+    "count": 64
   }
 }

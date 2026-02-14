@@ -1,4 +1,5 @@
 {
+  "item.elliesrailmod.signal_component": "Unprogrammed signal",
   "item.elliesrailmod.signal_switch_alternate": "Set switch alignment to alternate",
   "item.elliesrailmod.signal_proceed": "Proceed",
   "item.elliesrailmod.signal_override": "Override signal/track switch/train control",
@@ -9,10 +10,10 @@
   "item.elliesrailmod.signal_speed_diverging": "Signal: Diverging speed",
   "item.elliesrailmod.signal_speed_restricted": "Signal: Restricted speed",
 
-  "item.elliesrailmod.rail_segment": "Rail Segment",
-  "item.elliesrailmod.premium_rail_segment": "Premium Rail Segment",
-  "item.elliesrailmod.powered_rail_segment": "Powered Rail Segment",
-  "item.elliesrailmod.powered_premium_rail_segment": "Premium Powered Rail Segment",
+  "item.elliesrailmod.rail_segment": "Rail Segments",
+  "item.elliesrailmod.premium_rail_segment": "Premium Rail Segments",
+  "item.elliesrailmod.third_rail": "Third Rails",
+  "item.elliesrailmod.single_third_rail": "Third Rail",
 
   "block.elliesrailmod.rail_intersection": "Intersection Rail",
   "block.elliesrailmod.rail_class_1": "Class 1 Rail (12.5 mph max)",
@@ -28,8 +29,8 @@
 
   "block.elliesrailmod.powered_rail_class_5h": "Class 5 High-Speed Rail (240 km/h max)",
 
-  "item.elliesrailmod.unfinished_reaction_rail_segment": "Unfinished Reaction Rail Segment",
-  "item.elliesrailmod.reaction_rail_segment": "Reaction Rail Segment",
+  "item.elliesrailmod.unfinished_reaction_rail_segment": "Unfinished Reaction Rail Segments",
+  "item.elliesrailmod.reaction_rail_segment": "Reaction Rail Segments",
   "block.elliesrailmod.linear_induction_rail": "Linear Induction Rail (90 km/h max)",
 
   "block.elliesrailmod.track_circuit_switch": "Switch-Controlling Track Circuit",
@@ -46,5 +47,10 @@
   "block.elliesrailmod.elec_25kv_walkway": "25kVAC Electrification with Walkway",
   "block.elliesrailmod.elec_25kv_bare": "25kVAC Electrification without Walkway",
   "block.elliesrailmod.vvvfvcf_generator_bare": "VVVFVCF Rail Power Generator without Walkway",
-  "block.elliesrailmod.vvvfvcf_generator_walkway": "VVVFVCF Rail Power Generator with Walkway"
+  "block.elliesrailmod.vvvfvcf_generator_walkway": "VVVFVCF Rail Power Generator with Walkway",
+
+  "block.elliesrailmod.rail_workshop": "Rail Welder",
+  "container.elliesrailmod.rail_workshop": "Rail Welder",
+  "block.elliesrailmod.signal_programmer": "Signal Programmer",
+  "container.elliesrailmod.signal_programmer": "Signal Programmer"
 }

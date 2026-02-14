@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:crafting_table"
+    }
+  ],
+  "result": {
+    "id": "elliesrailmod:rail_workshop",
+    "count": 1
+  }
+}

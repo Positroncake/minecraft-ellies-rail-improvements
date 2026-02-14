@@ -1,18 +1,10 @@
 ﻿{
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "   ",
-    "A A",
-    " A "
-  ],
-  "key": {
-    "A": {
-      "item": "elliesrailmod:signal_component"
-    }
+  "type": "elliesrailmod:signal_programmer",
+  "input3": {
+    "item": "elliesrailmod:signal_component"
   },
   "result": {
-    "count": 1,
-    "id": "elliesrailmod:signal_stop"
+    "id": "elliesrailmod:signal_stop",
+    "count": 1
   }
 }

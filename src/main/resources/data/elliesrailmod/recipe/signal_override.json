@@ -1,18 +1,10 @@
 ﻿{
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    " A ",
-    "AAA",
-    "   "
-  ],
-  "key": {
-    "A": {
-      "item": "elliesrailmod:signal_component"
-    }
+  "type": "elliesrailmod:signal_programmer",
+  "input2": {
+    "item": "elliesrailmod:signal_component"
   },
   "result": {
-    "count": 1,
-    "id": "elliesrailmod:signal_override"
+    "id": "elliesrailmod:signal_override",
+    "count": 1
   }
 }

@@ -1,27 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "DBA",
-    "DCA",
-    "DBA"
-  ],
-  "key": {
-    "A": {
-      "item": "elliesrailmod:premium_rail_segment"
-    },
-    "B": {
-      "tag": "c:concretes"
-    },
-    "C": {
-      "item": "minecraft:quartz"
-    },
-    "D": {
-      "item": "elliesrailmod:powered_premium_rail_segment"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input1": {
+    "item": "elliesrailmod:premium_rail_segment"
+  },
+  "input2": {
+    "item": "minecraft:quartz"
+  },
+  "input3": {
+    "item": "elliesrailmod:premium_rail_segment"
+  },
+  "input4": {
+    "item": "elliesrailmod:third_rail"
   },
   "result": {
-    "count": 32,
-    "id": "elliesrailmod:powered_rail_class_5"
+    "id": "elliesrailmod:powered_rail_class_5",
+    "count": 32
   }
 }

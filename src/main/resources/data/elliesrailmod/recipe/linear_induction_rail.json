@@ -1,27 +1,19 @@
 ﻿{
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "DBA",
-    "DCA",
-    "DBA"
-  ],
-  "key": {
-    "A": {
-      "item": "elliesrailmod:premium_rail_segment"
-    },
-    "B": {
-      "item": "minecraft:stone"
-    },
-    "C": {
-      "item": "elliesrailmod:reaction_rail_segment"
-    },
-    "D": {
-      "item": "elliesrailmod:powered_premium_rail_segment"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input1": {
+    "item": "elliesrailmod:premium_rail_segment"
+  },
+  "input2": {
+    "item": "minecraft:stone"
+  },
+  "input3": {
+    "item": "elliesrailmod:premium_rail_segment"
+  },
+  "input4": {
+    "item": "elliesrailmod:reaction_rail_segment"
   },
   "result": {
-    "count": 48,
-    "id": "elliesrailmod:linear_induction_rail"
+    "id": "elliesrailmod:linear_induction_rail",
+    "count": 32
   }
 }

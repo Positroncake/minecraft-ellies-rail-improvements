@@ -1,21 +1,19 @@
 ﻿{
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "AAA",
-    "ABA",
-    "AAA"
-  ],
-  "key": {
-    "A": {
-      "item": "elliesrailmod:premium_rail_segment"
-    },
-    "B": {
-      "item": "minecraft:stone"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input1": {
+    "item": "elliesrailmod:premium_rail_segment"
+  },
+  "input2": {
+    "item": "minecraft:stone"
+  },
+  "input3": {
+    "item": "elliesrailmod:premium_rail_segment"
+  },
+  "input4": {
+    "item": "minecraft:ladder"
   },
   "result": {
-    "count": 2,
-    "id": "elliesrailmod:rail_intersection"
+    "id": "elliesrailmod:rail_intersection",
+    "count": 8
   }
 }

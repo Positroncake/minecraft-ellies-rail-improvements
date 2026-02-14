@@ -1,24 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [
-    "CBA",
-    "C A",
-    "CBA"
-  ],
-  "key": {
-    "A": {
-      "item": "elliesrailmod:rail_segment"
-    },
-    "B": {
-      "tag": "minecraft:planks"
-    },
-    "C": {
-      "item": "elliesrailmod:powered_rail_segment"
-    }
+  "type": "elliesrailmod:rail_workshop",
+  "input1": {
+    "item": "elliesrailmod:rail_segment"
+  },
+  "input2": {
+    "tag": "minecraft:planks"
+  },
+  "input3": {
+    "item": "elliesrailmod:rail_segment"
+  },
+  "input4": {
+    "item": "elliesrailmod:third_rail"
   },
   "result": {
-    "count": 32,
-    "id": "elliesrailmod:powered_rail_class_1"
+    "id": "elliesrailmod:powered_rail_class_1",
+    "count": 32
   }
 }

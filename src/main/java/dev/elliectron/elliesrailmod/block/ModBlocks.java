@@ -2,11 +2,16 @@ package dev.elliectron.elliesrailmod.block;
 
 import dev.elliectron.elliesrailmod.ElliesRailImprovements;
 import dev.elliectron.elliesrailmod.block.custom.*;
+import dev.elliectron.elliesrailmod.block.entity.RailWorkshopBlockEntity;
+import dev.elliectron.elliesrailmod.block.entity.SignalProgrammerBlockEntity;
 import dev.elliectron.elliesrailmod.item.ModItems;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -16,6 +21,38 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ElliesRailImprovements.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ElliesRailImprovements.MODID);
+
+    public static final Supplier<RailWorkshopBlock> RAIL_WORKSHOP = BLOCKS.register("rail_workshop",
+            () -> new RailWorkshopBlock(BlockBehaviour.Properties.of()
+                    .strength(2.5f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()
+            ));
+
+    public static final Supplier<BlockEntityType<RailWorkshopBlockEntity>> RAIL_WORKSHOP_BE =
+            BLOCK_ENTITIES.register("rail_workshop",
+                    () -> BlockEntityType.Builder.of(
+                            RailWorkshopBlockEntity::new,
+                            RAIL_WORKSHOP.get()
+                    ).build(null));
+
+    public static final Supplier<SignalProgrammerBlock> SIGNAL_PROGRAMMER = BLOCKS.register("signal_programmer",
+            () -> new SignalProgrammerBlock(BlockBehaviour.Properties.of()
+                    .strength(2.5f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()
+            ));
+
+    public static final Supplier<BlockEntityType<SignalProgrammerBlockEntity>> SIGNAL_PROGRAMMER_BE =
+            BLOCK_ENTITIES.register("signal_programmer",
+                    () -> BlockEntityType.Builder.of(
+                            SignalProgrammerBlockEntity::new,
+                            SIGNAL_PROGRAMMER.get()
+                    ).build(null));
 
     public static final DeferredBlock<Class1Rail> RAIL_CLASS_1 = registerBlock("rail_class_1",
             () -> new Class1Rail(BlockBehaviour.Properties.ofFullCopy(Blocks.RAIL).requiresCorrectToolForDrops().strength(1f, 7.5f)));
