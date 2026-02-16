@@ -4,7 +4,7 @@
     "item": "elliesrailmod:powered_rail_class_5"
   },
   "input4": {
-    "item": "elliesrailmod:gold_nugget"
+    "item": "minecraft:gold_nugget"
   },
   "result": {
     "id": "elliesrailmod:powered_rail_class_5h",

@@ -7,10 +7,10 @@
     "item": "minecraft:stone"
   },
   "input3": {
-    "item": "elliesrailmod:redstone"
+    "item": "minecraft:redstone"
   },
   "input4": {
-    "item": "elliesrailmod:copper_ingot"
+    "item": "minecraft:copper_ingot"
   },
   "result": {
     "id": "elliesrailmod:track_circuit_signal",

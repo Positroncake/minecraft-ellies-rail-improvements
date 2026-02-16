@@ -7,7 +7,7 @@
     "item": "minecraft:stone"
   },
   "input3": {
-    "item": "elliesrailmod:redstone"
+    "item": "minecraft:redstone"
   },
   "result": {
     "id": "elliesrailmod:track_circuit_switch",

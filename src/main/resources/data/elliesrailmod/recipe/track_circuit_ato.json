@@ -7,10 +7,10 @@
     "item": "minecraft:stone"
   },
   "input3": {
-    "item": "elliesrailmod:redstone"
+    "item": "minecraft:redstone"
   },
   "input4": {
-    "item": "elliesrailmod:diamond"
+    "item": "minecraft:diamond"
   },
   "result": {
     "id": "elliesrailmod:track_circuit_ato",
